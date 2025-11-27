@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: spring-boot-lab
+  jackson:
+    serialization:
+      indent-output: true
+
+opendata:
+  holiday:
+    url: https://data.ntpc.gov.tw/api/datasets/308dcd75-6434-45bc-a95f-584da4fed251/csv/file
+    output-dir: docs/opendata/holiday

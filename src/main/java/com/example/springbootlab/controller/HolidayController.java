@@ -1,0 +1,69 @@
+package com.example.springbootlab.controller;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.springbootlab.exception.ResourceNotFoundException;
+import com.example.springbootlab.model.Holiday;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * 假日資料 RESTful API 控制器。
+ *
+ * <p>
+ * 提供假日資料的查詢介面，資料來源為預先產生的 JSON 檔案。
+ * </p>
+ *
+ * @author Spring Boot Lab
+ * @since 1.0.0
+ */
+@Slf4j
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/api/holidays")
+public class HolidayController {
+
+    /** JSON 反序列化器（由 Spring 注入） */
+    private final ObjectMapper objectMapper;
+
+    /** 假日資料檔案目錄（可透過設定檔配置） */
+    @Value("${opendata.holiday.output-dir:docs/opendata/holiday}")
+    private String dataDir;
+
+    /**
+     * 依年份取得假日資料。
+     *
+     * @param year 西元年份 (例如: 2024)
+     * @return 該年份的假日資料列表
+     * @throws ResourceNotFoundException 當指定年份的資料不存在時
+     */
+    @GetMapping("/{year}")
+    public List<Holiday> getHolidaysByYear(@PathVariable String year) {
+        File file = Paths.get(dataDir, year + ".json").toFile();
+
+        if (!file.exists()) {
+            log.warn("找不到 {} 年度的假日資料。", year);
+            throw new ResourceNotFoundException("找不到 " + year + " 年度的假日資料");
+        }
+
+        try {
+            return objectMapper.readValue(file, new TypeReference<List<Holiday>>() {
+            });
+        } catch (IOException e) {
+            log.error("讀取 {} 年度假日資料時發生錯誤", year, e);
+            throw new ResourceNotFoundException("無法讀取 " + year + " 年度的假日資料", e);
+        }
+    }
+}
