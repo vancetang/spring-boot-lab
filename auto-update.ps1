@@ -7,7 +7,7 @@ $ErrorActionPreference = "Stop"
 # 1. 執行 Spring Boot 任務模式 (只抓資料，抓完自動結束)
 Write-Host "🚀 Starting Data Fetch Job..." -ForegroundColor Cyan
 try {
-    ./mvnw spring-boot:run "-Dspring-boot.run.arguments=--job=fetch" -q
+    mvn spring-boot:run "-Dspring-boot.run.arguments=--job=fetch" -q
     if ($LASTEXITCODE -ne 0) {
         throw "Maven process exited with code $LASTEXITCODE"
     }
