@@ -1,10 +1,11 @@
 package com.example.springbootlab.service;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -221,9 +222,9 @@ public class FetchDataService {
             String year = entry.getKey();
             List<Holiday> holidaysOfYear = entry.getValue();
 
-            File jsonFile = outputPath.resolve(year + ".json").toFile();
-            objectMapper.writeValue(jsonFile, holidaysOfYear);
-            log.info("已產生 {} 年度 JSON: {}", year, jsonFile.getAbsolutePath());
+            Path jsonFile = outputPath.resolve(year + ".json");
+            writeJsonWithLf(jsonFile, holidaysOfYear);
+            log.info("已產生 {} 年度 JSON: {}", year, jsonFile.toAbsolutePath());
         }
     }
 
@@ -238,9 +239,29 @@ public class FetchDataService {
                 .sorted(Comparator.reverseOrder())
                 .toList();
 
-        File yearsFile = Paths.get(outputDir, "years.json").toFile();
-        objectMapper.writeValue(yearsFile, sortedYears);
-        log.info("已產生年份索引檔: {}", yearsFile.getAbsolutePath());
+        Path yearsFile = Paths.get(outputDir, "years.json");
+        writeJsonWithLf(yearsFile, sortedYears);
+        log.info("已產生年份索引檔: {}", yearsFile.toAbsolutePath());
+    }
+
+    /**
+     * 將物件寫入 JSON 檔案，使用 LF 換行符號。
+     *
+     * @param filePath 檔案路徑
+     * @param data     要序列化的資料物件
+     * @throws IOException 當檔案寫入失敗時
+     */
+    private void writeJsonWithLf(Path filePath, Object data) throws IOException {
+        try (Writer writer = new OutputStreamWriter(Files.newOutputStream(filePath), StandardCharsets.UTF_8)) {
+            String json = objectMapper.writeValueAsString(data);
+            // 確保換行符號為 LF（移除可能的 CR）
+            json = json.replace("\r\n", "\n").replace("\r", "\n");
+            writer.write(json);
+            // 確保檔案以 LF 結尾
+            if (!json.endsWith("\n")) {
+                writer.write("\n");
+            }
+        }
     }
 
     /**
