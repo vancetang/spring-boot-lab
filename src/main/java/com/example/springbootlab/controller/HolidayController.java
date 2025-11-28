@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.springbootlab.config.OpendataProperties;
 import com.example.springbootlab.exception.ResourceNotFoundException;
 import com.example.springbootlab.model.Holiday;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -38,9 +38,8 @@ public class HolidayController {
     /** JSON 反序列化器（由 Spring 注入） */
     private final ObjectMapper objectMapper;
 
-    /** 假日資料檔案目錄（可透過設定檔配置） */
-    @Value("${opendata.holiday.output-dir:docs/opendata/holiday}")
-    private String dataDir;
+    /** 開放資料設定屬性（由 Spring 注入） */
+    private final OpendataProperties opendataProperties;
 
     /**
      * 依年份取得假日資料。
@@ -51,7 +50,7 @@ public class HolidayController {
      */
     @GetMapping("/{year}")
     public List<Holiday> getHolidaysByYear(@PathVariable String year) {
-        File file = Paths.get(dataDir, year + ".json").toFile();
+        File file = Paths.get(opendataProperties.holiday().outputDir(), year + ".json").toFile();
 
         if (!file.exists()) {
             log.warn("找不到 {} 年度的假日資料。", year);

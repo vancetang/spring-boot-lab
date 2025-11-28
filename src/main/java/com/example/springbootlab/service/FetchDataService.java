@@ -23,9 +23,9 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.BOMInputStream;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.example.springbootlab.config.OpendataProperties;
 import com.example.springbootlab.model.Holiday;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -71,13 +71,8 @@ public class FetchDataService {
     /** JSON 序列化器（由 Spring 注入） */
     private final ObjectMapper objectMapper;
 
-    /** 資料來源 URL，從設定檔注入 */
-    @Value("${opendata.holiday.url}")
-    private String dataUrl;
-
-    /** JSON 輸出目錄路徑（可透過設定檔配置） */
-    @Value("${opendata.holiday.output-dir:docs/opendata/holiday}")
-    private String outputDir;
+    /** 開放資料設定屬性（由 Spring 注入） */
+    private final OpendataProperties opendataProperties;
 
     /**
      * 執行資料抓取與處理的主要方法。
@@ -94,11 +89,12 @@ public class FetchDataService {
      */
     public void fetchAndProcess() {
         Path tempFile = null;
+        String dataUrl = opendataProperties.holiday().url();
         try {
             log.info("開始從 OpenData 抓取資料: {}", dataUrl);
 
             // 步驟 1: 下載至暫存檔
-            tempFile = downloadToTempFile();
+            tempFile = downloadToTempFile(dataUrl);
 
             // 步驟 2: 解析 CSV
             List<Holiday> allHolidays = parseCsvFile(tempFile);
@@ -124,11 +120,12 @@ public class FetchDataService {
     /**
      * 下載資料至暫存檔。
      *
+     * @param dataUrl 資料來源 URL
      * @return 暫存檔路徑
      * @throws IOException        當下載失敗時
      * @throws URISyntaxException 當 URL 格式錯誤時
      */
-    private Path downloadToTempFile() throws IOException, URISyntaxException {
+    private Path downloadToTempFile(String dataUrl) throws IOException, URISyntaxException {
         Path tempFile = Files.createTempFile("holiday_data_", ".csv");
         log.info("下載檔案中...");
         FileUtils.copyURLToFile(
@@ -215,7 +212,7 @@ public class FetchDataService {
      * @throws IOException 當檔案寫入失敗時
      */
     private void writeYearlyJsonFiles(Map<String, List<Holiday>> groupedByYear) throws IOException {
-        Path outputPath = Paths.get(outputDir);
+        Path outputPath = Paths.get(opendataProperties.holiday().outputDir());
         Files.createDirectories(outputPath);
 
         for (Map.Entry<String, List<Holiday>> entry : groupedByYear.entrySet()) {
@@ -239,7 +236,7 @@ public class FetchDataService {
                 .sorted(Comparator.reverseOrder())
                 .toList();
 
-        Path yearsFile = Paths.get(outputDir, "years.json");
+        Path yearsFile = Paths.get(opendataProperties.holiday().outputDir(), "years.json");
         writeJsonWithLf(yearsFile, sortedYears);
         log.info("已產生年份索引檔: {}", yearsFile.toAbsolutePath());
     }
