@@ -39,6 +39,24 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 處理靜態資源未找到例外（如 favicon.ico）。
+     *
+     * <p>
+     * 瀏覽器會自動請求 favicon.ico，若不存在只記錄 DEBUG 等級，
+     * 避免日誌污染。
+     * </p>
+     *
+     * @param ex 靜態資源未找到例外
+     * @return HTTP 404 回應
+     */
+    @ExceptionHandler(org.springframework.web.servlet.resource.NoResourceFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleNoResourceFound(
+            org.springframework.web.servlet.resource.NoResourceFoundException ex) {
+        log.debug("靜態資源未找到: {}", ex.getResourcePath());
+        return buildErrorResponse(HttpStatus.NOT_FOUND, "資源不存在: " + ex.getResourcePath());
+    }
+
+    /**
      * 處理其他未預期的例外。
      *
      * @param ex 例外
@@ -66,4 +84,3 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, status);
     }
 }
-
