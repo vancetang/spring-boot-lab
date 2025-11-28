@@ -5,209 +5,258 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>行政機關辦公日曆表</title>
     <style>
+      :root {
+        --primary: #1a73e8;
+        --primary-light: #e8f0fe;
+        --holiday: #c62828;
+        --holiday-bg: #ffebee;
+        --workday: #2e7d32;
+        --workday-bg: #e8f5e9;
+        --border: #e0e0e0;
+        --text: #424242;
+        --text-light: #757575;
+        --weekend: #fafafa;
+        --weekend-tag: #78909c;
+        --weekend-tag-bg: #eceff1;
+        --adjusted: #6a1b9a;
+        --adjusted-bg: #f3e5f5;
+        --special: #ef6c00;
+        --special-bg: #fff3e0;
+        --today: #1565c0;
+        --today-bg: #e3f2fd;
+      }
       * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
       }
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-          "Microsoft JhengHei", sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        padding: 20px;
+        font-family: "Google Sans", "Segoe UI", Arial, sans-serif;
+        background: #fff;
+        color: var(--text);
       }
       .container {
-        max-width: 900px;
+        max-width: 1200px;
         margin: 0 auto;
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 16px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        overflow: hidden;
+        padding: 16px;
       }
       .header {
-        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-        color: white;
-        padding: 24px 30px;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
         flex-wrap: wrap;
-        gap: 15px;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border);
       }
       .header h1 {
-        font-size: 1.6em;
-        font-weight: 600;
+        font-size: 22px;
+        font-weight: 400;
+        color: var(--text);
+        flex: 1;
       }
       .header h1 span {
-        font-size: 0.6em;
-        opacity: 0.8;
+        font-size: 14px;
+        color: var(--primary);
+        background: var(--primary-light);
+        padding: 4px 10px;
+        border-radius: 12px;
         margin-left: 8px;
       }
       .controls {
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: 8px;
         flex-wrap: wrap;
       }
-      .controls select {
-        padding: 10px 16px;
-        font-size: 15px;
-        border: none;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.9);
+      .nav-btn {
+        background: none;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 8px 16px;
         cursor: pointer;
-        font-weight: 500;
-        transition: all 0.2s;
+        font-size: 14px;
+        color: var(--text);
+        transition: background 0.2s;
       }
-      .controls select:hover {
-        background: white;
-        transform: translateY(-1px);
+      .nav-btn:hover {
+        background: var(--weekend);
       }
-      .controls .status {
-        font-size: 0.85em;
-        opacity: 0.9;
+      .nav-btn.primary {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
+      .nav-btn.primary:hover {
+        background: #1557b0;
+      }
+      select {
+        padding: 8px 12px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        background: #fff;
+      }
+      .nav-links {
+        display: flex;
+        gap: 8px;
+        margin-left: auto;
       }
       .nav-link {
-        color: rgba(255, 255, 255, 0.85);
         text-decoration: none;
-        font-size: 0.85em;
-        padding: 8px 14px;
-        border-radius: 6px;
-        background: rgba(255, 255, 255, 0.15);
-        transition: all 0.2s;
+        color: var(--primary);
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 4px;
+        transition: background 0.2s;
       }
       .nav-link:hover {
-        background: rgba(255, 255, 255, 0.25);
-        color: white;
+        background: var(--primary-light);
       }
-      .table-container {
-        overflow-x: auto;
+      .calendar {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
       }
-      table {
-        width: 100%;
-        border-collapse: collapse;
+      .calendar-header {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        background: var(--weekend);
+        border-bottom: 1px solid var(--border);
       }
-      th {
-        background: #f8f9fa;
-        color: #495057;
-        font-weight: 600;
+      .calendar-header div {
+        padding: 12px;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-light);
         text-transform: uppercase;
-        font-size: 0.75em;
-        letter-spacing: 0.5px;
-        padding: 14px 20px;
-        text-align: left;
-        border-bottom: 2px solid #dee2e6;
+      }
+      .calendar-header div:first-child,
+      .calendar-header div:last-child {
+        color: var(--holiday);
+      }
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+      }
+      .day-cell {
+        min-height: 100px;
+        border-right: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        padding: 4px;
+        position: relative;
+        cursor: default;
+      }
+      .day-cell:nth-child(7n) {
+        border-right: none;
+      }
+      .day-cell.other-month {
+        background: #f5f5f5;
+      }
+      .day-cell.other-month .day-number {
+        color: #ccc;
+      }
+      .day-cell.weekend {
+        background: var(--weekend);
+      }
+      .day-cell.today .day-number {
+        background: var(--today);
+        color: #fff;
+      }
+      .day-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 50%;
+        margin-bottom: 2px;
+      }
+      .day-events {
+        font-size: 11px;
+        line-height: 1.4;
+      }
+      .event {
+        padding: 2px 6px;
+        border-radius: 3px;
+        margin-bottom: 2px;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
-      td {
-        padding: 16px 20px;
-        border-bottom: 1px solid #eee;
-        vertical-align: top;
+      .event.holiday {
+        background: var(--holiday-bg);
+        color: var(--holiday);
       }
-      tr:hover {
-        background: #f8f9ff;
+      .event.workday {
+        background: var(--workday-bg);
+        color: var(--workday);
       }
-      tr:last-child td {
-        border-bottom: none;
-      }
-      .col-date {
-        width: 140px;
-      }
-      .col-holiday {
-        width: 70px;
-      }
-      .date-cell {
-        font-family: "SF Mono", "Consolas", monospace;
-        font-weight: 600;
-        color: #495057;
-        white-space: nowrap;
-      }
-      .date-cell .weekday {
-        font-size: 0.8em;
-        color: #868e96;
-        margin-left: 6px;
+      .event.weekend {
+        background: transparent;
+        color: #9e9e9e;
         font-weight: 400;
       }
-      .holiday-cell {
-        text-align: center;
+      .event.adjusted {
+        background: var(--adjusted-bg);
+        color: var(--adjusted);
       }
-      .holiday-badge {
-        display: inline-block;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.8em;
-        font-weight: 600;
-        white-space: nowrap;
+      .event.special {
+        background: var(--special-bg);
+        color: var(--special);
       }
-      .holiday-yes {
-        background: #ffe3e3;
-        color: #c92a2a;
+      .legend {
+        display: flex;
+        gap: 16px;
+        margin-top: 16px;
+        padding: 12px;
+        background: var(--weekend);
+        border-radius: 8px;
+        flex-wrap: wrap;
       }
-      .holiday-no {
-        background: #d3f9d8;
-        color: #2b8a3e;
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        color: var(--text-light);
       }
-      .desc-cell {
-        color: #495057;
-        word-break: break-word;
-      }
-      .desc-cell .main-desc {
-        font-weight: 500;
-        margin-bottom: 4px;
-      }
-      .desc-cell .sub-desc {
-        font-size: 0.85em;
-        color: #868e96;
-        line-height: 1.4;
-        word-break: break-word;
-      }
-      .loading {
-        text-align: center;
-        padding: 60px 20px;
-        color: #868e96;
-      }
-      .loading-spinner {
-        display: inline-block;
-        width: 30px;
-        height: 30px;
-        border: 3px solid #e9ecef;
-        border-top-color: #667eea;
-        border-radius: 50%;
-        animation: spin 0.8s linear infinite;
-        margin-bottom: 12px;
-      }
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-      .empty-state {
-        text-align: center;
-        padding: 60px 20px;
-        color: #868e96;
+      .legend-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 2px;
       }
       .footer {
-        padding: 16px 30px;
-        background: #f8f9fa;
+        margin-top: 16px;
         text-align: center;
-        font-size: 0.8em;
-        color: #868e96;
+        font-size: 12px;
+        color: var(--text-light);
       }
-      @media (max-width: 600px) {
-        .header {
-          padding: 20px;
+      .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        color: var(--text-light);
+      }
+      @media (max-width: 768px) {
+        .day-cell {
+          min-height: 60px;
+        }
+        .day-number {
+          width: 24px;
+          height: 24px;
+          font-size: 12px;
+        }
+        .day-events {
+          display: none;
         }
         .header h1 {
-          font-size: 1.3em;
-        }
-        th,
-        td {
-          padding: 12px 14px;
-        }
-        .date-cell .weekday {
-          display: block;
-          margin: 4px 0 0 0;
+          font-size: 18px;
         }
       }
     </style>
@@ -215,128 +264,296 @@
   <body>
     <div class="container">
       <div class="header">
-        <h1>📅 行政機關辦公日曆表<span>精簡版</span></h1>
+        <h1>📅 行政機關辦公日曆表<span>月曆版</span></h1>
         <div class="controls">
-          <select id="yearSelect">
-            <option disabled selected>載入中...</option>
-          </select>
-          <span id="status" class="status"></span>
-          <a href="detail.html" class="nav-link">📋 詳細版</a>
+          <button class="nav-btn" id="prevMonth">◀ 上月</button>
+          <select id="yearSelect"></select>
+          <select id="monthSelect"></select>
+          <button class="nav-btn" id="nextMonth">下月 ▶</button>
+          <button class="nav-btn primary" id="todayBtn">今天</button>
+        </div>
+        <div class="nav-links">
+          <a href="simple.html" class="nav-link" id="linkSimple">📋 精簡版</a>
+          <a href="detail.html" class="nav-link" id="linkDetail">📊 詳細版</a>
         </div>
       </div>
-      <div class="table-container">
-        <table id="dataTable">
-          <thead>
-            <tr>
-              <th class="col-date">日期</th>
-              <th class="col-holiday">假日</th>
-              <th>描述</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+      <div class="calendar">
+        <div class="calendar-header">
+          <div>日</div>
+          <div>一</div>
+          <div>二</div>
+          <div>三</div>
+          <div>四</div>
+          <div>五</div>
+          <div>六</div>
+        </div>
+        <div class="calendar-grid" id="calendarGrid">
+          <div class="loading">載入中...</div>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <div
+            class="legend-color"
+            style="
+              background: var(--holiday-bg);
+              border: 1px solid var(--holiday);
+            "
+          ></div>
+          國定假日
+        </div>
+        <div class="legend-item">
+          <span style="color: #9e9e9e; font-size: 11px">周休</span>
+          (純文字)
+        </div>
+        <div class="legend-item">
+          <div
+            class="legend-color"
+            style="
+              background: var(--adjusted-bg);
+              border: 1px solid var(--adjusted);
+            "
+          ></div>
+          調整放假
+        </div>
+        <div class="legend-item">
+          <div
+            class="legend-color"
+            style="
+              background: var(--workday-bg);
+              border: 1px solid var(--workday);
+            "
+          ></div>
+          補班日
+        </div>
+        <div class="legend-item">
+          <div
+            class="legend-color"
+            style="
+              background: var(--special-bg);
+              border: 1px solid var(--special);
+            "
+          ></div>
+          特殊節日
+        </div>
       </div>
       <div class="footer">資料來源：政府開放資料平台</div>
     </div>
     <script>
-      const yearSelect = document.getElementById("yearSelect");
-      const tableBody = document.querySelector("#dataTable tbody");
-      const statusEl = document.getElementById("status");
       const DATA_PATH = "opendata/holiday";
-      const WEEKDAYS = ["日", "一", "二", "三", "四", "五", "六"];
+      const yearSelect = document.getElementById("yearSelect");
+      const monthSelect = document.getElementById("monthSelect");
+      const calendarGrid = document.getElementById("calendarGrid");
+      let currentYear,
+        currentMonth,
+        holidayData = {},
+        availableYears = [];
 
-      function isWeekend(date) {
-        const d = date.getDay();
-        return d === 0 || d === 6;
-      }
-
-      function parseDate(s) {
-        if (!s || s.length !== 8) return null;
-        return new Date(+s.slice(0, 4), +s.slice(4, 6) - 1, +s.slice(6, 8));
-      }
-
-      function formatDate(s, date) {
-        if (!s || s.length !== 8) return s;
-        const wd = date ? WEEKDAYS[date.getDay()] : "";
-        return `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(
-          6,
-          8
-        )}<span class="weekday">(${wd})</span>`;
-      }
-
-      function getDescription(item, date) {
-        const isHoliday = item.holiday;
-        const name = (item.name || "").trim();
-        const desc = (item.description || "").trim();
-        let main = "";
-        if (!isHoliday) {
-          main = "補上班日";
-        } else if (isWeekend(date)) {
-          main = name ? `周休(${name})` : "周休";
-        } else if (!name) {
-          main = "補假或彈性放假日";
-        } else {
-          main = name;
-        }
-        return { main, sub: desc };
+      // 初始化月份選單
+      for (let m = 1; m <= 12; m++) {
+        monthSelect.innerHTML += `<option value="${m}">${m}月</option>`;
       }
 
       async function init() {
-        statusEl.textContent = "載入中...";
+        const today = new Date();
+        currentYear = today.getFullYear();
+        currentMonth = today.getMonth() + 1;
         try {
           const res = await fetch(`${DATA_PATH}/years.json`);
-          if (!res.ok) throw new Error("無法讀取年份");
-          const years = await res.json();
-          yearSelect.innerHTML = years
+          availableYears = await res.json();
+          yearSelect.innerHTML = availableYears
             .map((y) => `<option value="${y}">${y}</option>`)
             .join("");
-          loadData();
+          if (!availableYears.includes(String(currentYear))) {
+            currentYear = parseInt(availableYears[0]);
+          }
+          yearSelect.value = currentYear;
+          monthSelect.value = currentMonth;
+          updateLinks();
+          await loadYear(currentYear);
+          renderCalendar();
         } catch (e) {
-          yearSelect.innerHTML = "<option>載入失敗</option>";
-          statusEl.textContent = e.message;
+          calendarGrid.innerHTML = `<div class="loading">載入失敗: ${e.message}</div>`;
         }
       }
 
-      async function loadData() {
-        const year = yearSelect.value;
-        if (!year) return;
-        statusEl.textContent = "載入中...";
-        tableBody.innerHTML =
-          '<tr><td colspan="3" class="loading"><div class="loading-spinner"></div><div>載入資料中...</div></td></tr>';
+      async function loadYear(year) {
+        if (holidayData[year]) return;
         try {
           const res = await fetch(`${DATA_PATH}/${year}.json`);
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          const data = await res.json();
-          renderTable(data);
-          statusEl.textContent = `共 ${data.length} 筆`;
+          if (res.ok) holidayData[year] = await res.json();
         } catch (e) {
-          tableBody.innerHTML = `<tr><td colspan="3" class="empty-state">載入失敗: ${e.message}</td></tr>`;
+          console.warn(`無法載入 ${year} 年資料`);
         }
       }
 
-      function renderTable(data) {
-        if (!data.length) {
-          tableBody.innerHTML =
-            '<tr><td colspan="3" class="empty-state">無資料</td></tr>';
-          return;
-        }
-        tableBody.innerHTML = data
-          .map((item) => {
-            const date = parseDate(item.date);
-            const { main, sub } = getDescription(item, date);
-            const badge = item.holiday ? "holiday-yes" : "holiday-no";
-            const badgeText = item.holiday ? "假日" : "上班";
-            const subHtml = sub ? `<div class="sub-desc">${sub}</div>` : "";
-            return `<tr>
-            <td class="date-cell">${formatDate(item.date, date)}</td>
-            <td class="holiday-cell"><span class="holiday-badge ${badge}">${badgeText}</span></td>
-            <td class="desc-cell"><div class="main-desc">${main}</div>${subHtml}</td>
-        </tr>`;
-          })
-          .join("");
+      function updateLinks() {
+        document.getElementById(
+          "linkSimple"
+        ).href = `simple.html?year=${currentYear}`;
+        document.getElementById(
+          "linkDetail"
+        ).href = `detail.html?year=${currentYear}`;
       }
 
-      yearSelect.addEventListener("change", loadData);
+      /**
+       * 取得事件顯示文字（套用精簡版邏輯）
+       * @param {Object} item - 假日資料物件
+       * @param {boolean} isWeekend - 是否為週末
+       * @returns {Object} { display: 顯示文字, tooltip: 提示文字, type: 類型 }
+       */
+      function getEventDescription(item, isWeekend) {
+        const isHoliday = item.holiday;
+        const name = (item.name || "").trim();
+        const desc = (item.description || "").trim();
+        const category = (item.holidayCategory || "").trim();
+        let display = "";
+        let type = "holiday"; // holiday, workday, special
+
+        if (!isHoliday || category === "補行上班日") {
+          // 補班日
+          display = name ? `補班(${name})` : "補班";
+          type = "workday";
+        } else if (category === "星期六、星期日") {
+          // 周休
+          display = name ? `周休(${name})` : "周休";
+          type = "weekend";
+        } else if (category === "調整放假日") {
+          // 調整放假（如小年夜）
+          display = name || "調整放假";
+          type = "adjusted";
+        } else if (category === "放假之紀念日及節日") {
+          // 國定假日
+          display = name || "國定假日";
+          type = "holiday";
+        } else if (name) {
+          // 其他有名稱的節日（如節氣）
+          display = name;
+          type = "special";
+        } else {
+          // 其他補假
+          display = "補假";
+          type = "holiday";
+        }
+
+        return {
+          display,
+          tooltip: desc || `${category}${name ? ": " + name : ""}`,
+          type,
+        };
+      }
+
+      function renderCalendar() {
+        const firstDay = new Date(currentYear, currentMonth - 1, 1);
+        const lastDay = new Date(currentYear, currentMonth, 0);
+        const startDay = firstDay.getDay();
+        const daysInMonth = lastDay.getDate();
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}/${String(
+          today.getMonth() + 1
+        ).padStart(2, "0")}/${String(today.getDate()).padStart(2, "0")}`;
+
+        const yearData = holidayData[currentYear] || [];
+        const dateMap = {};
+        yearData.forEach((h) => {
+          dateMap[h.date] = h;
+        });
+
+        let html = "";
+        // 上月補位
+        const prevMonth = new Date(currentYear, currentMonth - 1, 0);
+        for (let i = startDay - 1; i >= 0; i--) {
+          const d = prevMonth.getDate() - i;
+          html += `<div class="day-cell other-month"><span class="day-number">${d}</span></div>`;
+        }
+        // 當月
+        for (let d = 1; d <= daysInMonth; d++) {
+          // JSON 資料日期格式為 YYYYMMDD (如 20250127)
+          const dateKey = `${currentYear}${String(currentMonth).padStart(
+            2,
+            "0"
+          )}${String(d).padStart(2, "0")}`;
+          // 顯示用格式 YYYY/MM/DD
+          const dateDisplay = `${currentYear}/${String(currentMonth).padStart(
+            2,
+            "0"
+          )}/${String(d).padStart(2, "0")}`;
+          const dayOfWeek = new Date(currentYear, currentMonth - 1, d).getDay();
+          const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+          const isToday = dateDisplay === todayStr;
+          const h = dateMap[dateKey];
+
+          let classes = "day-cell";
+          if (isWeekend) classes += " weekend";
+          if (isToday) classes += " today";
+
+          let events = "";
+          if (h) {
+            // 套用精簡版邏輯：顯示周休、補班等資訊
+            const eventInfo = getEventDescription(h, isWeekend);
+            // 根據類型設定不同的樣式 class
+            const eventClass = `event ${eventInfo.type}`;
+            events = `<div class="${eventClass}" title="${eventInfo.tooltip}">${eventInfo.display}</div>`;
+          }
+
+          html += `<div class="${classes}"><span class="day-number">${d}</span><div class="day-events">${events}</div></div>`;
+        }
+        // 下月補位
+        const remaining = (7 - ((startDay + daysInMonth) % 7)) % 7;
+        for (let d = 1; d <= remaining; d++) {
+          html += `<div class="day-cell other-month"><span class="day-number">${d}</span></div>`;
+        }
+        calendarGrid.innerHTML = html;
+      }
+
+      async function changeMonth(delta) {
+        currentMonth += delta;
+        if (currentMonth > 12) {
+          currentMonth = 1;
+          currentYear++;
+        } else if (currentMonth < 1) {
+          currentMonth = 12;
+          currentYear--;
+        }
+        if (!availableYears.includes(String(currentYear))) {
+          currentYear = parseInt(
+            availableYears[delta > 0 ? 0 : availableYears.length - 1]
+          );
+          currentMonth = delta > 0 ? 1 : 12;
+        }
+        yearSelect.value = currentYear;
+        monthSelect.value = currentMonth;
+        updateLinks();
+        await loadYear(currentYear);
+        renderCalendar();
+      }
+
+      document.getElementById("prevMonth").onclick = () => changeMonth(-1);
+      document.getElementById("nextMonth").onclick = () => changeMonth(1);
+      document.getElementById("todayBtn").onclick = async () => {
+        const today = new Date();
+        currentYear = today.getFullYear();
+        currentMonth = today.getMonth() + 1;
+        if (!availableYears.includes(String(currentYear))) {
+          currentYear = parseInt(availableYears[0]);
+        }
+        yearSelect.value = currentYear;
+        monthSelect.value = currentMonth;
+        updateLinks();
+        await loadYear(currentYear);
+        renderCalendar();
+      };
+      yearSelect.onchange = async () => {
+        currentYear = parseInt(yearSelect.value);
+        updateLinks();
+        await loadYear(currentYear);
+        renderCalendar();
+      };
+      monthSelect.onchange = () => {
+        currentMonth = parseInt(monthSelect.value);
+        renderCalendar();
+      };
+
       init();
     </script>
   </body>

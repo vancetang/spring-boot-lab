@@ -105,11 +105,10 @@ public class SpringBootLabApplication implements ApplicationRunner {
             fetchDataService.fetchAndProcess();
             log.info("任務完成，程式即將結束。");
         } else {
-            // 預設: Server Mode
+            // 預設: Server Mode (不自動抓取資料，需透過 Task Mode 手動更新)
             log.info("執行模式: SERVER MODE");
-            log.info("執行初始資料抓取...");
-            fetchDataService.fetchAndProcess();
             log.info("伺服器啟動完成，等待請求中。");
+            log.info("如需更新資料，請使用 Task Mode: mvn spring-boot:run \"-Dspring-boot.run.arguments=--job=fetch\"");
         }
     }
 }

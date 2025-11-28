@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>行政機關辦公日曆表 - 詳細版</title>
+    <title>行政機關辦公日曆表 - 精簡版</title>
     <style>
       * {
         box-sizing: border-box;
@@ -18,7 +18,7 @@
         padding: 20px;
       }
       .container {
-        max-width: 1100px;
+        max-width: 900px;
         margin: 0 auto;
         background: rgba(255, 255, 255, 0.95);
         border-radius: 16px;
@@ -95,13 +95,13 @@
         text-transform: uppercase;
         font-size: 0.75em;
         letter-spacing: 0.5px;
-        padding: 14px 16px;
+        padding: 14px 20px;
         text-align: left;
         border-bottom: 2px solid #dee2e6;
         white-space: nowrap;
       }
       td {
-        padding: 14px 16px;
+        padding: 16px 20px;
         border-bottom: 1px solid #eee;
         vertical-align: top;
       }
@@ -114,14 +114,8 @@
       .col-date {
         width: 140px;
       }
-      .col-name {
-        width: 120px;
-      }
       .col-holiday {
         width: 70px;
-      }
-      .col-category {
-        width: 90px;
       }
       .date-cell {
         font-family: "SF Mono", "Consolas", monospace;
@@ -134,10 +128,6 @@
         color: #868e96;
         margin-left: 6px;
         font-weight: 400;
-      }
-      .name-cell {
-        color: #495057;
-        word-break: break-word;
       }
       .holiday-cell {
         text-align: center;
@@ -158,15 +148,18 @@
         background: #d3f9d8;
         color: #2b8a3e;
       }
-      .category-cell {
-        color: #495057;
-        font-size: 0.9em;
-        white-space: nowrap;
-      }
       .desc-cell {
+        color: #495057;
+        word-break: break-word;
+      }
+      .desc-cell .main-desc {
+        font-weight: 500;
+        margin-bottom: 4px;
+      }
+      .desc-cell .sub-desc {
+        font-size: 0.85em;
         color: #868e96;
-        font-size: 0.9em;
-        line-height: 1.5;
+        line-height: 1.4;
         word-break: break-word;
       }
       .loading {
@@ -201,7 +194,7 @@
         font-size: 0.8em;
         color: #868e96;
       }
-      @media (max-width: 768px) {
+      @media (max-width: 600px) {
         .header {
           padding: 20px;
         }
@@ -210,14 +203,7 @@
         }
         th,
         td {
-          padding: 10px 12px;
-          font-size: 0.85em;
-        }
-        .col-date,
-        .col-name,
-        .col-holiday,
-        .col-category {
-          width: auto;
+          padding: 12px 14px;
         }
         .date-cell .weekday {
           display: block;
@@ -229,14 +215,14 @@
   <body>
     <div class="container">
       <div class="header">
-        <h1>📅 行政機關辦公日曆表<span>詳細版</span></h1>
+        <h1>📅 行政機關辦公日曆表<span>精簡版</span></h1>
         <div class="controls">
           <select id="yearSelect">
             <option disabled selected>載入中...</option>
           </select>
           <span id="status" class="status"></span>
           <a href="index.html" class="nav-link">📅 月曆版</a>
-          <a href="simple.html" class="nav-link">📋 精簡版</a>
+          <a href="detail.html" class="nav-link">📊 詳細版</a>
         </div>
       </div>
       <div class="table-container">
@@ -244,10 +230,8 @@
           <thead>
             <tr>
               <th class="col-date">日期</th>
-              <th class="col-name">名稱</th>
-              <th class="col-holiday">放假</th>
-              <th class="col-category">類別</th>
-              <th class="col-desc">說明</th>
+              <th class="col-holiday">假日</th>
+              <th>描述</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -255,13 +239,17 @@
       </div>
       <div class="footer">資料來源：政府開放資料平台</div>
     </div>
-
     <script>
       const yearSelect = document.getElementById("yearSelect");
       const tableBody = document.querySelector("#dataTable tbody");
       const statusEl = document.getElementById("status");
       const DATA_PATH = "opendata/holiday";
       const WEEKDAYS = ["日", "一", "二", "三", "四", "五", "六"];
+
+      function isWeekend(date) {
+        const d = date.getDay();
+        return d === 0 || d === 6;
+      }
 
       function parseDate(s) {
         if (!s || s.length !== 8) return null;
@@ -275,6 +263,23 @@
           6,
           8
         )}<span class="weekday">(${wd})</span>`;
+      }
+
+      function getDescription(item, date) {
+        const isHoliday = item.holiday;
+        const name = (item.name || "").trim();
+        const desc = (item.description || "").trim();
+        let main = "";
+        if (!isHoliday) {
+          main = "補上班日";
+        } else if (isWeekend(date)) {
+          main = name ? `周休(${name})` : "周休";
+        } else if (!name) {
+          main = "補假或彈性放假日";
+        } else {
+          main = name;
+        }
+        return { main, sub: desc };
       }
 
       async function init() {
@@ -304,7 +309,7 @@
         if (!year) return;
         statusEl.textContent = "載入中...";
         tableBody.innerHTML =
-          '<tr><td colspan="5" class="loading"><div class="loading-spinner"></div><div>載入資料中...</div></td></tr>';
+          '<tr><td colspan="3" class="loading"><div class="loading-spinner"></div><div>載入資料中...</div></td></tr>';
         try {
           const res = await fetch(`${DATA_PATH}/${year}.json`);
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -312,27 +317,27 @@
           renderTable(data);
           statusEl.textContent = `共 ${data.length} 筆`;
         } catch (e) {
-          tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">載入失敗: ${e.message}</td></tr>`;
+          tableBody.innerHTML = `<tr><td colspan="3" class="empty-state">載入失敗: ${e.message}</td></tr>`;
         }
       }
 
       function renderTable(data) {
         if (!data.length) {
           tableBody.innerHTML =
-            '<tr><td colspan="5" class="empty-state">無資料</td></tr>';
+            '<tr><td colspan="3" class="empty-state">無資料</td></tr>';
           return;
         }
         tableBody.innerHTML = data
           .map((item) => {
             const date = parseDate(item.date);
+            const { main, sub } = getDescription(item, date);
             const badge = item.holiday ? "holiday-yes" : "holiday-no";
             const badgeText = item.holiday ? "假日" : "上班";
+            const subHtml = sub ? `<div class="sub-desc">${sub}</div>` : "";
             return `<tr>
             <td class="date-cell">${formatDate(item.date, date)}</td>
-            <td class="name-cell">${item.name || ""}</td>
             <td class="holiday-cell"><span class="holiday-badge ${badge}">${badgeText}</span></td>
-            <td class="category-cell">${item.holidayCategory || ""}</td>
-            <td class="desc-cell">${item.description || ""}</td>
+            <td class="desc-cell"><div class="main-desc">${main}</div>${subHtml}</td>
         </tr>`;
           })
           .join("");

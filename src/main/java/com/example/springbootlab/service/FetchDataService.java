@@ -228,17 +228,37 @@ public class FetchDataService {
     /**
      * 產生年份索引檔 (years.json)。
      *
-     * @param groupedByYear 依年份分組的資料
+     * <p>
+     * 此方法會掃描輸出目錄中所有現有的年份 JSON 檔案，
+     * 確保索引包含所有年份，而非僅限於當次下載的資料。
+     * </p>
+     *
+     * @param groupedByYear 依年份分組的資料（用於確保新年份也被包含）
      * @throws IOException 當檔案寫入失敗時
      */
     private void writeYearsIndex(Map<String, List<Holiday>> groupedByYear) throws IOException {
-        List<String> sortedYears = groupedByYear.keySet().stream()
+        Path outputPath = Paths.get(opendataProperties.holiday().outputDir());
+
+        // 掃描目錄中所有 {year}.json 檔案，取得完整的年份列表
+        List<String> allYears = new ArrayList<>(groupedByYear.keySet());
+
+        try (var files = Files.list(outputPath)) {
+            files.filter(Files::isRegularFile)
+                    .map(Path::getFileName)
+                    .map(Path::toString)
+                    .filter(name -> name.matches("\\d{4}\\.json"))
+                    .map(name -> name.replace(".json", ""))
+                    .filter(year -> !allYears.contains(year))
+                    .forEach(allYears::add);
+        }
+
+        List<String> sortedYears = allYears.stream()
                 .sorted(Comparator.reverseOrder())
                 .toList();
 
-        Path yearsFile = Paths.get(opendataProperties.holiday().outputDir(), "years.json");
+        Path yearsFile = outputPath.resolve("years.json");
         writeJsonWithLf(yearsFile, sortedYears);
-        log.info("已產生年份索引檔: {}", yearsFile.toAbsolutePath());
+        log.info("已產生年份索引檔 (共 {} 個年份): {}", sortedYears.size(), yearsFile.toAbsolutePath());
     }
 
     /**

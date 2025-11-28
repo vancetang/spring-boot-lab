@@ -15,8 +15,9 @@
 - `src/main/java/com/example/springbootlab/service/FetchDataService.java`: 核心業務邏輯所在。此服務負責下載 CSV 資料、解析並寫入最終的 JSON 檔案。
 - `src/main/java/com/example/springbootlab/controller/HolidayController.java`: RESTful API 控制器。它公開用於存取假日資料的端點。
 - `src/main/resources/application.yml`: 主要設定檔。包含伺服器埠號和開放資料來源 URL 等設定。
-- `src/main/resources/static/`: Spring Boot 靜態資源目錄，透過 GitHub Actions 發布至 GitHub Pages。
-  - `static/index.html`: 精簡版前端 UI（預設）。
+- `src/main/resources/static/`: Spring Boot 靜態資源目錄。
+  - `static/index.html`: 月曆版前端 UI（預設首頁，類似 Google Calendar）。
+  - `static/simple.html`: 精簡版前端 UI。
   - `static/detail.html`: 詳細版前端 UI。
   - `static/opendata/holiday/`: 生成的 JSON 檔案 (例如 `2024.json`, `years.json`) 的目的地。
 - `spec.md`: 官方系統規格文件。有關架構細節和需求，請參考此文件。
@@ -30,11 +31,15 @@
 應用程式有兩種執行模式，如 `spec.md` 中所定義。
 
 - **A) 伺服器模式 (開發預設)**:
-  - **說明**: 啟動完整的 Web 應用程式，包含位於 8080 埠的 RESTful API 伺服器。它也會在啟動時執行資料擷取任務。
+  - **說明**: 啟動完整的 Web 應用程式，包含位於 8080 埠的 RESTful API 伺服器。**不會自動抓取資料**，需透過任務模式手動更新。
   - **指令**:
     ```bash
     mvn spring-boot:run
     ```
+  - **訪問 UI**:
+    - 月曆版: `http://localhost:8080/` 或 `http://localhost:8080/index.html`（預設）
+    - 精簡版: `http://localhost:8080/simple.html`
+    - 詳細版: `http://localhost:8080/detail.html`
 
 - **B) 任務模式 (用於 CI/CD 或自動化)**:
   - **說明**: 僅執行 `fetch` 任務 (資料下載與處理)，而不啟動 Web 伺服器。程序在完成後即結束。這是自動化更新的建議模式。

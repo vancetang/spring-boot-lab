@@ -5,18 +5,21 @@
 
 ## 2. 當前功能需求
 - **執行模式 (Execution Modes)**:
-    - **Server Mode (Default)**: 啟動 Web Server (Port 8080)，提供 RESTful API 與 Web UI。啟動時亦會執行一次資料抓取。
+    - **Server Mode (Default)**: 啟動 Web Server (Port 8080)，提供 RESTful API 與 Web UI。**不會自動抓取資料**，需透過 Task Mode 手動更新。
     - **Task Mode (`--job=fetch`)**: 僅執行 OpenData 抓取與 JSON 產出任務，不啟動 Web Server，任務完成後自動結束程式 (適合 CI/CD 自動化)。
 - **OpenData 處理**:
     - 自動下載政府行政機關辦公日曆表 CSV。
     - 轉換資料格式為 JSON。
     - 依年份分組，產出獨立 JSON 檔案 (e.g., `2024.json`) 及年份索引檔 `years.json`。
-    - 輸出路徑: `src/main/resources/static/opendata/holiday/` (透過 GitHub Actions 發布至 GitHub Pages)。
+    - **增量更新機制**: 僅覆寫當次下載包含的年份 JSON，不影響其他年份的現有資料。
+    - 輸出路徑: `src/main/resources/static/opendata/holiday/`。
 - **RESTful API**:
     - 提供 `/api/holidays/{year}` 介面，回傳指定年份的 JSON 資料。
 - **Web UI**:
-    - 靜態網頁 (`src/main/resources/static/index.html`) 透過 AJAX 讀取生成的 JSON 檔。
-    - 支援精簡版與詳細版兩種檢視模式。
+    - **月曆版 (`index.html`)**: 預設首頁，類似 Google Calendar 的月曆介面，支援年月切換，顯示周休/補班/假日等資訊。
+    - **精簡版 (`simple.html`)**: 表格式列表，僅顯示假日資訊。
+    - **詳細版 (`detail.html`)**: 完整資訊表格，包含所有欄位。
+    - 三種視圖可透過導覽連結相互切換，並支援 URL 參數 (`?year=YYYY`) 傳遞年份。
 - **Java 版本**: Java 21
 - **Framework**: Spring Boot 3.5.8
 

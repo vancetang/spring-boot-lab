@@ -15,28 +15,33 @@
 
 ## 🚀 功能特色 (Features)
 
-1.  **自動化資料抓取 (Auto Fetching)**:
-    - 啟動時自動從 [政府資料開放平臺](https://data.ntpc.gov.tw/datasets/308dcd75-6434-45bc-a95f-584da4fed251) 下載 CSV。
+1.  **資料抓取任務 (Data Fetching)**:
+    - 透過 Task Mode (`--job=fetch`) 從 [政府資料開放平臺](https://data.ntpc.gov.tw/datasets/308dcd75-6434-45bc-a95f-584da4fed251) 下載 CSV。
     - 自動解析並依年份分組產生 JSON 檔案 (`src/main/resources/static/opendata/holiday/{year}.json`)。
-    - 自動生成年份索引 (`src/main/resources/static/opendata/holiday/years.json`)。
+    - **增量更新**: 僅更新當次下載的年份，不影響其他年份的現有資料。
+    - 自動生成年份索引 (`years.json`)，包含所有現有年份。
 2.  **RESTful API**:
     - `GET /api/holidays/{year}`: 取得指定年份的假日資料。
-3.  **Web Visualization**:
-    - 內建靜態網頁 (`src/main/resources/static/index.html`)，可直接瀏覽解析後的假日資料。
-    - 支援 GitHub Pages 部署 (透過 GitHub Actions 自動發布 `static/` 目錄)。
+3.  **Web Visualization (三種視圖)**:
+    - 📅 **月曆版** (`index.html`): 預設首頁，類似 Google Calendar 的月曆介面，支援年月切換。
+    - 📋 **精簡版** (`simple.html`): 表格式列表，僅顯示假日資訊。
+    - 📊 **詳細版** (`detail.html`): 完整資訊表格，包含所有欄位。
 4.  **雙重執行模式 (Dual Execution Modes)**:
-    - 支援 Server 模式 (Web API) 與 Task 模式 (純資料處理)，方便整合 CI/CD。
+    - **Server Mode**: 啟動 Web Server 提供 API 與 UI（不自動抓取資料）。
+    - **Task Mode**: 純資料處理，適合 CI/CD 自動化。
 
 ## 🏃‍♂️ 如何執行 (How to Run)
 
 確保您的環境已安裝 Java 21 與 Maven。
 
 ### 模式 A: 啟動 Web Server (開發用)
-此模式會啟動 Web Server (Port 8080) 並執行一次資料抓取。
+此模式會啟動 Web Server (Port 8080)，**不會自動抓取資料**，需先執行 Task Mode 更新資料。
 ```bash
 mvn spring-boot:run
 ```
-- 瀏覽器訪問: `http://localhost:8080/index.html`
+- 月曆版: `http://localhost:8080/` 或 `http://localhost:8080/index.html` (預設首頁)
+- 精簡版: `http://localhost:8080/simple.html`
+- 詳細版: `http://localhost:8080/detail.html`
 
 ### 模式 B: 執行資料抓取任務 (自動化用)
 此模式**不會**啟動 Web Server (不佔用 Port)，僅執行資料抓取與 JSON 產出，完成後自動結束程式。
@@ -56,7 +61,11 @@ mvn spring-boot:run "-Dspring-boot.run.arguments=--job=fetch"
 - `src/main/java/.../service/FetchDataService.java`: 核心邏輯 (下載、解析、轉檔)。
 - `src/main/java/.../controller/HolidayController.java`: API 介面。
 - `src/main/resources/application.yml`: 設定檔 (Server Port, OpenData URL)。
-- `src/main/resources/static/`: 靜態資源目錄 (包含 HTML 與生成的 JSON)，Spring Boot 自動提供服務，並透過 GitHub Actions 發布至 GitHub Pages。
+- `src/main/resources/static/`: 靜態資源目錄 (包含 HTML 與生成的 JSON)。
+  - `index.html`: 月曆版 UI (預設首頁)
+  - `simple.html`: 精簡版 UI
+  - `detail.html`: 詳細版 UI
+  - `opendata/holiday/`: 生成的 JSON 資料目錄
 
 ## 📝 文件 (Docs)
 
