@@ -19,7 +19,7 @@ catch {
 }
 
 # 2. 檢查 Git 狀態
-$gitStatus = git status --porcelain -- docs/opendata/holiday/
+$gitStatus = git status --porcelain -- src/main/resources/static/opendata/holiday/
 if ([string]::IsNullOrWhiteSpace($gitStatus)) {
     Write-Host "✨ No changes detected. Skipping git commit." -ForegroundColor Yellow
     exit 0
@@ -29,7 +29,7 @@ if ([string]::IsNullOrWhiteSpace($gitStatus)) {
 Write-Host "📦 Changes detected. Committing to Git..." -ForegroundColor Cyan
 
 $date = Get-Date -Format "yyyy-MM-dd"
-git add docs/opendata/holiday/*.json
+git add src/main/resources/static/opendata/holiday/*.json
 
 # Conventional Commits 格式: chore(data): 自動更新假日資料
 git commit -m "chore(data): auto-update holiday data on $date"
