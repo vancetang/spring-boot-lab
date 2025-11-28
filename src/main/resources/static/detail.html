@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>行政機關辦公日曆表 - 詳細版</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+          "Microsoft JhengHei", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+      }
+      .header {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        padding: 24px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+      .header h1 {
+        font-size: 1.6em;
+        font-weight: 600;
+      }
+      .header h1 span {
+        font-size: 0.6em;
+        opacity: 0.8;
+        margin-left: 8px;
+      }
+      .controls {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+      .controls select {
+        padding: 10px 16px;
+        font-size: 15px;
+        border: none;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.9);
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
+      .controls select:hover {
+        background: white;
+        transform: translateY(-1px);
+      }
+      .controls .status {
+        font-size: 0.85em;
+        opacity: 0.9;
+      }
+      .nav-link {
+        color: rgba(255, 255, 255, 0.85);
+        text-decoration: none;
+        font-size: 0.85em;
+        padding: 8px 14px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.15);
+        transition: all 0.2s;
+      }
+      .nav-link:hover {
+        background: rgba(255, 255, 255, 0.25);
+        color: white;
+      }
+      .table-container {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
+      th {
+        background: #f8f9fa;
+        color: #495057;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75em;
+        letter-spacing: 0.5px;
+        padding: 14px 16px;
+        text-align: left;
+        border-bottom: 2px solid #dee2e6;
+        white-space: nowrap;
+      }
+      td {
+        padding: 14px 16px;
+        border-bottom: 1px solid #eee;
+        vertical-align: top;
+      }
+      tr:hover {
+        background: #f8f9ff;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      .col-date {
+        width: 130px;
+      }
+      .col-name {
+        width: 140px;
+      }
+      .col-holiday {
+        width: 80px;
+      }
+      .col-category {
+        width: 100px;
+      }
+      .col-desc {
+        width: auto;
+      }
+      .date-cell {
+        font-family: "SF Mono", "Consolas", monospace;
+        font-weight: 600;
+        color: #495057;
+        white-space: nowrap;
+      }
+      .date-cell .weekday {
+        font-size: 0.8em;
+        color: #868e96;
+        margin-left: 6px;
+        font-weight: 400;
+      }
+      .name-cell {
+        color: #495057;
+        word-break: break-word;
+      }
+      .holiday-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.8em;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .holiday-yes {
+        background: #ffe3e3;
+        color: #c92a2a;
+      }
+      .holiday-no {
+        background: #d3f9d8;
+        color: #2b8a3e;
+      }
+      .category-cell {
+        color: #495057;
+        font-size: 0.9em;
+      }
+      .desc-cell {
+        color: #868e96;
+        font-size: 0.9em;
+        line-height: 1.5;
+        word-break: break-word;
+      }
+      .loading {
+        text-align: center;
+        padding: 60px 20px;
+        color: #868e96;
+      }
+      .loading-spinner {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border: 3px solid #e9ecef;
+        border-top-color: #667eea;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin-bottom: 12px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #868e96;
+      }
+      .footer {
+        padding: 16px 30px;
+        background: #f8f9fa;
+        text-align: center;
+        font-size: 0.8em;
+        color: #868e96;
+      }
+      @media (max-width: 768px) {
+        .header {
+          padding: 20px;
+        }
+        .header h1 {
+          font-size: 1.3em;
+        }
+        th,
+        td {
+          padding: 10px 12px;
+          font-size: 0.85em;
+        }
+        .col-date,
+        .col-name,
+        .col-holiday,
+        .col-category {
+          width: auto;
+        }
+        .date-cell .weekday {
+          display: block;
+          margin: 4px 0 0 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>📅 行政機關辦公日曆表<span>詳細版</span></h1>
+        <div class="controls">
+          <select id="yearSelect">
+            <option disabled selected>載入中...</option>
+          </select>
+          <span id="status" class="status"></span>
+          <a href="index.html" class="nav-link">📅 精簡版</a>
+        </div>
+      </div>
+      <div class="table-container">
+        <table id="dataTable">
+          <thead>
+            <tr>
+              <th class="col-date">日期</th>
+              <th class="col-name">名稱</th>
+              <th class="col-holiday">放假</th>
+              <th class="col-category">類別</th>
+              <th class="col-desc">說明</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="footer">資料來源：政府開放資料平台</div>
+    </div>
+
+    <script>
+      const yearSelect = document.getElementById("yearSelect");
+      const tableBody = document.querySelector("#dataTable tbody");
+      const statusEl = document.getElementById("status");
+      const DATA_PATH = "opendata/holiday";
+      const WEEKDAYS = ["日", "一", "二", "三", "四", "五", "六"];
+
+      function parseDate(s) {
+        if (!s || s.length !== 8) return null;
+        return new Date(+s.slice(0, 4), +s.slice(4, 6) - 1, +s.slice(6, 8));
+      }
+
+      function formatDate(s, date) {
+        if (!s || s.length !== 8) return s;
+        const wd = date ? WEEKDAYS[date.getDay()] : "";
+        return `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(
+          6,
+          8
+        )}<span class="weekday">(${wd})</span>`;
+      }
+
+      async function init() {
+        statusEl.textContent = "載入中...";
+        try {
+          const res = await fetch(`${DATA_PATH}/years.json`);
+          if (!res.ok) throw new Error("無法讀取年份");
+          const years = await res.json();
+          yearSelect.innerHTML = years
+            .map((y) => `<option value="${y}">${y}</option>`)
+            .join("");
+          loadData();
+        } catch (e) {
+          yearSelect.innerHTML = "<option>載入失敗</option>";
+          statusEl.textContent = e.message;
+        }
+      }
+
+      async function loadData() {
+        const year = yearSelect.value;
+        if (!year) return;
+        statusEl.textContent = "載入中...";
+        tableBody.innerHTML =
+          '<tr><td colspan="5" class="loading"><div class="loading-spinner"></div><div>載入資料中...</div></td></tr>';
+        try {
+          const res = await fetch(`${DATA_PATH}/${year}.json`);
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const data = await res.json();
+          renderTable(data);
+          statusEl.textContent = `共 ${data.length} 筆`;
+        } catch (e) {
+          tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">載入失敗: ${e.message}</td></tr>`;
+        }
+      }
+
+      function renderTable(data) {
+        if (!data.length) {
+          tableBody.innerHTML =
+            '<tr><td colspan="5" class="empty-state">無資料</td></tr>';
+          return;
+        }
+        tableBody.innerHTML = data
+          .map((item) => {
+            const date = parseDate(item.date);
+            const badge = item.holiday ? "holiday-yes" : "holiday-no";
+            const badgeText = item.holiday ? "假日" : "上班";
+            return `<tr>
+            <td class="date-cell">${formatDate(item.date, date)}</td>
+            <td class="name-cell">${item.name || ""}</td>
+            <td><span class="holiday-badge ${badge}">${badgeText}</span></td>
+            <td class="category-cell">${item.holidayCategory || ""}</td>
+            <td class="desc-cell">${item.description || ""}</td>
+        </tr>`;
+          })
+          .join("");
+      }
+
+      yearSelect.addEventListener("change", loadData);
+      init();
+    </script>
+  </body>
+</html>
