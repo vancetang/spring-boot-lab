@@ -87,7 +87,6 @@
       table {
         width: 100%;
         border-collapse: collapse;
-        table-layout: fixed;
       }
       th {
         background: #f8f9fa;
@@ -113,19 +112,16 @@
         border-bottom: none;
       }
       .col-date {
-        width: 130px;
-      }
-      .col-name {
         width: 140px;
       }
+      .col-name {
+        width: 120px;
+      }
       .col-holiday {
-        width: 80px;
+        width: 70px;
       }
       .col-category {
-        width: 100px;
-      }
-      .col-desc {
-        width: auto;
+        width: 90px;
       }
       .date-cell {
         font-family: "SF Mono", "Consolas", monospace;
@@ -143,9 +139,12 @@
         color: #495057;
         word-break: break-word;
       }
+      .holiday-cell {
+        text-align: center;
+      }
       .holiday-badge {
         display: inline-block;
-        padding: 4px 10px;
+        padding: 4px 12px;
         border-radius: 20px;
         font-size: 0.8em;
         font-weight: 600;
@@ -162,6 +161,7 @@
       .category-cell {
         color: #495057;
         font-size: 0.9em;
+        white-space: nowrap;
       }
       .desc-cell {
         color: #868e96;
@@ -323,7 +323,7 @@
             return `<tr>
             <td class="date-cell">${formatDate(item.date, date)}</td>
             <td class="name-cell">${item.name || ""}</td>
-            <td><span class="holiday-badge ${badge}">${badgeText}</span></td>
+            <td class="holiday-cell"><span class="holiday-badge ${badge}">${badgeText}</span></td>
             <td class="category-cell">${item.holidayCategory || ""}</td>
             <td class="desc-cell">${item.description || ""}</td>
         </tr>`;
