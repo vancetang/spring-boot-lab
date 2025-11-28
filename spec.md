@@ -11,12 +11,12 @@
     - 自動下載政府行政機關辦公日曆表 CSV。
     - 轉換資料格式為 JSON。
     - 依年份分組，產出獨立 JSON 檔案 (e.g., `2024.json`) 及年份索引檔 `years.json`。
-    - 輸出路徑: `docs/opendata/holiday/` (支援 GitHub Pages)。
+    - 輸出路徑: `src/main/resources/static/opendata/holiday/` (透過 GitHub Actions 發布至 GitHub Pages)。
 - **RESTful API**:
     - 提供 `/api/holidays/{year}` 介面，回傳指定年份的 JSON 資料。
 - **Web UI**:
-    - 靜態網頁 (`docs/index.html`) 透過 AJAX 讀取生成的 JSON 檔。
-    - 支援年份自動載入與切換檢視。
+    - 靜態網頁 (`src/main/resources/static/index.html`) 透過 AJAX 讀取生成的 JSON 檔。
+    - 支援精簡版與詳細版兩種檢視模式。
 - **Java 版本**: Java 21
 - **Framework**: Spring Boot 3.5.8
 

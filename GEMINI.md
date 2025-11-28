@@ -15,9 +15,10 @@
 - `src/main/java/com/example/springbootlab/service/FetchDataService.java`: 核心業務邏輯所在。此服務負責下載 CSV 資料、解析並寫入最終的 JSON 檔案。
 - `src/main/java/com/example/springbootlab/controller/HolidayController.java`: RESTful API 控制器。它公開用於存取假日資料的端點。
 - `src/main/resources/application.yml`: 主要設定檔。包含伺服器埠號和開放資料來源 URL 等設定。
-- `docs/`: 此目錄作為 Web 伺服器的靜態內容根目錄，並預期用於 GitHub Pages 部署。
-  - `docs/index.html`: 一個用於瀏覽假日資料的簡易前端 UI。
-  - `docs/opendata/holiday/`: 生成的 JSON 檔案 (例如 `2024.json`, `years.json`) 的目的地。
+- `src/main/resources/static/`: Spring Boot 靜態資源目錄，透過 GitHub Actions 發布至 GitHub Pages。
+  - `static/index.html`: 精簡版前端 UI（預設）。
+  - `static/detail.html`: 詳細版前端 UI。
+  - `static/opendata/holiday/`: 生成的 JSON 檔案 (例如 `2024.json`, `years.json`) 的目的地。
 - `spec.md`: 官方系統規格文件。有關架構細節和需求，請參考此文件。
 
 ## 3. 開發工作流程與指令
