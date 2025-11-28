@@ -140,14 +140,21 @@
       .calendar-grid {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
+        height: 540px; /* 固定外框高度 */
+      }
+      .calendar-grid.weeks-5 {
+        grid-template-rows: repeat(5, 1fr);
+      }
+      .calendar-grid.weeks-6 {
+        grid-template-rows: repeat(6, 1fr);
       }
       .day-cell {
-        min-height: 100px;
         border-right: 1px solid var(--border);
         border-bottom: 1px solid var(--border);
         padding: 4px;
         position: relative;
         cursor: default;
+        overflow: hidden;
       }
       .day-cell:nth-child(7n) {
         border-right: none;
@@ -446,6 +453,7 @@
       function renderCalendar() {
         const firstDay = new Date(currentYear, currentMonth - 1, 1);
         const lastDay = new Date(currentYear, currentMonth, 0);
+        // 週日開始: getDay() 週日=0, 週一=1, ..., 週六=6
         const startDay = firstDay.getDay();
         const daysInMonth = lastDay.getDate();
         const today = new Date();
@@ -498,11 +506,17 @@
 
           html += `<div class="${classes}"><span class="day-number">${d}</span><div class="day-events">${events}</div></div>`;
         }
-        // 下月補位
-        const remaining = (7 - ((startDay + daysInMonth) % 7)) % 7;
+        // 計算需要幾週
+        const totalCells = startDay + daysInMonth;
+        const weeksNeeded = Math.ceil(totalCells / 7);
+        const targetCells = weeksNeeded * 7;
+        // 下月補位 - 填滿該週數所需的格子
+        const remaining = targetCells - totalCells;
         for (let d = 1; d <= remaining; d++) {
           html += `<div class="day-cell other-month"><span class="day-number">${d}</span></div>`;
         }
+        // 設定週數 class 以調整格子高度
+        calendarGrid.className = `calendar-grid weeks-${weeksNeeded}`;
         calendarGrid.innerHTML = html;
       }
 
