@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.SimpleCommandLinePropertySource;
 import org.springframework.lang.NonNull;
@@ -29,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @SpringBootApplication
+@ConfigurationPropertiesScan
 public class SpringBootLabApplication implements ApplicationRunner {
 
     /** 資料抓取服務（建構子注入） */
