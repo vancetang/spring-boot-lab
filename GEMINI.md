@@ -62,6 +62,7 @@
 - **Git Commit 規範**: 遵循 [Conventional Commits](https://www.conventionalcommits.org/) 1.0.0。
   - **Type** 與 **Scope** 使用英文 (如 `feat`, `fix`, `chore`, `refactor`, `docs`)。
   - **Description** (標題) 與 **Body** (內容) 使用**繁體中文**撰寫。
+- **CI/CD 輸出**: GitHub Actions 或其他自動化腳本的 Log 輸出訊息 (echo) 應使用**繁體中文**。
 - **語言與註解**: 所有程式碼、註解與文件均以**繁體中文**撰寫。
 - **程式碼風格**: 遵循標準的 Java 慣例。專案廣泛使用 Lombok 以減少樣板程式碼。請在適當之處使用 `@Data`、`@Slf4j` 等註解。
 - **資料模型**: POJO (例如 `Holiday.java`) 是簡單的資料載體，定義在 `model` 套件中。

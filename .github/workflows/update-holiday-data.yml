@@ -40,21 +40,22 @@ jobs:
         run: |
           # 檢查 docs/opendata/holiday/ 目錄下是否有變更
           if [ -z "$(git status --porcelain docs/opendata/holiday/)" ]; then
-            echo "✨ No changes detected. Skipping commit."
+            echo "✨ 未偵測到變更。跳過提交。"
             exit 0
           fi
 
-          echo "📦 Changes detected. Configuring Git..."
+          echo "📝 偵測到變更。正在設定 Git..."
           git config --global user.name "${{ env.GIT_USER_NAME }}"
           git config --global user.email "${{ env.GIT_USER_EMAIL }}"
 
-          echo "Staging files..."
+          echo "➕ 正在暫存檔案..."
           git add docs/opendata/holiday/*.json
 
-          echo "Committing..."
+          echo "💾 正在提交..."
           # 取得當前日期
           TODAY=$(date +'%Y-%m-%d')
           git commit -m "chore(data): auto-update holiday data on $TODAY"
 
-          echo "⬆️ Pushing to repository..."
+          echo "⬆️ 正在推送至儲存庫..."
           git push
+          echo "🚀 變更已成功推送"
