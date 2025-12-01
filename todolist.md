@@ -1,7 +1,7 @@
 # Todo List
 
 ## Pending
-- [ ] 設定 GitHub Actions 自動執行抓取任務 (deploy-pages.yml 已移除，待重新規劃)
+- [x] 設定 GitHub Actions 自動執行抓取任務 (update-holiday-data.yml)
 - [ ] 撰寫單元測試 (FetchDataService、HolidayController)
 - [ ] 改進 API 錯誤處理 (回傳適當 HTTP 狀態碼)
 - [ ] 新增 OpenAPI/Swagger API 文件
