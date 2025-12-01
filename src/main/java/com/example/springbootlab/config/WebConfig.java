@@ -1,14 +1,14 @@
 package com.example.springbootlab.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * Web MVC 設定類別。
  *
  * <p>
- * 配置靜態資源處理，Spring Boot 預設會自動處理 classpath:/static/ 下的資源。
- * 此類別保留以便未來擴充自訂 Web MVC 配置。
+ * 配置靜態資源處理。
  * </p>
  *
  * @author Spring Boot Lab
@@ -16,6 +16,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    // Spring Boot 預設已自動處理 classpath:/static/ 靜態資源
-    // 此類別保留以便未來擴充 Web MVC 配置（如 CORS、Interceptor 等）
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // 將所有請求對應到專案根目錄下的 docs 資料夾
+        registry.addResourceHandler("/**")
+                .addResourceLocations("file:docs/");
+    }
 }

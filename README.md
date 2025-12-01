@@ -17,7 +17,7 @@
 
 1.  **資料抓取任務 (Data Fetching)**:
     - 透過 Task Mode (`--job=fetch`) 從 [政府資料開放平臺](https://data.ntpc.gov.tw/datasets/308dcd75-6434-45bc-a95f-584da4fed251) 下載 CSV。
-    - 自動解析並依年份分組產生 JSON 檔案 (`src/main/resources/static/opendata/holiday/{year}.json`)。
+    - 自動解析並依年份分組產生 JSON 檔案 (`docs/opendata/holiday/{year}.json`)。
     - **增量更新**: 僅更新當次下載的年份，不影響其他年份的現有資料。
     - 自動生成年份索引 (`years.json`)，包含所有現有年份。
 2.  **RESTful API**:
@@ -61,7 +61,7 @@ mvn spring-boot:run "-Dspring-boot.run.arguments=--job=fetch"
 - `src/main/java/.../service/FetchDataService.java`: 核心邏輯 (下載、解析、轉檔)。
 - `src/main/java/.../controller/HolidayController.java`: API 介面。
 - `src/main/resources/application.yml`: 設定檔 (Server Port, OpenData URL)。
-- `src/main/resources/static/`: 靜態資源目錄 (包含 HTML 與生成的 JSON)。
+- `docs/`: 靜態資源目錄 (包含 HTML 與生成的 JSON)。
   - `index.html`: 月曆版 UI (預設首頁)
   - `simple.html`: 精簡版 UI
   - `detail.html`: 詳細版 UI

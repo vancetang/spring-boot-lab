@@ -12,7 +12,7 @@
     - 轉換資料格式為 JSON。
     - 依年份分組，產出獨立 JSON 檔案 (e.g., `2024.json`) 及年份索引檔 `years.json`。
     - **增量更新機制**: 僅覆寫當次下載包含的年份 JSON，不影響其他年份的現有資料。
-    - 輸出路徑: `src/main/resources/static/opendata/holiday/`。
+    - 輸出路徑: `docs/opendata/holiday/`。
 - **RESTful API**:
     - 提供 `/api/holidays/{year}` 介面，回傳指定年份的 JSON 資料。
 - **Web UI**:

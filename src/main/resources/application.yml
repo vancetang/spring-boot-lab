@@ -13,4 +13,4 @@ spring:
 opendata:
   holiday:
     url: https://data.ntpc.gov.tw/api/datasets/308dcd75-6434-45bc-a95f-584da4fed251/csv/file
-    output-dir: src/main/resources/static/opendata/holiday
+    output-dir: docs/opendata/holiday

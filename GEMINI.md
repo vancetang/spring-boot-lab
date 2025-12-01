@@ -15,11 +15,11 @@
 - `src/main/java/com/example/springbootlab/service/FetchDataService.java`: 核心業務邏輯所在。此服務負責下載 CSV 資料、解析並寫入最終的 JSON 檔案。
 - `src/main/java/com/example/springbootlab/controller/HolidayController.java`: RESTful API 控制器。它公開用於存取假日資料的端點。
 - `src/main/resources/application.yml`: 主要設定檔。包含伺服器埠號和開放資料來源 URL 等設定。
-- `src/main/resources/static/`: Spring Boot 靜態資源目錄。
-  - `static/index.html`: 月曆版前端 UI（預設首頁，類似 Google Calendar）。
-  - `static/simple.html`: 精簡版前端 UI。
-  - `static/detail.html`: 詳細版前端 UI。
-  - `static/opendata/holiday/`: 生成的 JSON 檔案 (例如 `2024.json`, `years.json`) 的目的地。
+- `docs/`: 靜態資源目錄。
+  - `index.html`: 月曆版前端 UI（預設首頁，類似 Google Calendar）。
+  - `simple.html`: 精簡版前端 UI。
+  - `detail.html`: 詳細版前端 UI。
+  - `opendata/holiday/`: 生成的 JSON 檔案 (例如 `2024.json`, `years.json`) 的目的地。
 - `spec.md`: 官方系統規格文件。有關架構細節和需求，請參考此文件。
 
 ## 3. 開發工作流程與指令
@@ -59,6 +59,9 @@
 
 ## 4. 程式碼與風格慣例
 
+- **Git Commit 規範**: 遵循 [Conventional Commits](https://www.conventionalcommits.org/) 1.0.0。
+  - **Type** 與 **Scope** 使用英文 (如 `feat`, `fix`, `chore`, `refactor`, `docs`)。
+  - **Description** (標題) 與 **Body** (內容) 使用**繁體中文**撰寫。
 - **語言與註解**: 所有程式碼、註解與文件均以**繁體中文**撰寫。
 - **程式碼風格**: 遵循標準的 Java 慣例。專案廣泛使用 Lombok 以減少樣板程式碼。請在適當之處使用 `@Data`、`@Slf4j` 等註解。
 - **資料模型**: POJO (例如 `Holiday.java`) 是簡單的資料載體，定義在 `model` 套件中。
