@@ -23,10 +23,11 @@
     - **精簡版 (`simple.html`)**: 表格式列表，僅顯示假日資訊，並提供 **CSV 下載** 功能 (包含 BOM 以支援 Excel)。
     - **詳細版 (`detail.html`)**: 完整資訊表格，包含所有欄位，並提供 **CSV 下載** 功能。
     - 三種視圖可透過導覽連結相互切換，並支援 URL 參數 (`?year=YYYY`) 傳遞年份。
-- **Java 版本**: Java 21
-- **Framework**: Spring Boot 3.5.8
 
 ## 3. 架構設計
+- **技術堆疊 (Tech Stack)**:
+    - **Language**: Java 21
+    - **Framework**: Spring Boot 3.5.8
 - **Package Structure**:
     - `com.example.springbootlab`: Main Application (實作 `ApplicationRunner` 處理參數)
     - `com.example.springbootlab.config`: Web 設定 (靜態資源映射)
@@ -34,7 +35,10 @@
     - `com.example.springbootlab.service`: 業務邏輯 (FetchDataService)
     - `com.example.springbootlab.model`: 資料物件 (Holiday)
 - **資料流**: CSV URL -> Temp File -> CSVParser -> List<Holiday> -> Grouping -> ObjectMapper -> JSON Files (and years.json)
-- **DevOps**: `auto-update.ps1` 腳本整合 Maven 執行與 Git Push。
+- **DevOps**:
+    - `auto-update.ps1`: 本地端腳本，整合 Maven 執行與 Git Push。
+    - **GitHub Actions**: 透過 `.github/workflows/update-holiday-data.yml` 設定排程 (每月 15 號) 或手動觸發，自動執行 Task Mode 更新資料並 Commit 回 Repository。
 
 ## 4. 未來擴充
-- 設定 GitHub Actions 自動化排程抓取 (使用 Task Mode)
+- 增加 OpenAPI/Swagger API 文件
+- 加強單元測試覆蓋率
