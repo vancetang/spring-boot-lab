@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -31,7 +32,7 @@ public class RealTimeHolidayService {
 
     private final RestClient restClient;
 
-    public RealTimeHolidayService(ObjectMapper objectMapper) {
+    public RealTimeHolidayService(@NonNull ObjectMapper objectMapper) {
         this.restClient = RestClient.builder()
                 .messageConverters(converters -> converters.add(new MappingJackson2HttpMessageConverter(objectMapper)))
                 .build();
@@ -70,7 +71,7 @@ public class RealTimeHolidayService {
      * 判斷邏輯：
      * 1. 檢查 summary text 是否包含「臺北市」或「台北市」。
      * 2. 確保不包含其他更細的行政區名稱（這裡簡化為檢查是否直接接冒號，
-     *    例如 "[停班停課通知]臺北市:" 表示全區）。
+     * 例如 "[停班停課通知]臺北市:" 表示全區）。
      * </p>
      * 
      * @param entry NCDR 資料項目
@@ -82,7 +83,7 @@ public class RealTimeHolidayService {
         }
 
         String text = entry.getSummary().getText();
-        
+
         // 檢查是否包含目標城市
         boolean hasCityName = text.contains(TARGET_CITY_1) || text.contains(TARGET_CITY_2);
         if (!hasCityName) {
