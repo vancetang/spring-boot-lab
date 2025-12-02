@@ -221,6 +221,7 @@
             <option disabled selected>載入中...</option>
           </select>
           <span id="status" class="status"></span>
+          <button id="downloadBtn" class="nav-link" style="cursor:pointer; border:none; font-family: inherit;">📥 下載 CSV</button>
           <a href="index.html" class="nav-link">📅 月曆版</a>
           <a href="detail.html" class="nav-link">📊 詳細版</a>
         </div>
@@ -243,8 +244,10 @@
       const yearSelect = document.getElementById("yearSelect");
       const tableBody = document.querySelector("#dataTable tbody");
       const statusEl = document.getElementById("status");
+      const downloadBtn = document.getElementById("downloadBtn");
       const DATA_PATH = "opendata/holiday";
       const WEEKDAYS = ["日", "一", "二", "三", "四", "五", "六"];
+      let currentData = [];
 
       function isWeekend(date) {
         const d = date.getDay();
@@ -314,9 +317,12 @@
           const res = await fetch(`${DATA_PATH}/${year}.json`);
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           const data = await res.json();
+          currentData = data;
           renderTable(data);
           statusEl.textContent = `共 ${data.length} 筆`;
         } catch (e) {
+          console.error(e);
+          currentData = [];
           tableBody.innerHTML = `<tr><td colspan="3" class="empty-state">載入失敗: ${e.message}</td></tr>`;
         }
       }
@@ -343,7 +349,53 @@
           .join("");
       }
 
+      function downloadCSV() {
+        if (!currentData || currentData.length === 0) {
+          alert("無資料可下載");
+          return;
+        }
+
+        const headers = ["日期", "是否放假", "描述"];
+        const csvContent = [
+            headers.join(","), 
+            ...currentData.map(item => {
+                const dateObj = parseDate(item.date);
+                const dateStr = item.date.replace(/^(\d{4})(\d{2})(\d{2})$/, "$1-$2-$3");
+                const isHolidayStr = item.holiday ? "是" : "否";
+                
+                // 重用 getDescription 邏輯以保持一致性
+                const { main, sub } = getDescription(item, dateObj);
+                let fullDesc = main;
+                if (sub) fullDesc += ` (${sub})`;
+                
+                // 處理 CSV 特殊字元 (逗號、換行、雙引號)
+                const escapeCsv = (field) => {
+                  if (field == null) return "";
+                  const stringField = String(field);
+                  if (stringField.includes(",") || stringField.includes("\n") || stringField.includes('"')) {
+                    return `"${stringField.replace(/"/g, '""')}"`;
+                  }
+                  return stringField;
+                };
+
+                return [dateStr, isHolidayStr, escapeCsv(fullDesc)].join(",");
+            })
+        ].join("\n");
+
+        // 加入 BOM 以支援 Excel 中文顯示
+        const blob = new Blob(["\ufeff" + csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", `holiday_simple_${yearSelect.value}.csv`);
+        link.style.visibility = "hidden";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
       yearSelect.addEventListener("change", loadData);
+      downloadBtn.addEventListener("click", downloadCSV);
       init();
     </script>
   </body>
