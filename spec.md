@@ -23,26 +23,31 @@
             - 鎖定目標城市：**台北市** 或 **臺北市**。
             - **全區判斷**: 檢查內容是否符合 `[停班停課通知]臺北市:` 或 `[停班停課通知]台北市:` (即城市名稱後緊接冒號，無其他行政區名)，以確保為全區停班停課。
         - **回傳格式**: 回傳包含日期、狀態 (停止上班/上課)、發布時間與原始描述的 JSON 物件。
-
-## 3. 架構設計
-        - **社畜儀表板 (Office Worker Dashboard)**: 
+- **Web UI**:
+    - **月曆版 (`index.html`)**: 預設首頁，類似 Google Calendar 的月曆介面，支援年月切換，顯示周休/補班/假日等資訊。
+        - **社畜儀表板 (Office Worker Dashboard)**:
             - **連假倒數**: 自動計算距離下一個非週末假日的剩餘天數。
             - **年度進度**: 顯示當前年份已過的時間百分比與趣味文案。
+            - **即時停班停課**: 整合 NCDR API，顯示台北市即時停班停課狀態。
     - **精簡版 (`simple.html`)**: 表格式列表，僅顯示假日資訊，並提供 **CSV 下載** 功能 (包含 BOM 以支援 Excel)。
     - **詳細版 (`detail.html`)**: 完整資訊表格，包含所有欄位，並提供 **CSV 下載** 功能。
     - 三種視圖可透過導覽連結相互切換，並支援 URL 參數 (`?year=YYYY`) 傳遞年份。
-- **Java 版本**: Java 21
-- **Framework**: Spring Boot 3.5.8
 
 ## 3. 架構設計
+- **技術堆疊 (Tech Stack)**:
+    - **Language**: Java 21
+    - **Framework**: Spring Boot 3.5.8
 - **Package Structure**:
     - `com.example.springbootlab`: Main Application (實作 `ApplicationRunner` 處理參數)
     - `com.example.springbootlab.config`: Web 設定 (靜態資源映射)
     - `com.example.springbootlab.controller`: API 控制器 (HolidayController)
-    - `com.example.springbootlab.service`: 業務邏輯 (FetchDataService)
-    - `com.example.springbootlab.model`: 資料物件 (Holiday)
+    - `com.example.springbootlab.service`: 業務邏輯 (FetchDataService, RealTimeHolidayService)
+    - `com.example.springbootlab.model`: 資料物件 (Holiday, NcdrHolidayResponse 等)
 - **資料流**: CSV URL -> Temp File -> CSVParser -> List<Holiday> -> Grouping -> ObjectMapper -> JSON Files (and years.json)
-- **DevOps**: `auto-update.ps1` 腳本整合 Maven 執行與 Git Push。
+- **DevOps**:
+    - `auto-update.ps1`: 本地端腳本，整合 Maven 執行與 Git Push。
+    - **GitHub Actions**: 透過 `.github/workflows/update-holiday-data.yml` 設定排程 (每月 15 號) 或手動觸發，自動執行 Task Mode 更新資料並 Commit 回 Repository。
 
 ## 4. 未來擴充
-- 設定 GitHub Actions 自動化排程抓取 (使用 Task Mode)
+- 增加 OpenAPI/Swagger API 文件
+- 加強單元測試覆蓋率
