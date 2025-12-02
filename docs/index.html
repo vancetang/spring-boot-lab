@@ -256,61 +256,67 @@
       .dashboard {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 12px; /* 縮小 gap */
-        margin-bottom: 12px; /* 縮小 margin-bottom */
+        gap: 8px; /* 12px -> 8px */
+        margin-bottom: 8px; /* 12px -> 8px */
         animation: fadeIn 0.5s ease-in;
       }
       .dashboard-card {
         background: #fff;
         border: 1px solid var(--border);
         border-radius: 8px;
-        padding: 12px; /* 縮小 padding */
+        padding: 8px 12px; /* 12px -> 8px 12px */
         display: flex;
-        align-items: flex-start;
-        gap: 12px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        align-items: center; /* 改為 center 讓內容垂直置中 */
+        gap: 10px; /* 12px -> 10px */
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         transition: transform 0.2s;
+        min-height: 60px; /* 設定一個較小的最小高度 */
       }
       .dashboard-card:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       }
       .card-icon {
-        font-size: 24px;
+        font-size: 18px; /* 24px -> 18px */
         background: var(--weekend);
-        width: 48px;
-        height: 48px;
+        width: 36px; /* 48px -> 36px */
+        height: 36px; /* 48px -> 36px */
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 12px;
+        border-radius: 8px;
+        flex-shrink: 0; /* 防止 icon 被壓縮 */
       }
       .card-content {
         flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
       .card-title {
-        font-size: 14px;
+        font-size: 11px; /* 14px -> 11px */
         color: var(--text-light);
-        margin-bottom: 4px;
+        margin-bottom: 2px;
         font-weight: 500;
+        line-height: 1;
       }
       .card-desc {
-        font-size: 16px;
+        font-size: 13px; /* 16px -> 13px */
         color: var(--text);
         font-weight: 600;
-        line-height: 1.4;
+        line-height: 1.2;
       }
       .card-desc span.highlight {
         color: var(--primary);
-        font-size: 20px;
-        margin: 0 4px;
+        font-size: 15px; /* 20px -> 15px */
+        margin: 0 2px;
       }
       .progress-container {
-        height: 8px;
+        height: 4px; /* 8px -> 4px */
         background: var(--weekend);
-        border-radius: 4px;
+        border-radius: 2px;
         overflow: hidden;
-        margin: 8px 0;
+        margin: 4px 0;
       }
       .progress-bar {
         height: 100%;
