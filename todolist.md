@@ -9,6 +9,7 @@
 ## In Progress
 
 ## Completed
+- [x] 實作前端資料 CSV 下載功能 (精簡版、詳細版)
 - [x] 新增月曆版視圖 (calendar.html) - 類似 Google Calendar 的月曆介面
 - [x] 移除 Server Mode 啟動時自動下載功能 (改為僅 Task Mode 可更新資料)
 - [x] 修正 years.json 產生邏輯，確保包含所有現有年份 (增量更新機制)

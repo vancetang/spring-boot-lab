@@ -17,8 +17,8 @@
     - 提供 `/api/holidays/{year}` 介面，回傳指定年份的 JSON 資料。
 - **Web UI**:
     - **月曆版 (`index.html`)**: 預設首頁，類似 Google Calendar 的月曆介面，支援年月切換，顯示周休/補班/假日等資訊。
-    - **精簡版 (`simple.html`)**: 表格式列表，僅顯示假日資訊。
-    - **詳細版 (`detail.html`)**: 完整資訊表格，包含所有欄位。
+    - **精簡版 (`simple.html`)**: 表格式列表，僅顯示假日資訊，並提供 **CSV 下載** 功能 (包含 BOM 以支援 Excel)。
+    - **詳細版 (`detail.html`)**: 完整資訊表格，包含所有欄位，並提供 **CSV 下載** 功能。
     - 三種視圖可透過導覽連結相互切換，並支援 URL 參數 (`?year=YYYY`) 傳遞年份。
 - **Java 版本**: Java 21
 - **Framework**: Spring Boot 3.5.8

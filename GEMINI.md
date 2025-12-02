@@ -17,8 +17,8 @@
 - `src/main/resources/application.yml`: 主要設定檔。包含伺服器埠號和開放資料來源 URL 等設定。
 - `docs/`: 靜態資源目錄。
   - `index.html`: 月曆版前端 UI（預設首頁，類似 Google Calendar）。
-  - `simple.html`: 精簡版前端 UI。
-  - `detail.html`: 詳細版前端 UI。
+  - `simple.html`: 精簡版前端 UI (支援 CSV 下載)。
+  - `detail.html`: 詳細版前端 UI (支援 CSV 下載)。
   - `opendata/holiday/`: 生成的 JSON 檔案 (例如 `2024.json`, `years.json`) 的目的地。
 - `spec.md`: 官方系統規格文件。有關架構細節和需求，請參考此文件。
 
