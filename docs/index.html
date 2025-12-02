@@ -250,6 +250,81 @@
         min-height: 400px;
         color: var(--text-light);
       }
+      /* Dashboard Styles */
+      .dashboard {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 20px;
+        animation: fadeIn 0.5s ease-in;
+      }
+      .dashboard-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 16px;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        transition: transform 0.2s;
+      }
+      .dashboard-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      .card-icon {
+        font-size: 24px;
+        background: var(--weekend);
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+      }
+      .card-content {
+        flex: 1;
+      }
+      .card-title {
+        font-size: 14px;
+        color: var(--text-light);
+        margin-bottom: 4px;
+        font-weight: 500;
+      }
+      .card-desc {
+        font-size: 16px;
+        color: var(--text);
+        font-weight: 600;
+        line-height: 1.4;
+      }
+      .card-desc span.highlight {
+        color: var(--primary);
+        font-size: 20px;
+        margin: 0 4px;
+      }
+      .progress-container {
+        height: 8px;
+        background: var(--weekend);
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 8px 0;
+      }
+      .progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), #4285f4);
+        border-radius: 4px;
+        transition: width 1s ease-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @media (max-width: 600px) {
+        .dashboard {
+          grid-template-columns: 1fr;
+        }
+      }
       @media (max-width: 768px) {
         .day-cell {
           min-height: 60px;
@@ -267,6 +342,27 @@
   </head>
   <body>
     <div class="container">
+      <!-- Dashboard Area -->
+      <div class="dashboard" id="dashboard" style="display: none;">
+        <div class="dashboard-card holiday-countdown">
+          <div class="card-icon">🎯</div>
+          <div class="card-content">
+            <div class="card-title">下一個目標</div>
+            <div class="card-desc" id="nextHolidayContent">載入中...</div>
+          </div>
+        </div>
+        <div class="dashboard-card year-progress">
+          <div class="card-icon">⏳</div>
+          <div class="card-content">
+            <div class="card-title" id="yearProgressTitle">2025年 進度條</div>
+            <div class="progress-container">
+              <div class="progress-bar" id="yearProgressBar" style="width: 0%"></div>
+            </div>
+            <div class="card-desc" id="yearProgressDesc" style="font-size: 12px; font-weight: normal; color: var(--text-light);">...</div>
+          </div>
+        </div>
+      </div>
+
       <div class="header">
         <h1>📅 行政機關辦公日曆表<span>月曆版</span></h1>
         <div class="controls">
@@ -368,17 +464,121 @@
           yearSelect.innerHTML = availableYears
             .map((y) => `<option value="${y}">${y}</option>`)
             .join("");
-          if (!availableYears.includes(String(currentYear))) {
-            currentYear = parseInt(availableYears[0]);
+          
+          // 確保載入資料邏輯
+          // 1. 用於顯示月曆的年份 (如果當前年份不在資料庫，預設顯示最新或最舊)
+          let calendarYear = currentYear;
+          if (!availableYears.includes(String(calendarYear))) {
+            calendarYear = parseInt(availableYears[0]);
           }
-          yearSelect.value = currentYear;
+          
+          // 設定 UI
+          yearSelect.value = calendarYear;
           monthSelect.value = currentMonth;
+          
+          // 更新全域變數以供 renderCalendar 使用
+          currentYear = calendarYear;
           updateLinks();
+
+          // 2. 載入資料
+          // 載入月曆顯示年份
           await loadYear(currentYear);
+          
+          // 載入真實當前年份與明年 (為了 Dashboard)
+          const realYear = today.getFullYear();
+          if (realYear !== currentYear) await loadYear(realYear);
+          if (availableYears.includes(String(realYear + 1))) {
+            await loadYear(realYear + 1);
+          }
+
           renderCalendar();
+          renderDashboard();
+          document.getElementById('dashboard').style.display = 'grid';
+
         } catch (e) {
           calendarGrid.innerHTML = `<div class="loading">載入失敗: ${e.message}</div>`;
+          console.error(e);
         }
+      }
+
+      function renderDashboard() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        // 格式化為 YYYYMMDD
+        const todayStr = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, "0")}${String(today.getDate()).padStart(2, "0")}`;
+        
+        // --- 1. 下一個連假邏輯 ---
+        let nextHoliday = null;
+        // 搜尋今年和明年
+        const searchYears = [today.getFullYear(), today.getFullYear() + 1];
+        
+        // 尋找候選人
+        for (const year of searchYears) {
+            const data = holidayData[year];
+            if (!data) continue;
+            
+            for (const h of data) {
+                 // 過濾掉過去的日期
+                 if (h.date < todayStr) continue;
+
+                 // 必須是放假日 (holiday: true)
+                 if (!h.holiday) continue;
+
+                 // 過濾掉單純的週末 (除非是特別指定的節日)
+                 const category = (h.holidayCategory || "").trim();
+                 if (category === '星期六、星期日') continue;
+
+                 // 找到第一個符合的
+                 nextHoliday = h;
+                 break;
+            }
+            if (nextHoliday) break;
+        }
+        
+        const holidayTitle = document.getElementById('nextHolidayContent');
+        
+        if (nextHoliday) {
+            const targetDate = new Date(
+                parseInt(nextHoliday.date.substring(0, 4)),
+                parseInt(nextHoliday.date.substring(4, 6)) - 1,
+                parseInt(nextHoliday.date.substring(6, 8))
+            );
+            
+            const diffTime = targetDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            let desc = '';
+            const name = nextHoliday.name || '放假';
+
+            if (diffDays <= 0) {
+                desc = `正在放假中！<br>享受 <span class="highlight">${name}</span> 吧！`;
+            } else {
+                desc = `距離 <span class="highlight">${name}</span><br>還有 <span class="highlight">${diffDays}</span> 天`;
+            }
+            holidayTitle.innerHTML = desc;
+        } else {
+            holidayTitle.innerHTML = '資料庫中暫無下一個假期...<br>先專心工作吧！';
+        }
+
+        // --- 2. 年度進度條邏輯 ---
+        const startOfYear = new Date(today.getFullYear(), 0, 1);
+        const endOfYear = new Date(today.getFullYear() + 1, 0, 1);
+        const totalMillis = endOfYear - startOfYear;
+        const elapsedMillis = today - startOfYear; // 現在距離年初過了多久
+        let progress = (elapsedMillis / totalMillis) * 100;
+        progress = Math.max(0, Math.min(100, progress)); // 限制 0-100
+        
+        document.getElementById('yearProgressTitle').innerText = `${today.getFullYear()}年 進度條`;
+        document.getElementById('yearProgressBar').style.width = `${progress}%`;
+        
+        let progressText = '';
+        if (progress < 15) progressText = "新的一年，請多指教";
+        else if (progress < 40) progressText = "努力搬磚中...";
+        else if (progress < 60) progressText = "今年過一半囉！";
+        else if (progress < 85) progressText = "撐住！年終在向你招手";
+        else progressText = "最後衝刺！";
+        
+        document.getElementById('yearProgressDesc').innerText = `${progress.toFixed(1)}% - ${progressText}`;
       }
 
       async function loadYear(year) {
