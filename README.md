@@ -24,6 +24,7 @@
     - `GET /api/holidays/{year}`: 取得指定年份的假日資料。
 3.  **Web Visualization (三種視圖)**:
     - 📅 **月曆版** (`index.html`): 預設首頁，類似 Google Calendar 的月曆介面，支援年月切換。
+      - **社畜儀表板 (Dashboard)**: 首頁新增儀表板，顯示「下一個連假倒數」與「年度時間進度條」，讓使用者一眼掌握放假目標。
     - 📋 **精簡版** (`simple.html`): 表格式列表，僅顯示假日資訊，**支援 CSV 匯出**。
     - 📊 **詳細版** (`detail.html`): 完整資訊表格，包含所有欄位，**支援 CSV 匯出**。
 4.  **雙重執行模式 (Dual Execution Modes)**:
