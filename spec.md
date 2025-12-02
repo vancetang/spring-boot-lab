@@ -15,8 +15,16 @@
     - 輸出路徑: `docs/opendata/holiday/`。
 - **RESTful API**:
     - 提供 `/api/holidays/{year}` 介面，回傳指定年份的 JSON 資料。
-- **Web UI**:
-    - **月曆版 (`index.html`)**: 預設首頁，類似 Google Calendar 的月曆介面，支援年月切換，顯示周休/補班/假日等資訊。
+    - **(New) 即時颱風假查詢**:
+        - 提供 `/api/holidays/realtime` 介面，回傳當前是否有即時停班停課資訊。
+        - **資料來源**: 國家災害防救科技中心 (NCDR) JSON Atom Feed (`https://alerts.ncdr.nat.gov.tw/JSONAtomFeed.ashx?AlertType=33`)。
+        - **判斷邏輯**:
+            - 解析 JSON Feed 中的 `entry` -> `summary` -> `#text`。
+            - 鎖定目標城市：**台北市** 或 **臺北市**。
+            - **全區判斷**: 檢查內容是否符合 `[停班停課通知]臺北市:` 或 `[停班停課通知]台北市:` (即城市名稱後緊接冒號，無其他行政區名)，以確保為全區停班停課。
+        - **回傳格式**: 回傳包含日期、狀態 (停止上班/上課)、發布時間與原始描述的 JSON 物件。
+
+## 3. 架構設計
         - **社畜儀表板 (Office Worker Dashboard)**: 
             - **連假倒數**: 自動計算距離下一個非週末假日的剩餘天數。
             - **年度進度**: 顯示當前年份已過的時間百分比與趣味文案。
