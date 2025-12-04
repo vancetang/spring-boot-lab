@@ -66,21 +66,21 @@
   "year" : "2025",
   "name" : "",
   "holidayCategory" : "調整放假日",
-  "description" : "全國各機關學校放假一日，小年夜(一月二十七日)適逢星期一，調整為放假日，並於二月八日補行上班一日。",
+  "description" : "",
   "holiday" : true
 }, {
   "date" : "20250128",
   "year" : "2025",
   "name" : "農曆除夕",
   "holidayCategory" : "放假之紀念日及節日",
-  "description" : "",
+  "description" : "全國各機關學校放假一日，小年夜(一月二十七日)適逢星期一，調整為放假日，並於二月八日補行上班一日。",
   "holiday" : true
 }, {
   "date" : "20250129",
   "year" : "2025",
   "name" : "春節",
   "holidayCategory" : "放假之紀念日及節日",
-  "description" : "",
+  "description" : "全國各機關學校於一月二十九日至一月三十一日放假三日。",
   "holiday" : true
 }, {
   "date" : "20250130",
@@ -157,7 +157,7 @@
   "year" : "2025",
   "name" : "和平紀念日",
   "holidayCategory" : "放假之紀念日及節日",
-  "description" : "全國各機關學校放假一日。",
+  "description" : "",
   "holiday" : true
 }, {
   "date" : "20250301",
@@ -374,7 +374,7 @@
   "year" : "2025",
   "name" : "端午節",
   "holidayCategory" : "放假之紀念日及節日",
-  "description" : "全國各機關學校放假一日。",
+  "description" : "全國各機關學校放假一日，適逢星期六，於5月30日補假一日。",
   "holiday" : true
 }, {
   "date" : "20250601",
@@ -407,9 +407,9 @@
 }, {
   "date" : "20250615",
   "year" : "2025",
-  "name" : "",
-  "holidayCategory" : "星期六、星期日",
-  "description" : "",
+  "name" : "警察節",
+  "holidayCategory" : "特定節日",
+  "description" : "警察依內政部規定辦理。",
   "holiday" : true
 }, {
   "date" : "20250621",
@@ -624,16 +624,16 @@
 }, {
   "date" : "20250928",
   "year" : "2025",
-  "name" : "",
+  "name" : "孔子誕辰紀念日/教師節",
   "holidayCategory" : "放假之紀念日及節日",
-  "description" : "",
+  "description" : "全國各機關學校放假一日，適逢星期日，於9月29日補假一日。",
   "holiday" : true
 }, {
   "date" : "20250929",
   "year" : "2025",
   "name" : "",
   "holidayCategory" : "補假",
-  "description" : "9/28（日）假日，於9/29（一）補假一日",
+  "description" : "",
   "holiday" : true
 }, {
   "date" : "20251004",
@@ -696,14 +696,14 @@
   "year" : "2025",
   "name" : "",
   "holidayCategory" : "補假",
-  "description" : "光復暨金門古寧頭大捷紀念日適逢星期六，則於前一日10/24(五)補假一日",
+  "description" : "",
   "holiday" : true
 }, {
   "date" : "20251025",
   "year" : "2025",
-  "name" : "",
+  "name" : "臺灣光復暨金門古寧頭大捷紀念日",
   "holidayCategory" : "放假之紀念日及節日",
-  "description" : "",
+  "description" : "全國各機關學校放假一日，適逢星期六，於10月24日補假一日。",
   "holiday" : true
 }, {
   "date" : "20251026",
