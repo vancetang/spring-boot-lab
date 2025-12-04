@@ -80,14 +80,14 @@
   "year" : "2024",
   "name" : "",
   "holidayCategory" : "調整放假日",
-  "description" : "全國各機關學校放假一日，小年夜(二月八日)適逢星期四，調整為放假日，並於二月十七日補行上班一日。",
+  "description" : "",
   "holiday" : true
 }, {
   "date" : "20240209",
   "year" : "2024",
   "name" : "農曆除夕",
   "holidayCategory" : "放假之紀念日及節日",
-  "description" : "",
+  "description" : "全國各機關學校放假一日，小年夜(二月八日)適逢星期四，調整為放假日，並於二月十七日補行上班一日。",
   "holiday" : true
 }, {
   "date" : "20240210",

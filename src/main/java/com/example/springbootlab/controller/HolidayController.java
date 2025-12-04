@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.springbootlab.config.OpendataProperties;
 import com.example.springbootlab.exception.ResourceNotFoundException;
 import com.example.springbootlab.model.Holiday;
+import com.example.springbootlab.model.ncdr.NcdrEntry;
+import com.example.springbootlab.service.RealTimeHolidayService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -40,6 +42,9 @@ public class HolidayController {
 
     /** 開放資料設定屬性（由 Spring 注入） */
     private final OpendataProperties opendataProperties;
+    
+    /** 即時假日服務 */
+    private final RealTimeHolidayService realTimeHolidayService;
 
     /**
      * 依年份取得假日資料。
@@ -64,5 +69,15 @@ public class HolidayController {
             log.error("讀取 {} 年度假日資料時發生錯誤", year, e);
             throw new ResourceNotFoundException("無法讀取 " + year + " 年度的假日資料", e);
         }
+    }
+    
+    /**
+     * 查詢即時停班停課資訊 (台北市全區)。
+     * 
+     * @return 符合條件的 NCDR 警報資料列表
+     */
+    @GetMapping("/realtime")
+    public List<NcdrEntry> getRealTimeHolidays() {
+        return realTimeHolidayService.getRealTimeHolidays();
     }
 }

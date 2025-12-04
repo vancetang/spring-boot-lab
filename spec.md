@@ -15,11 +15,20 @@
     - 輸出路徑: `docs/opendata/holiday/`。
 - **RESTful API**:
     - 提供 `/api/holidays/{year}` 介面，回傳指定年份的 JSON 資料。
+    - **(New) 即時颱風假查詢**:
+        - 提供 `/api/holidays/realtime` 介面，回傳當前是否有即時停班停課資訊。
+        - **資料來源**: 國家災害防救科技中心 (NCDR) JSON Atom Feed (`https://alerts.ncdr.nat.gov.tw/JSONAtomFeed.ashx?AlertType=33`)。
+        - **判斷邏輯**:
+            - 解析 JSON Feed 中的 `entry` -> `summary` -> `#text`。
+            - 鎖定目標城市：**台北市** 或 **臺北市**。
+            - **全區判斷**: 檢查內容是否符合 `[停班停課通知]臺北市:` 或 `[停班停課通知]台北市:` (即城市名稱後緊接冒號，無其他行政區名)，以確保為全區停班停課。
+        - **回傳格式**: 回傳包含日期、狀態 (停止上班/上課)、發布時間與原始描述的 JSON 物件。
 - **Web UI**:
     - **月曆版 (`index.html`)**: 預設首頁，類似 Google Calendar 的月曆介面，支援年月切換，顯示周休/補班/假日等資訊。
-        - **社畜儀表板 (Office Worker Dashboard)**: 
+        - **社畜儀表板 (Office Worker Dashboard)**:
             - **連假倒數**: 自動計算距離下一個非週末假日的剩餘天數。
             - **年度進度**: 顯示當前年份已過的時間百分比與趣味文案。
+            - **即時停班停課**: 整合 NCDR API，顯示台北市即時停班停課狀態。
     - **精簡版 (`simple.html`)**: 表格式列表，僅顯示假日資訊，並提供 **CSV 下載** 功能 (包含 BOM 以支援 Excel)。
     - **詳細版 (`detail.html`)**: 完整資訊表格，包含所有欄位，並提供 **CSV 下載** 功能。
     - 三種視圖可透過導覽連結相互切換，並支援 URL 參數 (`?year=YYYY`) 傳遞年份。
@@ -32,8 +41,8 @@
     - `com.example.springbootlab`: Main Application (實作 `ApplicationRunner` 處理參數)
     - `com.example.springbootlab.config`: Web 設定 (靜態資源映射)
     - `com.example.springbootlab.controller`: API 控制器 (HolidayController)
-    - `com.example.springbootlab.service`: 業務邏輯 (FetchDataService)
-    - `com.example.springbootlab.model`: 資料物件 (Holiday)
+    - `com.example.springbootlab.service`: 業務邏輯 (FetchDataService, RealTimeHolidayService)
+    - `com.example.springbootlab.model`: 資料物件 (Holiday, NcdrHolidayResponse 等)
 - **資料流**: CSV URL -> Temp File -> CSVParser -> List<Holiday> -> Grouping -> ObjectMapper -> JSON Files (and years.json)
 - **DevOps**:
     - `auto-update.ps1`: 本地端腳本，整合 Maven 執行與 Git Push。

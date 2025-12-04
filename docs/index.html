@@ -31,7 +31,7 @@
         padding: 0;
       }
       body {
-        font-family: "Google Sans", "Segoe UI", Arial, sans-serif;
+        font-family: 'Google Sans', 'Segoe UI', Arial, sans-serif;
         background: #fff;
         color: var(--text);
       }
@@ -128,7 +128,7 @@
       .calendar-header div {
         padding: 12px;
         text-align: center;
-        font-size: 12px;
+        font-size: 14px;
         font-weight: 500;
         color: var(--text-light);
         text-transform: uppercase;
@@ -141,7 +141,7 @@
         display: grid;
         grid-template-columns: repeat(7, 1fr);
         height: auto; /* 改為自動高度，由內容撐開但設最小高度 */
-        min-height: 400px;
+        min-height: 480px;
       }
       .calendar-grid.weeks-5 {
         grid-template-rows: repeat(5, 1fr);
@@ -152,11 +152,11 @@
       .day-cell {
         border-right: 1px solid var(--border);
         border-bottom: 1px solid var(--border);
-        padding: 2px; /* 縮小 padding */
+        padding: 4px;
         position: relative;
         cursor: default;
         overflow: hidden;
-        min-height: 80px; /* 設定最小高度 */
+        min-height: 100px; /* 設定最小高度 */
       }
       .day-cell:nth-child(7n) {
         border-right: none;
@@ -178,21 +178,21 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 24px; /* 縮小日期圓圈 */
-        height: 24px;
-        font-size: 12px;
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
         font-weight: 500;
         border-radius: 50%;
-        margin-bottom: 1px;
+        margin-bottom: 2px;
       }
       .day-events {
-        font-size: 10px; /* 縮小事件字體 */
-        line-height: 1.3;
+        font-size: 12px;
+        line-height: 1.4;
       }
       .event {
-        padding: 1px 4px; /* 縮小事件 padding */
+        padding: 2px 4px;
         border-radius: 3px;
-        margin-bottom: 1px;
+        margin-bottom: 2px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -209,6 +209,12 @@
         background: transparent;
         color: #9e9e9e;
         font-weight: 400;
+      }
+      .event.weekend-special {
+        background: var(--special-bg);
+        color: var(--special);
+        border: 1px dashed var(--special);
+        font-weight: 500;
       }
       .event.adjusted {
         background: var(--adjusted-bg);
@@ -255,7 +261,7 @@
       /* Dashboard Styles */
       .dashboard {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 8px; /* 12px -> 8px */
         margin-bottom: 8px; /* 12px -> 8px */
         animation: fadeIn 0.5s ease-in;
@@ -268,13 +274,13 @@
         display: flex;
         align-items: center; /* 改為 center 讓內容垂直置中 */
         gap: 10px; /* 12px -> 10px */
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         transition: transform 0.2s;
         min-height: 60px; /* 設定一個較小的最小高度 */
       }
       .dashboard-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
       .card-icon {
         font-size: 18px; /* 24px -> 18px */
@@ -325,8 +331,14 @@
         transition: width 1s ease-out;
       }
       @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
       @media (max-width: 600px) {
         .dashboard {
@@ -351,7 +363,7 @@
   <body>
     <div class="container">
       <!-- Dashboard Area -->
-      <div class="dashboard" id="dashboard" style="display: none;">
+      <div class="dashboard" id="dashboard" style="display: none">
         <div class="dashboard-card holiday-countdown">
           <div class="card-icon">🎯</div>
           <div class="card-content">
@@ -364,9 +376,41 @@
           <div class="card-content">
             <div class="card-title" id="yearProgressTitle">2025年 進度條</div>
             <div class="progress-container">
-              <div class="progress-bar" id="yearProgressBar" style="width: 0%"></div>
+              <div
+                class="progress-bar"
+                id="yearProgressBar"
+                style="width: 0%"
+              ></div>
             </div>
-            <div class="card-desc" id="yearProgressDesc" style="font-size: 12px; font-weight: normal; color: var(--text-light);">...</div>
+            <div
+              class="card-desc"
+              id="yearProgressDesc"
+              style="
+                font-size: 12px;
+                font-weight: normal;
+                color: var(--text-light);
+              "
+            >
+              ...
+            </div>
+          </div>
+        </div>
+        <!-- 颱風假查詢卡片 -->
+        <div
+          class="dashboard-card typhoon-check"
+          style="cursor: pointer"
+          onclick="checkTyphoon()"
+        >
+          <div class="card-icon" style="background: #fff3e0; color: #ef6c00">
+            🌀
+          </div>
+          <div class="card-content">
+            <div class="card-title">即時停班停課</div>
+            <div class="card-desc" id="typhoonContent">
+              <span style="font-size: 14px; color: var(--primary)"
+                >點擊查詢台北市狀況</span
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -411,10 +455,6 @@
           國定假日
         </div>
         <div class="legend-item">
-          <span style="color: #9e9e9e; font-size: 11px">周休</span>
-          (純文字)
-        </div>
-        <div class="legend-item">
           <div
             class="legend-color"
             style="
@@ -444,14 +484,16 @@
           ></div>
           特殊節日
         </div>
+        <div class="legend-item" style="margin-left: auto; font-size: 14px; color: var(--text);">
+          資料來源：臺北市資料大平臺
+        </div>
       </div>
-      <div class="footer">資料來源：政府開放資料平台</div>
     </div>
     <script>
-      const DATA_PATH = "opendata/holiday";
-      const yearSelect = document.getElementById("yearSelect");
-      const monthSelect = document.getElementById("monthSelect");
-      const calendarGrid = document.getElementById("calendarGrid");
+      const DATA_PATH = 'opendata/holiday';
+      const yearSelect = document.getElementById('yearSelect');
+      const monthSelect = document.getElementById('monthSelect');
+      const calendarGrid = document.getElementById('calendarGrid');
       let currentYear,
         currentMonth,
         holidayData = {},
@@ -471,19 +513,19 @@
           availableYears = await res.json();
           yearSelect.innerHTML = availableYears
             .map((y) => `<option value="${y}">${y}</option>`)
-            .join("");
-          
+            .join('');
+
           // 確保載入資料邏輯
           // 1. 用於顯示月曆的年份 (如果當前年份不在資料庫，預設顯示最新或最舊)
           let calendarYear = currentYear;
           if (!availableYears.includes(String(calendarYear))) {
             calendarYear = parseInt(availableYears[0]);
           }
-          
+
           // 設定 UI
           yearSelect.value = calendarYear;
           monthSelect.value = currentMonth;
-          
+
           // 更新全域變數以供 renderCalendar 使用
           currentYear = calendarYear;
           updateLinks();
@@ -491,7 +533,7 @@
           // 2. 載入資料
           // 載入月曆顯示年份
           await loadYear(currentYear);
-          
+
           // 載入真實當前年份與明年 (為了 Dashboard)
           const realYear = today.getFullYear();
           if (realYear !== currentYear) await loadYear(realYear);
@@ -502,7 +544,6 @@
           renderCalendar();
           renderDashboard();
           document.getElementById('dashboard').style.display = 'grid';
-
         } catch (e) {
           calendarGrid.innerHTML = `<div class="loading">載入失敗: ${e.message}</div>`;
           console.error(e);
@@ -513,59 +554,62 @@
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         // 格式化為 YYYYMMDD
-        const todayStr = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, "0")}${String(today.getDate()).padStart(2, "0")}`;
-        
+        const todayStr = `${today.getFullYear()}${String(
+          today.getMonth() + 1
+        ).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
+
         // --- 1. 下一個連假邏輯 ---
         let nextHoliday = null;
         // 搜尋今年和明年
         const searchYears = [today.getFullYear(), today.getFullYear() + 1];
-        
+
         // 尋找候選人
         for (const year of searchYears) {
-            const data = holidayData[year];
-            if (!data) continue;
-            
-            for (const h of data) {
-                 // 過濾掉過去的日期
-                 if (h.date < todayStr) continue;
+          const data = holidayData[year];
+          if (!data) continue;
 
-                 // 必須是放假日 (holiday: true)
-                 if (!h.holiday) continue;
+          for (const h of data) {
+            // 過濾掉過去的日期
+            if (h.date < todayStr) continue;
 
-                 // 過濾掉單純的週末 (除非是特別指定的節日)
-                 const category = (h.holidayCategory || "").trim();
-                 if (category === '星期六、星期日') continue;
+            // 必須是放假日 (holiday: true)
+            if (!h.holiday) continue;
 
-                 // 找到第一個符合的
-                 nextHoliday = h;
-                 break;
-            }
-            if (nextHoliday) break;
+            // 過濾掉單純的週末 (除非是特別指定的節日)
+            const category = (h.holidayCategory || '').trim();
+            if (category === '星期六、星期日') continue;
+
+            // 找到第一個符合的
+            nextHoliday = h;
+            break;
+          }
+          if (nextHoliday) break;
         }
-        
-        const holidayTitle = document.getElementById('nextHolidayContent');
-        
-        if (nextHoliday) {
-            const targetDate = new Date(
-                parseInt(nextHoliday.date.substring(0, 4)),
-                parseInt(nextHoliday.date.substring(4, 6)) - 1,
-                parseInt(nextHoliday.date.substring(6, 8))
-            );
-            
-            const diffTime = targetDate - today;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            let desc = '';
-            const name = nextHoliday.name || '放假';
 
-            if (diffDays <= 0) {
-                desc = `正在放假中！<br>享受 <span class="highlight">${name}</span> 吧！`;
-            } else {
-                desc = `距離 <span class="highlight">${name}</span><br>還有 <span class="highlight">${diffDays}</span> 天`;
-            }
-            holidayTitle.innerHTML = desc;
+        const holidayTitle = document.getElementById('nextHolidayContent');
+
+        if (nextHoliday) {
+          const targetDate = new Date(
+            parseInt(nextHoliday.date.substring(0, 4)),
+            parseInt(nextHoliday.date.substring(4, 6)) - 1,
+            parseInt(nextHoliday.date.substring(6, 8))
+          );
+
+          const diffTime = targetDate - today;
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+          let desc = '';
+          const name = nextHoliday.name || '放假';
+
+          if (diffDays <= 0) {
+            desc = `正在放假中！<br>享受 <span class="highlight">${name}</span> 吧！`;
+          } else {
+            desc = `距離 <span class="highlight">${name}</span><br>還有 <span class="highlight">${diffDays}</span> 天`;
+          }
+          holidayTitle.innerHTML = desc;
         } else {
-            holidayTitle.innerHTML = '資料庫中暫無下一個假期...<br>先專心工作吧！';
+          holidayTitle.innerHTML =
+            '資料庫中暫無下一個假期...<br>先專心工作吧！';
         }
 
         // --- 2. 年度進度條邏輯 ---
@@ -575,18 +619,53 @@
         const elapsedMillis = today - startOfYear; // 現在距離年初過了多久
         let progress = (elapsedMillis / totalMillis) * 100;
         progress = Math.max(0, Math.min(100, progress)); // 限制 0-100
-        
-        document.getElementById('yearProgressTitle').innerText = `${today.getFullYear()}年 進度條`;
+
+        document.getElementById(
+          'yearProgressTitle'
+        ).innerText = `${today.getFullYear()}年 進度條`;
         document.getElementById('yearProgressBar').style.width = `${progress}%`;
-        
+
         let progressText = '';
-        if (progress < 15) progressText = "新的一年，請多指教";
-        else if (progress < 40) progressText = "努力搬磚中...";
-        else if (progress < 60) progressText = "今年過一半囉！";
-        else if (progress < 85) progressText = "撐住！年終在向你招手";
-        else progressText = "最後衝刺！";
-        
-        document.getElementById('yearProgressDesc').innerText = `${progress.toFixed(1)}% - ${progressText}`;
+        if (progress < 15) progressText = '新的一年，請多指教';
+        else if (progress < 40) progressText = '努力搬磚中...';
+        else if (progress < 60) progressText = '今年過一半囉！';
+        else if (progress < 85) progressText = '撐住！年終在向你招手';
+        else progressText = '最後衝刺！';
+
+        document.getElementById(
+          'yearProgressDesc'
+        ).innerText = `${progress.toFixed(1)}% - ${progressText}`;
+      }
+
+      async function checkTyphoon() {
+        const content = document.getElementById('typhoonContent');
+        content.innerHTML =
+          '<span style="font-size: 14px; color: var(--text-light);">查詢中...</span>';
+
+        try {
+          // 注意：這裡假設後端 API 已部署在 /api/holidays/realtime
+          // 若是靜態頁面直接開啟，此功能會因為跨域或找不到 API 而失敗
+          const res = await fetch('/api/holidays/realtime');
+          if (!res.ok) throw new Error('API Error');
+
+          const data = await res.json();
+          if (data && data.length > 0) {
+            // 有資料，顯示第一筆的 summary
+            const summary = data[0].summary['#text'];
+            // 簡化顯示：移除 [停班停課通知] 等前綴，只顯示重點
+            let cleanText = summary
+              .replace(/\[.*?\]/g, '')
+              .replace(/行政院人事行政總處.*/, '');
+            content.innerHTML = `<span style="font-size: 13px; color: #c62828; font-weight: bold;">${cleanText}</span>`;
+          } else {
+            content.innerHTML =
+              '<span style="font-size: 14px; color: var(--workday);">目前無停班課資訊</span>';
+          }
+        } catch (e) {
+          console.error(e);
+          content.innerHTML =
+            '<span style="font-size: 12px; color: var(--text-light);">無法連線至伺服器</span>';
+        }
       }
 
       async function loadYear(year) {
@@ -601,10 +680,10 @@
 
       function updateLinks() {
         document.getElementById(
-          "linkSimple"
+          'linkSimple'
         ).href = `simple.html?year=${currentYear}`;
         document.getElementById(
-          "linkDetail"
+          'linkDetail'
         ).href = `detail.html?year=${currentYear}`;
       }
 
@@ -616,41 +695,46 @@
        */
       function getEventDescription(item, isWeekend) {
         const isHoliday = item.holiday;
-        const name = (item.name || "").trim();
-        const desc = (item.description || "").trim();
-        const category = (item.holidayCategory || "").trim();
-        let display = "";
-        let type = "holiday"; // holiday, workday, special
+        const name = (item.name || '').trim();
+        const desc = (item.description || '').trim();
+        const category = (item.holidayCategory || '').trim();
+        let display = '';
+        let type = 'holiday'; // holiday, workday, special
 
-        if (!isHoliday || category === "補行上班日") {
+        if (!isHoliday || category === '補行上班日') {
           // 補班日
-          display = name ? `補班(${name})` : "補班";
-          type = "workday";
-        } else if (category === "星期六、星期日") {
+          display = name ? `補班(${name})` : '補班';
+          type = 'workday';
+        } else if (category === '星期六、星期日') {
           // 周休
-          display = name ? `周休(${name})` : "周休";
-          type = "weekend";
-        } else if (category === "調整放假日") {
+          if (name || desc) {
+            display = name ? `周休(${name})` : '周休(詳)';
+            type = 'weekend-special';
+          } else {
+            display = '周休';
+            type = 'weekend';
+          }
+        } else if (category === '調整放假日') {
           // 調整放假（如小年夜）
-          display = name || "調整放假";
-          type = "adjusted";
-        } else if (category === "放假之紀念日及節日") {
+          display = name || '調整放假';
+          type = 'adjusted';
+        } else if (category === '放假之紀念日及節日') {
           // 國定假日
-          display = name || "國定假日";
-          type = "holiday";
+          display = name || '國定假日';
+          type = 'holiday';
         } else if (name) {
           // 其他有名稱的節日（如節氣）
           display = name;
-          type = "special";
+          type = 'special';
         } else {
           // 其他補假
-          display = "補假";
-          type = "holiday";
+          display = '補假';
+          type = 'holiday';
         }
 
         return {
           display,
-          tooltip: desc || `${category}${name ? ": " + name : ""}`,
+          tooltip: desc || `${category}${name ? ': ' + name : ''}`,
           type,
         };
       }
@@ -664,7 +748,7 @@
         const today = new Date();
         const todayStr = `${today.getFullYear()}/${String(
           today.getMonth() + 1
-        ).padStart(2, "0")}/${String(today.getDate()).padStart(2, "0")}`;
+        ).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}`;
 
         const yearData = holidayData[currentYear] || [];
         const dateMap = {};
@@ -672,7 +756,7 @@
           dateMap[h.date] = h;
         });
 
-        let html = "";
+        let html = '';
         // 上月補位
         const prevMonth = new Date(currentYear, currentMonth - 1, 0);
         for (let i = startDay - 1; i >= 0; i--) {
@@ -684,23 +768,23 @@
           // JSON 資料日期格式為 YYYYMMDD (如 20250127)
           const dateKey = `${currentYear}${String(currentMonth).padStart(
             2,
-            "0"
-          )}${String(d).padStart(2, "0")}`;
+            '0'
+          )}${String(d).padStart(2, '0')}`;
           // 顯示用格式 YYYY/MM/DD
           const dateDisplay = `${currentYear}/${String(currentMonth).padStart(
             2,
-            "0"
-          )}/${String(d).padStart(2, "0")}`;
+            '0'
+          )}/${String(d).padStart(2, '0')}`;
           const dayOfWeek = new Date(currentYear, currentMonth - 1, d).getDay();
           const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
           const isToday = dateDisplay === todayStr;
           const h = dateMap[dateKey];
 
-          let classes = "day-cell";
-          if (isWeekend) classes += " weekend";
-          if (isToday) classes += " today";
+          let classes = 'day-cell';
+          if (isWeekend) classes += ' weekend';
+          if (isToday) classes += ' today';
 
-          let events = "";
+          let events = '';
           if (h) {
             // 套用精簡版邏輯：顯示周休、補班等資訊
             const eventInfo = getEventDescription(h, isWeekend);
@@ -747,9 +831,9 @@
         renderCalendar();
       }
 
-      document.getElementById("prevMonth").onclick = () => changeMonth(-1);
-      document.getElementById("nextMonth").onclick = () => changeMonth(1);
-      document.getElementById("todayBtn").onclick = async () => {
+      document.getElementById('prevMonth').onclick = () => changeMonth(-1);
+      document.getElementById('nextMonth').onclick = () => changeMonth(1);
+      document.getElementById('todayBtn').onclick = async () => {
         const today = new Date();
         currentYear = today.getFullYear();
         currentMonth = today.getMonth() + 1;

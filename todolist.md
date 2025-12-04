@@ -1,6 +1,12 @@
 # Todo List
 
 ## Pending
+- [x] **[New] 實作即時颱風假查詢功能**
+    - [x] 建立 DTO (NcdrHolidayResponse.java, NcdrEntry.java) 對應 NCDR API。
+    - [x] 建立 `RealTimeHolidayService` (實作資料抓取、解析與全區判斷邏輯)。
+    - [x] 更新 `HolidayController` 新增 `/api/holidays/realtime` 端點。
+    - [x] 撰寫 `RealTimeHolidayService` 單元測試。
+    - [x] 更新前端 `index.html` 新增查詢介面。
 - [x] 設定 GitHub Actions 自動執行抓取任務 (update-holiday-data.yml)
 - [ ] 撰寫單元測試 (FetchDataService、HolidayController)
 - [ ] 改進 API 錯誤處理 (回傳適當 HTTP 狀態碼)

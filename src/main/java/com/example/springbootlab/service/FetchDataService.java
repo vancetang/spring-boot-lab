@@ -184,12 +184,16 @@ public class FetchDataService {
      * @return Holiday 物件
      */
     private Holiday mapToHoliday(CSVRecord record) {
+        String dateStr = record.get("Date");
+        // 從日期字串 (YYYYMMDD) 擷取年份
+        String year = dateStr.substring(0, 4);
+
         return Holiday.builder()
-                .date(record.get("date"))
-                .year(record.get("year"))
+                .date(dateStr)
+                .year(year)
                 .name(record.get("name"))
-                .isHoliday(YES_STRING.equals(record.get("isholiday")))
-                .holidayCategory(record.get("holidaycategory"))
+                .isHoliday(YES_STRING.equals(record.get("isHoliday")))
+                .holidayCategory(record.get("holidayCategory"))
                 .description(record.get("description"))
                 .build();
     }
