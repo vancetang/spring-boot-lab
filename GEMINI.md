@@ -63,8 +63,10 @@
 ## 4. 程式碼與風格慣例
 
 - **Git Commit 規範**: 遵循 [Conventional Commits](https://www.conventionalcommits.org/) 1.0.0。
-  - **Type** 與 **Scope** 必須使用 **英文** (例如 `feat`, `fix`, `chore`)。
-  - **其他部分 (Description 標題、Body 內容)** 必須使用 **繁體中文** 撰寫。
+  - **格式結構**: `<type>(<scope>): <description>`
+  - **Type & Scope**: 必須使用 **英文** (例如 `feat`, `fix`, `frontend`, `core`)。
+  - **Description (冒號後的簡述)**: 必須使用 **繁體中文**。
+  - **Body (詳細內容)**: 必須使用 **繁體中文**。
 - **CI/CD 輸出**: GitHub Actions 或其他自動化腳本的 Log 輸出訊息 (echo) 應使用**繁體中文**。
 - **語言與註解**: 所有程式碼、註解與文件均以**繁體中文**撰寫。
 - **程式碼風格**: 遵循標準的 Java 慣例。專案廣泛使用 Lombok 以減少樣板程式碼。請在適當之處使用 `@Data`、`@Slf4j` 等註解。
