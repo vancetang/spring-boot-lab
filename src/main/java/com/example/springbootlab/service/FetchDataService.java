@@ -75,6 +75,56 @@ public class FetchDataService {
     private final OpendataProperties opendataProperties;
 
     /**
+     * 僅處理現有 JSON 檔案，更新關聯資訊 (不重新下載)。
+     */
+    public void processExistingFiles() {
+        try {
+            Path outputDir = Paths.get(opendataProperties.holiday().outputDir());
+            if (!Files.exists(outputDir)) {
+                log.warn("輸出目錄不存在，無法處理現有檔案: {}", outputDir);
+                return;
+            }
+
+            log.info("開始處理現有 JSON 檔案: {}", outputDir);
+
+            List<Path> jsonFiles;
+            try (var stream = Files.list(outputDir)) {
+                jsonFiles = stream
+                        .filter(Files::isRegularFile)
+                        .filter(p -> p.toString().endsWith(".json"))
+                        .filter(p -> !p.getFileName().toString().equals("years.json"))
+                        .toList();
+            }
+
+            if (jsonFiles.isEmpty()) {
+                log.info("沒有找到需要處理的 JSON 檔案。");
+                return;
+            }
+
+            for (Path file : jsonFiles) {
+                try {
+                    // 1. 讀取 JSON
+                    List<Holiday> holidays = loadHolidaysFromJson(file);
+                    
+                    // 2. 處理關聯節日
+                    processRelatedHolidays(holidays);
+                    
+                    // 3. 寫回 JSON
+                    saveHolidaysToJson(file, holidays);
+                    
+                    log.info("已更新檔案: {}", file.getFileName());
+                } catch (IOException e) {
+                    log.error("處理檔案失敗: {}", file, e);
+                }
+            }
+            log.info("所有現有檔案處理完成。");
+
+        } catch (IOException e) {
+            log.error("掃描目錄失敗", e);
+        }
+    }
+
+    /**
      * 執行資料抓取與處理的主要方法。
      *
      * <p>
@@ -118,6 +168,22 @@ public class FetchDataService {
             // 步驟 5: 清理暫存檔
             cleanupTempFile(tempFile);
         }
+    }
+
+    /**
+     * 從 JSON 檔案讀取 Holiday 列表。
+     */
+    private List<Holiday> loadHolidaysFromJson(Path file) throws IOException {
+        try (Reader reader = new InputStreamReader(new FileInputStream(file.toFile()), StandardCharsets.UTF_8)) {
+            return objectMapper.readValue(reader, new com.fasterxml.jackson.core.type.TypeReference<List<Holiday>>() {});
+        }
+    }
+
+    /**
+     * 將 Holiday 列表寫入 JSON 檔案。
+     */
+    private void saveHolidaysToJson(Path file, List<Holiday> holidays) throws IOException {
+        writeJsonWithLf(file, holidays);
     }
 
     /**

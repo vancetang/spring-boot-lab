@@ -6,7 +6,8 @@
 ## 2. 當前功能需求
 - **執行模式 (Execution Modes)**:
     - **Server Mode (Default)**: 啟動 Web Server (Port 8080)，提供 RESTful API 與 Web UI。**不會自動抓取資料**，需透過 Task Mode 手動更新。
-    - **Task Mode (`--job=fetch`)**: 僅執行 OpenData 抓取與 JSON 產出任務，不啟動 Web Server，任務完成後自動結束程式 (適合 CI/CD 自動化)。
+    - **Task Mode (`--job=fetch`)**: 執行完整的 OpenData 抓取流程：下載 CSV -> 解析 -> 處理關聯 -> 產出 JSON。任務完成後自動結束程式 (適合 CI/CD 自動化)。
+    - **Task Mode (`--job=process`)**: **(New)** 僅處理現有 JSON 檔案，重新執行關聯分析邏輯 (e.g., 更新 `note` 欄位)，不重新下載資料。適合在修改邏輯後快速更新資料。
 - **OpenData 處理**:
     - 自動下載政府行政機關辦公日曆表 CSV。
     - 轉換資料格式為 JSON。

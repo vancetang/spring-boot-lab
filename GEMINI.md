@@ -45,8 +45,11 @@
   - **說明**: 僅執行 `fetch` 任務 (資料下載與處理)，而不啟動 Web 伺服器。程序在完成後即結束。這是自動化更新的建議模式。
   - **指令**:
     ```bash
-    # 執行 fetch 任務時，請使用此精確的指令格式
+    # 執行 fetch 任務 (下載 + 處理)
     mvn spring-boot:run "-Dspring-boot.run.arguments=--job=fetch"
+    
+    # 執行 process 任務 (僅處理現有檔案)
+    mvn spring-boot:run "-Dspring-boot.run.arguments=--job=process"
     ```
 
 ### 3.2. 執行測試
