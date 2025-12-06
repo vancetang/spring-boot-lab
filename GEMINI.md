@@ -15,7 +15,7 @@
 - `src/main/java/com/example/springbootlab/service/FetchDataService.java`: 核心業務邏輯所在。此服務負責下載 CSV 資料、解析並寫入最終的 JSON 檔案。
 - `src/main/java/com/example/springbootlab/controller/HolidayController.java`: RESTful API 控制器。它公開用於存取假日資料的端點。
 - `src/main/resources/application.yml`: 主要設定檔。包含伺服器埠號和開放資料來源 URL 等設定。
-- `docs/`: 靜態資源目錄。
+- `src/main/resources/static/`: 靜態資源目錄。
   - `index.html`: 月曆版前端 UI（預設首頁，類似 Google Calendar）。
   - `simple.html`: 精簡版前端 UI (支援 CSV 下載)。
   - `detail.html`: 詳細版前端 UI (支援 CSV 下載)。
@@ -62,9 +62,11 @@
 
 ## 4. 程式碼與風格慣例
 
-- **Git Commit 規範**: 遵循 [Conventional Commits](https://www.conventionalcommits.org/) 1.0.0。
-  - **Type** 與 **Scope** 使用英文 (如 `feat`, `fix`, `chore`, `refactor`, `docs`)。
-  - **Description** (標題) 與 **Body** (內容) 使用**繁體中文**撰寫。
+- **Git Commit 與 Pull Request 規範**: 遵循 [Conventional Commits](https://www.conventionalcommits.org/) 1.0.0。
+  - **格式結構**: `<type>(<scope>): <description>`
+  - **Type & Scope**: 必須使用 **英文** (例如 `feat`, `fix`, `frontend`, `core`)。
+  - **Description (冒號後的簡述)**: 必須使用 **繁體中文**。
+  - **Body (詳細內容)**: 必須使用 **繁體中文**。
 - **CI/CD 輸出**: GitHub Actions 或其他自動化腳本的 Log 輸出訊息 (echo) 應使用**繁體中文**。
 - **語言與註解**: 所有程式碼、註解與文件均以**繁體中文**撰寫。
 - **程式碼風格**: 遵循標準的 Java 慣例。專案廣泛使用 Lombok 以減少樣板程式碼。請在適當之處使用 `@Data`、`@Slf4j` 等註解。
