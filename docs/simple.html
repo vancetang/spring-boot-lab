@@ -295,7 +295,7 @@
       async function init() {
         statusEl.textContent = "載入中...";
         try {
-          const res = await fetch(`${DATA_PATH}/years.json`);
+          const res = await fetch(`${DATA_PATH}/years.json?t=${new Date().getTime()}`);
           if (!res.ok) throw new Error("無法讀取年份");
           const years = await res.json();
           yearSelect.innerHTML = years
@@ -321,7 +321,7 @@
         tableBody.innerHTML =
           '<tr><td colspan="3" class="loading"><div class="loading-spinner"></div><div>載入資料中...</div></td></tr>';
         try {
-          const res = await fetch(`${DATA_PATH}/${year}.json`);
+          const res = await fetch(`${DATA_PATH}/${year}.json?t=${new Date().getTime()}`);
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           const data = await res.json();
           currentData = data;

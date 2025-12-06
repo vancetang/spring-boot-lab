@@ -284,7 +284,7 @@
       async function init() {
         statusEl.textContent = "載入中...";
         try {
-          const res = await fetch(`${DATA_PATH}/years.json`);
+          const res = await fetch(`${DATA_PATH}/years.json?t=${new Date().getTime()}`);
           if (!res.ok) throw new Error("無法讀取年份");
           const years = await res.json();
           yearSelect.innerHTML = years
@@ -310,7 +310,7 @@
         tableBody.innerHTML =
           '<tr><td colspan="5" class="loading"><div class="loading-spinner"></div><div>載入資料中...</div></td></tr>';
         try {
-          const res = await fetch(`${DATA_PATH}/${year}.json`);
+          const res = await fetch(`${DATA_PATH}/${year}.json?t=${new Date().getTime()}`);
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           const data = await res.json();
           currentData = data;
@@ -334,13 +334,19 @@
             const date = parseDate(item.date);
             const badge = item.holiday ? "holiday-yes" : "holiday-no";
             const badgeText = item.holiday ? "假日" : "上班";
-            const noteHtml = item.note ? ` <span style="color: #888; font-weight: normal;">(${item.note})</span>` : "";
+            
+            let desc = item.description || "";
+            if (item.note) {
+                if (desc) desc += " ";
+                desc += `(${item.note})`;
+            }
+
             return `<tr>
             <td class="date-cell">${formatDate(item.date, date)}</td>
-            <td class="name-cell">${item.name || ""}${noteHtml}</td>
+            <td class="name-cell">${item.name || ""}</td>
             <td class="holiday-cell"><span class="holiday-badge ${badge}">${badgeText}</span></td>
             <td class="category-cell">${item.holidayCategory || ""}</td>
-            <td class="desc-cell">${item.description || ""}</td>
+            <td class="desc-cell">${desc}</td>
         </tr>`;
           })
           .join("");
@@ -359,9 +365,10 @@
                 const dateStr = item.date.replace(/^(\d{4})(\d{2})(\d{2})$/, "$1-$2-$3");
                 const isHolidayStr = item.holiday ? "是" : "否";
                 
-                let name = item.name || "";
+                let desc = item.description || "";
                 if (item.note) {
-                    name += ` (${item.note})`;
+                    if (desc) desc += " ";
+                    desc += `(${item.note})`;
                 }
 
                 // 處理 CSV 特殊字元
@@ -376,10 +383,10 @@
 
                 return [
                   dateStr, 
-                  escapeCsv(name),
+                  escapeCsv(item.name),
                   isHolidayStr,
                   escapeCsv(item.holidayCategory),
-                  escapeCsv(item.description)
+                  escapeCsv(desc)
                 ].join(",");
             })
         ].join("\n");

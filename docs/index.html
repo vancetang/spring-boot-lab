@@ -510,7 +510,7 @@
         currentYear = today.getFullYear();
         currentMonth = today.getMonth() + 1;
         try {
-          const res = await fetch(`${DATA_PATH}/years.json`);
+          const res = await fetch(`${DATA_PATH}/years.json?t=${new Date().getTime()}`);
           availableYears = await res.json();
           yearSelect.innerHTML = availableYears
             .map((y) => `<option value="${y}">${y}</option>`)
@@ -740,7 +740,7 @@
       async function loadYear(year) {
         if (holidayData[year]) return;
         try {
-          const res = await fetch(`${DATA_PATH}/${year}.json`);
+          const res = await fetch(`${DATA_PATH}/${year}.json?t=${new Date().getTime()}`);
           if (res.ok) holidayData[year] = await res.json();
         } catch (e) {
           console.warn(`無法載入 ${year} 年資料`);
@@ -801,9 +801,15 @@
           type = 'holiday';
         }
 
+        const note = (item.note || '').trim();
+        let tooltip = desc || `${category}${name ? ': ' + name : ''}`;
+        if (note) {
+            tooltip += ` (${note})`;
+        }
+
         return {
           display,
-          tooltip: desc || `${category}${name ? ': ' + name : ''}`,
+          tooltip,
           type,
         };
       }
