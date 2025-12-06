@@ -15,7 +15,7 @@
 - `src/main/java/com/example/springbootlab/service/FetchDataService.java`: 核心業務邏輯所在。此服務負責下載 CSV 資料、解析並寫入最終的 JSON 檔案。
 - `src/main/java/com/example/springbootlab/controller/HolidayController.java`: RESTful API 控制器。它公開用於存取假日資料的端點。
 - `src/main/resources/application.yml`: 主要設定檔。包含伺服器埠號和開放資料來源 URL 等設定。
-- `docs/`: 靜態資源目錄。
+- `src/main/resources/static/`: 靜態資源目錄。
   - `index.html`: 月曆版前端 UI（預設首頁，類似 Google Calendar）。
   - `simple.html`: 精簡版前端 UI (支援 CSV 下載)。
   - `detail.html`: 詳細版前端 UI (支援 CSV 下載)。

@@ -38,8 +38,8 @@ jobs:
 
       - name: Check for changes and Commit
         run: |
-          # 檢查 docs/opendata/holiday/ 目錄下是否有變更
-          if [ -z "$(git status --porcelain docs/opendata/holiday/)" ]; then
+          # 檢查 src/main/resources/static/opendata/holiday/ 目錄下是否有變更
+          if [ -z "$(git status --porcelain src/main/resources/static/opendata/holiday/)" ]; then
             echo "✨ 未偵測到變更。跳過提交。"
             exit 0
           fi
@@ -49,7 +49,7 @@ jobs:
           git config --global user.email "${{ env.GIT_USER_EMAIL }}"
 
           echo "➕ 正在暫存檔案..."
-          git add docs/opendata/holiday/*.json
+          git add src/main/resources/static/opendata/holiday/*.json
 
           echo "💾 正在提交..."
           # 取得當前日期
