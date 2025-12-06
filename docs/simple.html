@@ -273,6 +273,7 @@
         const isHoliday = item.holiday;
         const name = (item.name || "").trim();
         const desc = (item.description || "").trim();
+        const note = (item.note || "").trim();
         let main = "";
         if (!isHoliday) {
           main = "補上班日";
@@ -283,6 +284,11 @@
         } else {
           main = name;
         }
+
+        if (note) {
+            main += ` (${note})`;
+        }
+
         return { main, sub: desc };
       }
 

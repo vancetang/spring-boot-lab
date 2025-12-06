@@ -334,9 +334,10 @@
             const date = parseDate(item.date);
             const badge = item.holiday ? "holiday-yes" : "holiday-no";
             const badgeText = item.holiday ? "假日" : "上班";
+            const noteHtml = item.note ? ` <span style="color: #888; font-weight: normal;">(${item.note})</span>` : "";
             return `<tr>
             <td class="date-cell">${formatDate(item.date, date)}</td>
-            <td class="name-cell">${item.name || ""}</td>
+            <td class="name-cell">${item.name || ""}${noteHtml}</td>
             <td class="holiday-cell"><span class="holiday-badge ${badge}">${badgeText}</span></td>
             <td class="category-cell">${item.holidayCategory || ""}</td>
             <td class="desc-cell">${item.description || ""}</td>
@@ -358,6 +359,11 @@
                 const dateStr = item.date.replace(/^(\d{4})(\d{2})(\d{2})$/, "$1-$2-$3");
                 const isHolidayStr = item.holiday ? "是" : "否";
                 
+                let name = item.name || "";
+                if (item.note) {
+                    name += ` (${item.note})`;
+                }
+
                 // 處理 CSV 特殊字元
                 const escapeCsv = (field) => {
                   if (field == null) return "";
@@ -370,7 +376,7 @@
 
                 return [
                   dateStr, 
-                  escapeCsv(item.name),
+                  escapeCsv(name),
                   isHolidayStr,
                   escapeCsv(item.holidayCategory),
                   escapeCsv(item.description)

@@ -4,6 +4,7 @@
   "name" : "中華民國開國紀念日",
   "holidayCategory" : "放假之紀念日及節日",
   "description" : "全國各機關學校放假一日。",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140104",
@@ -11,6 +12,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140105",
@@ -18,6 +20,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140111",
@@ -25,6 +28,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140112",
@@ -32,6 +36,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140118",
@@ -39,6 +44,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140119",
@@ -46,6 +52,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140125",
@@ -53,6 +60,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140126",
@@ -60,6 +68,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140130",
@@ -67,6 +76,7 @@
   "name" : "農曆除夕",
   "holidayCategory" : "放假之紀念日及節日",
   "description" : "全國各機關學校放假一日。",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140131",
@@ -74,6 +84,7 @@
   "name" : "春節",
   "holidayCategory" : "放假之紀念日及節日",
   "description" : "全國各機關學校於一月三十一日至二月二日放假三日，二月一日及二月二日適逢星期六、星期日，分別於二月三日及二月四日補假一日。",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140201",
@@ -81,6 +92,7 @@
   "name" : "春節",
   "holidayCategory" : "放假之紀念日及節日",
   "description" : "全國各機關學校於一月三十一日至二月二日放假三日，二月一日及二月二日適逢星期六、星期日，分別於二月三日及二月四日補假一日。",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140202",
@@ -88,6 +100,7 @@
   "name" : "春節",
   "holidayCategory" : "放假之紀念日及節日",
   "description" : "全國各機關學校於一月三十一日至二月二日放假三日，二月一日及二月二日適逢星期六、星期日，分別於二月三日及二月四日補假一日。",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140203",
@@ -95,6 +108,7 @@
   "name" : "",
   "holidayCategory" : "補假",
   "description" : "",
+  "note" : "春節",
   "holiday" : true
 }, {
   "date" : "20140204",
@@ -102,6 +116,7 @@
   "name" : "",
   "holidayCategory" : "補假",
   "description" : "",
+  "note" : "春節",
   "holiday" : true
 }, {
   "date" : "20140208",
@@ -109,6 +124,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140209",
@@ -116,6 +132,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140215",
@@ -123,6 +140,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140216",
@@ -130,6 +148,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140222",
@@ -137,6 +156,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140223",
@@ -144,6 +164,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140228",
@@ -151,6 +172,7 @@
   "name" : "和平紀念日",
   "holidayCategory" : "放假之紀念日及節日",
   "description" : "全國各機關學校放假一日。",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140301",
@@ -158,6 +180,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140302",
@@ -165,6 +188,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140308",
@@ -172,6 +196,7 @@
   "name" : "婦女節",
   "holidayCategory" : "紀念日及節日",
   "description" : "適逢星期六放假一日。",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140309",
@@ -179,6 +204,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140315",
@@ -186,6 +212,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140316",
@@ -193,6 +220,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140322",
@@ -200,6 +228,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140323",
@@ -207,6 +236,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140329",
@@ -214,6 +244,7 @@
   "name" : "青年節",
   "holidayCategory" : "紀念日及節日",
   "description" : "適逢星期六放假一日。",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140330",
@@ -221,6 +252,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140404",
@@ -228,6 +260,7 @@
   "name" : "兒童節",
   "holidayCategory" : "放假之紀念日及節日",
   "description" : "全國各機關學校放假一日。",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140405",
@@ -235,6 +268,7 @@
   "name" : "民族掃墓節（清明節）",
   "holidayCategory" : "放假之紀念日及節日",
   "description" : "全國各機關學校放假一日。",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140406",
@@ -242,6 +276,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140412",
@@ -249,6 +284,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140413",
@@ -256,6 +292,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140419",
@@ -263,6 +300,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140420",
@@ -270,6 +308,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140426",
@@ -277,6 +316,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140427",
@@ -284,6 +324,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140501",
@@ -291,6 +332,7 @@
   "name" : "勞動節",
   "holidayCategory" : "特定節日",
   "description" : "勞工放假一日。",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140503",
@@ -298,6 +340,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140504",
@@ -305,6 +348,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140510",
@@ -312,6 +356,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140511",
@@ -319,6 +364,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140517",
@@ -326,6 +372,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140518",
@@ -333,6 +380,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140524",
@@ -340,6 +388,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140525",
@@ -347,6 +396,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140531",
@@ -354,6 +404,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140601",
@@ -361,6 +412,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140602",
@@ -368,6 +420,7 @@
   "name" : "端午節",
   "holidayCategory" : "放假之紀念日及節日",
   "description" : "全國各機關學校放假一日。",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140607",
@@ -375,6 +428,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140608",
@@ -382,6 +436,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140614",
@@ -389,6 +444,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140615",
@@ -396,6 +452,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140621",
@@ -403,6 +460,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140622",
@@ -410,6 +468,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140628",
@@ -417,6 +476,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140629",
@@ -424,6 +484,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140705",
@@ -431,6 +492,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140706",
@@ -438,6 +500,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140712",
@@ -445,6 +508,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140713",
@@ -452,6 +516,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140719",
@@ -459,6 +524,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140720",
@@ -466,6 +532,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140726",
@@ -473,6 +540,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140727",
@@ -480,6 +548,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140802",
@@ -487,6 +556,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140803",
@@ -494,6 +564,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140809",
@@ -501,6 +572,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140810",
@@ -508,6 +580,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140816",
@@ -515,6 +588,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140817",
@@ -522,6 +596,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140823",
@@ -529,6 +604,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140824",
@@ -536,6 +612,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140830",
@@ -543,6 +620,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140831",
@@ -550,6 +628,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140903",
@@ -557,6 +636,7 @@
   "name" : "軍人節",
   "holidayCategory" : "特定節日",
   "description" : "軍人依國防部規定辦理",
+  "note" : null,
   "holiday" : false
 }, {
   "date" : "20140906",
@@ -564,6 +644,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140907",
@@ -571,6 +652,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140908",
@@ -578,6 +660,7 @@
   "name" : "中秋節",
   "holidayCategory" : "放假之紀念日及節日",
   "description" : "全國各機關學校放假一日。",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140913",
@@ -585,6 +668,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140914",
@@ -592,6 +676,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140920",
@@ -599,6 +684,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140921",
@@ -606,6 +692,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140927",
@@ -613,6 +700,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20140928",
@@ -620,6 +708,7 @@
   "name" : "教師節",
   "holidayCategory" : "紀念日及節日",
   "description" : "適逢星期日放假一日",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141004",
@@ -627,6 +716,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141005",
@@ -634,6 +724,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141010",
@@ -641,6 +732,7 @@
   "name" : "國慶日",
   "holidayCategory" : "放假之紀念日及節日",
   "description" : "全國各機關學校放假一日。",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141011",
@@ -648,6 +740,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141012",
@@ -655,6 +748,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141018",
@@ -662,6 +756,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141019",
@@ -669,6 +764,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141025",
@@ -676,6 +772,7 @@
   "name" : "臺灣光復節",
   "holidayCategory" : "紀念日及節日",
   "description" : "適逢星期六放假一日",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141026",
@@ -683,6 +780,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141101",
@@ -690,6 +788,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141102",
@@ -697,6 +796,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141108",
@@ -704,6 +804,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141109",
@@ -711,6 +812,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141112",
@@ -718,6 +820,7 @@
   "name" : "國父誕辰紀念日(中華文化復興節)",
   "holidayCategory" : "紀念日及節日",
   "description" : "本日照常上班。",
+  "note" : null,
   "holiday" : false
 }, {
   "date" : "20141115",
@@ -725,6 +828,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141116",
@@ -732,6 +836,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141122",
@@ -739,6 +844,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141123",
@@ -746,6 +852,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141129",
@@ -753,6 +860,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141130",
@@ -760,6 +868,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141206",
@@ -767,6 +876,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141207",
@@ -774,6 +884,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141213",
@@ -781,6 +892,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141214",
@@ -788,6 +900,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141220",
@@ -795,6 +908,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141221",
@@ -802,6 +916,7 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 }, {
   "date" : "20141225",
@@ -809,6 +924,7 @@
   "name" : "行憲紀念日",
   "holidayCategory" : "紀念日及節日",
   "description" : "本日照常上班。",
+  "note" : null,
   "holiday" : false
 }, {
   "date" : "20141227",
@@ -816,6 +932,7 @@
   "name" : "",
   "holidayCategory" : "補行上班日",
   "description" : "",
+  "note" : null,
   "holiday" : false
 }, {
   "date" : "20141228",
@@ -823,5 +940,6 @@
   "name" : "",
   "holidayCategory" : "星期六、星期日",
   "description" : "",
+  "note" : null,
   "holiday" : true
 } ]

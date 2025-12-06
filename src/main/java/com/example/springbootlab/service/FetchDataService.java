@@ -100,6 +100,9 @@ public class FetchDataService {
             List<Holiday> allHolidays = parseCsvFile(tempFile);
             log.info("成功解析 {} 筆記錄。", allHolidays.size());
 
+            // 步驟 2.5: 處理關聯節日 (補假追蹤)
+            processRelatedHolidays(allHolidays);
+
             // 步驟 3: 依年份分組並輸出 JSON
             Map<String, List<Holiday>> groupedByYear = groupByYear(allHolidays);
             writeYearlyJsonFiles(groupedByYear);
@@ -302,5 +305,102 @@ public class FetchDataService {
         } catch (IOException e) {
             log.warn("無法刪除暫存檔: {}", tempFile, e);
         }
+    }    /**
+     * 處理關聯節日資訊。
+     * <p>
+     * 針對補假、補上班等項目，嘗試從其他節日的說明中找出關聯。
+     * 例如：10/24 補假，會在 10/25 的說明中找到「於10月24日補假」，
+     * 此時將 10/25 的節日名稱填入 10/24 的 note 欄位。
+     * </p>
+     *
+     * @param holidays 所有節日列表
+     */
+    private void processRelatedHolidays(List<Holiday> holidays) {
+        // 為避免重複解析，先建立年份分組的 Map，縮小搜尋範圍 (雖然題目需求是同一年，但全 list 跑也無妨，這邊優化一下)
+        Map<String, List<Holiday>> byYear = groupByYear(holidays);
+
+        for (List<Holiday> yearList : byYear.values()) {
+            for (Holiday target : yearList) {
+                // 判斷是否需要追蹤：補假、補上班、調整放假 或 名稱空白
+                boolean isMakeup = false;
+                if (target.getHolidayCategory() != null) {
+                    String cat = target.getHolidayCategory();
+                    if (cat.contains("補假") || cat.contains("補行上班") || cat.contains("調整放假")) {
+                        isMakeup = true;
+                    }
+                }
+                if (!isMakeup && (target.getName() == null || target.getName().trim().isEmpty())) {
+                    isMakeup = true;
+                }
+
+                // 如果不是目標類型，跳過
+                if (!isMakeup) {
+                    continue;
+                }
+
+                // 解析日期
+                String dStr = target.getDate();
+                if (dStr == null || dStr.length() != 8) {
+                    continue;
+                }
+                int month = Integer.parseInt(dStr.substring(4, 6));
+                int day = Integer.parseInt(dStr.substring(6, 8));
+
+                // 建立搜尋模式 (使用 Regex 以支援更多格式，如空白、補零等)
+                String mStr = String.valueOf(month);
+                String mPad = String.format("%02d", month);
+                String mChi = toChineseNum(month);
+
+                String dayStr = String.valueOf(day);
+                String dPad = String.format("%02d", day);
+                String dChi = toChineseNum(day);
+
+                // 建構 Regex: (M|MM|中文) + 可能空白 + "月" + 可能空白 + (D|DD|中文) + 可能空白 + "日"
+                // 注意：toChineseNum 回傳的若是單一數字可能與 String.valueOf 相同 (雖然目前實作 10 以下是中文)，但重複在 OR 條件中無妨
+                String regex = String.format("(%s|%s|%s)\\s*月\\s*(%s|%s|%s)\\s*日", 
+                        mStr, mPad, mChi, dayStr, dPad, dChi);
+                
+                java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(regex);
+
+                // 在同一年份的其他項目中搜尋
+                for (Holiday source : yearList) {
+                    if (source == target) continue;
+
+                    String desc = source.getDescription();
+                    if (desc != null) {
+                        java.util.regex.Matcher matcher = pattern.matcher(desc);
+                        if (matcher.find()) {
+                            // 找到關聯，設定 note
+                            String sourceName = source.getName();
+                            if (sourceName != null && !sourceName.isEmpty()) {
+                                target.setNote(sourceName);
+                                // 找到一個就停止搜尋該項目的來源
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 將數字轉換為中文數字 (僅支援日期用途，1-31)。
+     *
+     * @param num 數字
+     * @return 中文數字字串
+     */
+    private String toChineseNum(int num) {
+        final String[] chinese = {"", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"};
+        if (num <= 10) {
+            return chinese[num];
+        } else if (num < 20) {
+            return "十" + (num % 10 == 0 ? "" : chinese[num % 10]);
+        } else if (num < 30) {
+            return "二十" + (num % 10 == 0 ? "" : chinese[num % 10]);
+        } else if (num < 40) {
+            return "三十" + (num % 10 == 0 ? "" : chinese[num % 10]);
+        }
+        return String.valueOf(num);
     }
 }

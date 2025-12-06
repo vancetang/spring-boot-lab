@@ -38,4 +38,7 @@ public class Holiday {
 
     /** 說明 (補充資訊，可能為空) */
     private String description;
+
+    /** 備註 (程式自動分析的關聯資訊，例如補假來源節日) */
+    private String note;
 }
