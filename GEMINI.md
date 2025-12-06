@@ -62,7 +62,7 @@
 
 ## 4. 程式碼與風格慣例
 
-- **Git Commit 規範**: 遵循 [Conventional Commits](https://www.conventionalcommits.org/) 1.0.0。
+- **Git Commit 與 Pull Request 規範**: 遵循 [Conventional Commits](https://www.conventionalcommits.org/) 1.0.0。
   - **格式結構**: `<type>(<scope>): <description>`
   - **Type & Scope**: 必須使用 **英文** (例如 `feat`, `fix`, `frontend`, `core`)。
   - **Description (冒號後的簡述)**: 必須使用 **繁體中文**。
