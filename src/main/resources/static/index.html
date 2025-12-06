@@ -602,7 +602,7 @@
         // 格式化為 YYYYMMDD
         const todayStr = `${today.getFullYear()}${String(
           today.getMonth() + 1
-        ).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}`;
+        ).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
 
         // --- 1. 下一個連假邏輯 ---
         let nextHoliday = null;
