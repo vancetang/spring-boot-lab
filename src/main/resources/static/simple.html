@@ -1,10 +1,22 @@
 <!DOCTYPE html>
+<!--
+  行政機關辦公日曆表 - 精簡版 (simple.html)
+  功能：
+  1. 提供條列式的假日資訊列表。
+  2. 整合並簡化假日描述，讓使用者快速閱讀。
+  3. 提供 CSV 下載功能 (包含 BOM 處理以支援 Excel)。
+-->
 <html lang="zh-TW">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <title>行政機關辦公日曆表 - 精簡版</title>
+    <!--
+      樣式定義區
+      使用漸層背景與卡片式設計，強調內容的可讀性。
+      包含表格樣式、假日標籤 (Badge) 與響應式調整。
+    -->
     <style>
       * {
         box-sizing: border-box;
@@ -215,6 +227,7 @@
   </head>
   <body>
     <div class="container">
+      <!-- 頁首與導航 -->
       <div class="header">
         <h1>📅 行政機關辦公日曆表<span>精簡版</span></h1>
         <div class="controls">
@@ -227,6 +240,8 @@
           <a href="detail.html" class="nav-link">📊 詳細版</a>
         </div>
       </div>
+      
+      <!-- 資料表格 -->
       <div class="table-container">
         <table id="dataTable">
           <thead>
@@ -241,25 +256,39 @@
       </div>
       <div class="footer">資料來源：臺北市資料大平臺</div>
     </div>
+    
+    <!-- 應用程式邏輯 -->
     <script>
+      // DOM 元素參考
       const yearSelect = document.getElementById("yearSelect");
       const tableBody = document.querySelector("#dataTable tbody");
       const statusEl = document.getElementById("status");
       const downloadBtn = document.getElementById("downloadBtn");
+      
+      // 常數定義
       const DATA_PATH = "opendata/holiday";
       const WEEKDAYS = ["日", "一", "二", "三", "四", "五", "六"];
       let currentData = [];
 
+      /**
+       * 判斷指定日期是否為週末
+       */
       function isWeekend(date) {
         const d = date.getDay();
         return d === 0 || d === 6;
       }
 
+      /**
+       * 解析 YYYYMMDD 格式字串為 Date 物件
+       */
       function parseDate(s) {
         if (!s || s.length !== 8) return null;
         return new Date(+s.slice(0, 4), +s.slice(4, 6) - 1, +s.slice(6, 8));
       }
 
+      /**
+       * 格式化日期字串 (YYYY-MM-DD (週X))
+       */
       function formatDate(s, date) {
         if (!s || s.length !== 8) return s;
         const wd = date ? WEEKDAYS[date.getDay()] : "";
@@ -269,12 +298,20 @@
         )}<span class="weekday">(${wd})</span>`;
       }
 
+      /**
+       * 產生易讀的假日描述 (精簡版核心邏輯)
+       * 將原始資料的 category, name, note 整合為 main 與 sub 兩段描述
+       * 
+       * @returns {Object} { main: 主要描述, sub: 次要描述 }
+       */
       function getDescription(item, date) {
         const isHoliday = item.holiday;
         const name = (item.name || "").trim();
         const desc = (item.description || "").trim();
         const note = (item.note || "").trim();
         let main = "";
+        
+        // 判斷主要顯示文字
         if (!isHoliday) {
           main = "補上班日";
         } else if (isWeekend(date)) {
@@ -285,6 +322,7 @@
           main = name;
         }
 
+        // 附加關聯備註 (如：於 10/11 補假)
         if (note) {
             main += ` (${note})`;
         }
@@ -292,6 +330,9 @@
         return { main, sub: desc };
       }
 
+      /**
+       * 初始化：載入年份列表
+       */
       async function init() {
         statusEl.textContent = "載入中...";
         try {
@@ -301,6 +342,7 @@
           yearSelect.innerHTML = years
             .map((y) => `<option value="${y}">${y}</option>`)
             .join("");
+            
           // 支援 URL 參數指定年份
           const urlParams = new URLSearchParams(window.location.search);
           const urlYear = urlParams.get("year");
@@ -314,6 +356,9 @@
         }
       }
 
+      /**
+       * 載入選定年份的 JSON 資料
+       */
       async function loadData() {
         const year = yearSelect.value;
         if (!year) return;
@@ -334,6 +379,9 @@
         }
       }
 
+      /**
+       * 渲染表格內容
+       */
       function renderTable(data) {
         if (!data.length) {
           tableBody.innerHTML =
@@ -356,6 +404,12 @@
           .join("");
       }
 
+      /**
+       * 下載 CSV 功能
+       * 1. 轉換資料為 CSV 格式
+       * 2. 加入 BOM 標頭解決 Excel 中文亂碼問題
+       * 3. 觸發瀏覽器下載
+       */
       function downloadCSV() {
         if (!currentData || currentData.length === 0) {
           alert("無資料可下載");
@@ -401,11 +455,15 @@
         document.body.removeChild(link);
       }
 
+      // 事件綁定
       yearSelect.addEventListener("change", loadData);
       downloadBtn.addEventListener("click", downloadCSV);
+      
+      // 啟動程式
       init();
     </script>
   </body>
+  <!-- GitHub Corner圖示 -->
   <a
     href="https://github.com/vancetang/spring-boot-lab"
     class="github-corner"

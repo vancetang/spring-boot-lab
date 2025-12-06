@@ -1,12 +1,25 @@
 <!DOCTYPE html>
+<!--
+  行政機關辦公日曆表 - 月曆版首頁 (index.html)
+  功能：
+  1. 提供類似 Google Calendar 的月曆視圖。
+  2. 整合「社畜儀表板」，顯示連假倒數、年度進度與即時停班停課資訊。
+  3. 支援年份切換與詳細/精簡版連結。
+-->
 <html lang="zh-TW">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <title>行政機關辦公日曆表</title>
+    <!-- 
+      樣式定義區 
+      定義了全站主題顏色 (CSS Variables) 與各區塊樣式。
+      包含月曆網格 (Grid Layout)、Dashboard 卡片與響應式設計。
+    -->
     <style>
       :root {
+        /* 主題色系定義 */
         --primary: #1a73e8;
         --primary-light: #e8f0fe;
         --holiday: #c62828;
@@ -41,6 +54,7 @@
         margin: 0 auto;
         padding: 16px;
       }
+      /* 頁首標題與導航 */
       .header {
         display: flex;
         flex-wrap: wrap;
@@ -64,6 +78,7 @@
         border-radius: 12px;
         margin-left: 8px;
       }
+      /* 控制按鈕區 (上下月切換) */
       .controls {
         display: flex;
         align-items: center;
@@ -99,6 +114,7 @@
         cursor: pointer;
         background: #fff;
       }
+      /* 右上角切換連結 */
       .nav-links {
         display: flex;
         gap: 8px;
@@ -115,6 +131,7 @@
       .nav-link:hover {
         background: var(--primary-light);
       }
+      /* 月曆主體 */
       .calendar {
         border: 1px solid var(--border);
         border-radius: 8px;
@@ -198,6 +215,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
+      /* 事件類型樣式 */
       .event.holiday {
         background: var(--holiday-bg);
         color: var(--holiday);
@@ -225,6 +243,7 @@
         background: var(--special-bg);
         color: var(--special);
       }
+      /* 圖例說明 */
       .legend {
         display: flex;
         gap: 16px;
@@ -259,7 +278,7 @@
         min-height: 400px;
         color: var(--text-light);
       }
-      /* Dashboard Styles */
+      /* Dashboard Styles (儀表板) */
       .dashboard {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -363,8 +382,9 @@
   </head>
   <body>
     <div class="container">
-      <!-- Dashboard Area -->
+      <!-- Dashboard Area (社畜儀表板) -->
       <div class="dashboard" id="dashboard" style="display: none">
+        <!-- 卡片 1: 下一個連假倒數 -->
         <div class="dashboard-card holiday-countdown">
           <div class="card-icon">🎯</div>
           <div class="card-content">
@@ -372,6 +392,7 @@
             <div class="card-desc" id="nextHolidayContent">載入中...</div>
           </div>
         </div>
+        <!-- 卡片 2: 年度進度條 -->
         <div class="dashboard-card year-progress">
           <div class="card-icon">⏳</div>
           <div class="card-content">
@@ -396,7 +417,7 @@
             </div>
           </div>
         </div>
-        <!-- 颱風假查詢卡片 -->
+        <!-- 卡片 3: 颱風假查詢 (點擊觸發) -->
         <div
           class="dashboard-card typhoon-check"
           style="cursor: pointer"
@@ -416,6 +437,7 @@
         </div>
       </div>
 
+      <!-- Header: 標題與導航 -->
       <div class="header">
         <h1>📅 行政機關辦公日曆表<span>月曆版</span></h1>
         <div class="controls">
@@ -430,6 +452,8 @@
           <a href="detail.html" class="nav-link" id="linkDetail">📊 詳細版</a>
         </div>
       </div>
+      
+      <!-- Calendar Grid: 月曆主體區 -->
       <div class="calendar">
         <div class="calendar-header">
           <div>日</div>
@@ -444,6 +468,8 @@
           <div class="loading">載入中...</div>
         </div>
       </div>
+
+      <!-- Legend: 圖例說明 -->
       <div class="legend">
         <div class="legend-item">
           <div
@@ -490,26 +516,41 @@
         </div>
       </div>
     </div>
+
+    <!-- 應用程式邏輯 -->
     <script>
+      // 資料路徑設定
       const DATA_PATH = 'opendata/holiday';
+      
+      // DOM 元素參考
       const yearSelect = document.getElementById('yearSelect');
       const monthSelect = document.getElementById('monthSelect');
       const calendarGrid = document.getElementById('calendarGrid');
+      
+      // 狀態變數
       let currentYear,
         currentMonth,
-        holidayData = {},
-        availableYears = [];
+        holidayData = {}, // 快取已載入的假日資料
+        availableYears = []; // 可用的年份列表
 
-      // 初始化月份選單
+      // 初始化月份選單 (1-12月)
       for (let m = 1; m <= 12; m++) {
         monthSelect.innerHTML += `<option value="${m}">${m}月</option>`;
       }
 
+      /**
+       * 應用程式初始化函式
+       * 1. 取得現在日期
+       * 2. 載入 availableYears 列表
+       * 3. 設定 UI 初始狀態
+       * 4. 載入所需年份資料並渲染
+       */
       async function init() {
         const today = new Date();
         currentYear = today.getFullYear();
         currentMonth = today.getMonth() + 1;
         try {
+          // 加上時間戳記避免快取
           const res = await fetch(`${DATA_PATH}/years.json?t=${new Date().getTime()}`);
           availableYears = await res.json();
           yearSelect.innerHTML = availableYears
@@ -535,7 +576,7 @@
           // 載入月曆顯示年份
           await loadYear(currentYear);
 
-          // 載入真實當前年份與明年 (為了 Dashboard)
+          // 載入真實當前年份與明年 (為了 Dashboard 計算倒數)
           const realYear = today.getFullYear();
           if (realYear !== currentYear) await loadYear(realYear);
           if (availableYears.includes(String(realYear + 1))) {
@@ -551,13 +592,17 @@
         }
       }
 
+      /**
+       * 渲染 Dashboard (社畜儀表板)
+       * 計算並顯示下一個連假與年度進度條
+       */
       function renderDashboard() {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         // 格式化為 YYYYMMDD
         const todayStr = `${today.getFullYear()}${String(
           today.getMonth() + 1
-        ).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
+        ).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}`;
 
         // --- 1. 下一個連假邏輯 ---
         let nextHoliday = null;
@@ -638,6 +683,12 @@
         ).innerText = `${progress.toFixed(1)}% - ${progressText}`;
       }
 
+      /**
+       * 透過 Proxy 檢查 NCDR 颱風假資訊 (GitHub Pages 適用)
+       * 使用 allorigins.win 作為 CORS Proxy 繞過瀏覽器限制。
+       * 
+       * 注意：此方法僅供靜態網站展示用，正式環境應使用後端 API。
+       */
       async function checkTyphoonViaProxy() {
         const content = document.getElementById('typhoonContent');
         content.innerHTML =
@@ -706,6 +757,10 @@
         }
       }
 
+      /**
+       * 透過後端 API 檢查颱風假資訊 (Server Mode 適用)
+       * (目前未在 UI 中直接呼叫，保留供參考)
+       */
       async function checkTyphoon() {
         const content = document.getElementById('typhoonContent');
         content.innerHTML =
@@ -737,6 +792,10 @@
         }
       }
 
+      /**
+       * 載入特定年份的資料
+       * @param {number} year - 目標年份
+       */
       async function loadYear(year) {
         if (holidayData[year]) return;
         try {
@@ -747,6 +806,9 @@
         }
       }
 
+      /**
+       * 更新跳轉連結 (將當前選擇的年份帶入 URL 參數)
+       */
       function updateLinks() {
         document.getElementById(
           'linkSimple'
@@ -758,6 +820,8 @@
 
       /**
        * 取得事件顯示文字（套用精簡版邏輯）
+       * 負責根據假日類別判斷顯示名稱與樣式類型
+       * 
        * @param {Object} item - 假日資料物件
        * @param {boolean} isWeekend - 是否為週末
        * @returns {Object} { display: 顯示文字, tooltip: 提示文字, type: 類型 }
@@ -814,6 +878,10 @@
         };
       }
 
+      /**
+       * 渲染月曆核心邏輯
+       * 計算每月天數、補白、填入日期與事件
+       */
       function renderCalendar() {
         const firstDay = new Date(currentYear, currentMonth - 1, 1);
         const lastDay = new Date(currentYear, currentMonth, 0);
@@ -832,13 +900,13 @@
         });
 
         let html = '';
-        // 上月補位
+        // 上月補位 (填補第一週前面的空白)
         const prevMonth = new Date(currentYear, currentMonth - 1, 0);
         for (let i = startDay - 1; i >= 0; i--) {
           const d = prevMonth.getDate() - i;
           html += `<div class="day-cell other-month"><span class="day-number">${d}</span></div>`;
         }
-        // 當月
+        // 當月日期生成
         for (let d = 1; d <= daysInMonth; d++) {
           // JSON 資料日期格式為 YYYYMMDD (如 20250127)
           const dateKey = `${currentYear}${String(currentMonth).padStart(
@@ -870,7 +938,7 @@
 
           html += `<div class="${classes}"><span class="day-number">${d}</span><div class="day-events">${events}</div></div>`;
         }
-        // 計算需要幾週
+        // 計算需要幾週以決定網格高度
         const totalCells = startDay + daysInMonth;
         const weeksNeeded = Math.ceil(totalCells / 7);
         const targetCells = weeksNeeded * 7;
@@ -879,11 +947,15 @@
         for (let d = 1; d <= remaining; d++) {
           html += `<div class="day-cell other-month"><span class="day-number">${d}</span></div>`;
         }
-        // 設定週數 class 以調整格子高度
+        // 設定週數 class 以調整格子高度 (CSS Grid)
         calendarGrid.className = `calendar-grid weeks-${weeksNeeded}`;
         calendarGrid.innerHTML = html;
       }
 
+      /**
+       * 切換月份
+       * @param {number} delta - 切換量 (+1 或 -1)
+       */
       async function changeMonth(delta) {
         currentMonth += delta;
         if (currentMonth > 12) {
@@ -893,6 +965,7 @@
           currentMonth = 12;
           currentYear--;
         }
+        // 若切換後的年份無資料，跳轉至邊界年份
         if (!availableYears.includes(String(currentYear))) {
           currentYear = parseInt(
             availableYears[delta > 0 ? 0 : availableYears.length - 1]
@@ -906,6 +979,7 @@
         renderCalendar();
       }
 
+      // 事件綁定
       document.getElementById('prevMonth').onclick = () => changeMonth(-1);
       document.getElementById('nextMonth').onclick = () => changeMonth(1);
       document.getElementById('todayBtn').onclick = async () => {
@@ -932,9 +1006,11 @@
         renderCalendar();
       };
 
+      // 啟動程式
       init();
     </script>
   </body>
+  <!-- GitHub Corner 圖示 -->
   <a
     href="https://github.com/vancetang/spring-boot-lab"
     class="github-corner"

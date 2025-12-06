@@ -1,10 +1,22 @@
 <!DOCTYPE html>
+<!--
+  行政機關辦公日曆表 - 詳細版 (detail.html)
+  功能：
+  1. 提供完整的假日資料表格，顯示所有原始欄位 (包含類別、備註等)。
+  2. 適合需要查看詳細資料或進行資料核對的使用者。
+  3. 提供完整欄位的 CSV 下載功能。
+-->
 <html lang="zh-TW">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <title>行政機關辦公日曆表 - 詳細版</title>
+    <!--
+      樣式定義區
+      使用寬版容器以容納更多欄位。
+      針對手機版表格進行響應式調整 (雖然表格較寬，仍透過 overflow-x: auto 保持可用性)。
+    -->
     <style>
       * {
         box-sizing: border-box;
@@ -229,6 +241,7 @@
   </head>
   <body>
     <div class="container">
+      <!-- 頁首與導航 -->
       <div class="header">
         <h1>📅 行政機關辦公日曆表<span>詳細版</span></h1>
         <div class="controls">
@@ -241,6 +254,8 @@
           <a href="simple.html" class="nav-link">📋 精簡版</a>
         </div>
       </div>
+      
+      <!-- 資料表格 -->
       <div class="table-container">
         <table id="dataTable">
           <thead>
@@ -258,20 +273,30 @@
       <div class="footer">資料來源：臺北市資料大平臺</div>
     </div>
 
+    <!-- 應用程式邏輯 -->
     <script>
+      // DOM 元素參考
       const yearSelect = document.getElementById("yearSelect");
       const tableBody = document.querySelector("#dataTable tbody");
       const statusEl = document.getElementById("status");
       const downloadBtn = document.getElementById("downloadBtn");
+      
+      // 常數定義
       const DATA_PATH = "opendata/holiday";
       const WEEKDAYS = ["日", "一", "二", "三", "四", "五", "六"];
       let currentData = [];
 
+      /**
+       * 解析 YYYYMMDD 格式字串為 Date 物件
+       */
       function parseDate(s) {
         if (!s || s.length !== 8) return null;
         return new Date(+s.slice(0, 4), +s.slice(4, 6) - 1, +s.slice(6, 8));
       }
 
+      /**
+       * 格式化日期字串 (YYYY-MM-DD (週X))
+       */
       function formatDate(s, date) {
         if (!s || s.length !== 8) return s;
         const wd = date ? WEEKDAYS[date.getDay()] : "";
@@ -281,6 +306,9 @@
         )}<span class="weekday">(${wd})</span>`;
       }
 
+      /**
+       * 初始化：載入年份列表
+       */
       async function init() {
         statusEl.textContent = "載入中...";
         try {
@@ -290,6 +318,7 @@
           yearSelect.innerHTML = years
             .map((y) => `<option value="${y}">${y}</option>`)
             .join("");
+            
           // 支援 URL 參數指定年份
           const urlParams = new URLSearchParams(window.location.search);
           const urlYear = urlParams.get("year");
@@ -303,6 +332,9 @@
         }
       }
 
+      /**
+       * 載入選定年份的 JSON 資料
+       */
       async function loadData() {
         const year = yearSelect.value;
         if (!year) return;
@@ -323,6 +355,10 @@
         }
       }
 
+      /**
+       * 渲染表格內容
+       *詳細版會顯示：名稱、類別與完整說明
+       */
       function renderTable(data) {
         if (!data.length) {
           tableBody.innerHTML =
@@ -335,6 +371,7 @@
             const badge = item.holiday ? "holiday-yes" : "holiday-no";
             const badgeText = item.holiday ? "假日" : "上班";
             
+            // 組合完整說明：description + note
             let desc = item.description || "";
             if (item.note) {
                 if (desc) desc += " ";
@@ -352,6 +389,10 @@
           .join("");
       }
 
+      /**
+       * 下載 CSV 功能
+       * 匯出所有欄位 (包含類別與說明)
+       */
       function downloadCSV() {
         if (!currentData || currentData.length === 0) {
           alert("無資料可下載");
@@ -371,7 +412,7 @@
                     desc += `(${item.note})`;
                 }
 
-                // 處理 CSV 特殊字元
+                // 處理 CSV 特殊字元 (逗號、換行、雙引號)
                 const escapeCsv = (field) => {
                   if (field == null) return "";
                   const stringField = String(field);
@@ -403,8 +444,11 @@
         document.body.removeChild(link);
       }
 
+      // 事件綁定
       yearSelect.addEventListener("change", loadData);
       downloadBtn.addEventListener("click", downloadCSV);
+      
+      // 啟動程式
       init();
     </script>
   </body>
