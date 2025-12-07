@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,6 +48,9 @@ public class HolidayController {
     /** 即時假日服務 */
     private final RealTimeHolidayService realTimeHolidayService;
 
+    /** 假日資料快取 (Key: Year, Value: Holiday List) */
+    private final Map<String, List<Holiday>> holidayCache = new ConcurrentHashMap<>();
+
     /**
      * 依年份取得假日資料。
      *
@@ -55,20 +60,27 @@ public class HolidayController {
      */
     @GetMapping("/{year}")
     public List<Holiday> getHolidaysByYear(@PathVariable String year) {
-        File file = Paths.get(opendataProperties.holiday().outputDir(), year + ".json").toFile();
-
-        if (!file.exists()) {
-            log.warn("找不到 {} 年度的假日資料。", year);
-            throw new ResourceNotFoundException("找不到 " + year + " 年度的假日資料");
+        // Validate input format to prevent path traversal
+        if (!year.matches("^\\d{4}$")) {
+            throw new ResourceNotFoundException("年份格式錯誤，僅允許 4 位數字");
         }
 
-        try {
-            return objectMapper.readValue(file, new TypeReference<List<Holiday>>() {
-            });
-        } catch (IOException e) {
-            log.error("讀取 {} 年度假日資料時發生錯誤", year, e);
-            throw new ResourceNotFoundException("無法讀取 " + year + " 年度的假日資料", e);
-        }
+        return holidayCache.computeIfAbsent(year, key -> {
+            File file = Paths.get(opendataProperties.holiday().outputDir(), key + ".json").toFile();
+
+            if (!file.exists()) {
+                log.warn("找不到 {} 年度的假日資料。", key);
+                throw new ResourceNotFoundException("找不到 " + key + " 年度的假日資料");
+            }
+
+            try {
+                return objectMapper.readValue(file, new TypeReference<List<Holiday>>() {
+                });
+            } catch (IOException e) {
+                log.error("讀取 {} 年度假日資料時發生錯誤", key, e);
+                throw new ResourceNotFoundException("無法讀取 " + key + " 年度的假日資料", e);
+            }
+        });
     }
     
     /**

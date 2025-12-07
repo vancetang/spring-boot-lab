@@ -13,6 +13,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.SimpleCommandLinePropertySource;
 import org.springframework.lang.NonNull;
 
+import org.springframework.cache.annotation.EnableCaching;
+
 import com.example.springbootlab.service.FetchDataService;
 
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @SpringBootApplication
 @ConfigurationPropertiesScan
+@EnableCaching
 public class SpringBootLabApplication implements ApplicationRunner {
 
     /** 資料抓取服務（建構子注入） */

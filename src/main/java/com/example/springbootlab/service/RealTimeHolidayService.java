@@ -3,6 +3,7 @@ package com.example.springbootlab.service;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,7 @@ public class RealTimeHolidayService {
      *
      * @return 符合條件的 NcdrEntry 列表，若無或發生錯誤則回傳空列表。
      */
+    @Cacheable(value = "realTimeHolidays", unless = "#result == null || #result.isEmpty()")
     public List<NcdrEntry> getRealTimeHolidays() {
         try {
             NcdrHolidayResponse response = restClient.get()
