@@ -16,7 +16,7 @@
 ## 🚀 功能特色 (Features)
 
 1.  **資料抓取任務 (Data Fetching)**:
-    - 透過 Task Mode (`--job=fetch`) 從 [臺北市資料大平臺](https://data.taipei/dataset/detail?id=0dcbcfcf-f7a1-4664-a810-82c01cb524e0) 下載 CSV。
+    - 透過 Task Mode (`--job=fetch`) 從[臺北市資料大平臺](https://data.taipei/)的[臺北市政府行政機關辦公日曆表](https://data.taipei/dataset/detail?id=c30ca421-d935-4faa-b523-9c175c8de738)資料 下載 CSV。
     - 自動解析並依年份分組產生 JSON 檔案 (`src/main/resources/static/opendata/holiday/{year}.json`)。
     - **增量更新**: 僅更新當次下載的年份，不影響其他年份的現有資料。
     - 自動生成年份索引 (`years.json`)，包含所有現有年份。
