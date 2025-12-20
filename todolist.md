@@ -15,6 +15,10 @@
 ## In Progress
 
 ## Completed
+- [x] **[New] 整合 Resend Email API**
+    - [x] 新增 `resend-java` 與 `dotenv-java` 依賴。
+    - [x] 建立 `.env` 環境變數管理機制。
+    - [x] 撰寫 `ResendApiTest` 整合測試 (支援時間戳記標題)。
 - [x] 實作前端資料 CSV 下載功能 (精簡版、詳細版)
 - [x] 新增月曆版視圖 (calendar.html) - 類似 Google Calendar 的月曆介面
 - [x] 移除 Server Mode 啟動時自動下載功能 (改為僅 Task Mode 可更新資料)

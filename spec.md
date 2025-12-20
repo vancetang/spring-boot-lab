@@ -38,6 +38,11 @@
 - **技術堆疊 (Tech Stack)**:
     - **Language**: Java 21
     - **Framework**: Spring Boot 3.5.8
+    - **Libraries**:
+        - `commons-csv`, `commons-io` (File Processing)
+        - `openhtmltopdf` (PDF Generation)
+        - `resend-java` (Email Notification)
+        - `dotenv-java` (Environment Config)
 - **Package Structure**:
     - `com.example.springbootlab`: Main Application (實作 `ApplicationRunner` 處理參數)
     - `com.example.springbootlab.controller`: API 控制器 (HolidayController)

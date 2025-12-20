@@ -12,6 +12,18 @@
   - `commons-io`: 檔案與串流處理 (包含 BOM 處理)
   - `spring-boot-starter-web`: RESTful API 與 Web 服務
   - `lombok`: 簡化程式碼 (Data Class, Logging)
+  - `resend-java`: Email 發送服務 (Resend API)
+  - `dotenv-java`: 環境變數管理 (.env)
+
+## ⚙️ 設定 (Configuration)
+
+本專案使用 `.env` 檔案管理敏感資訊 (如 API Key)。請在專案根目錄建立 `.env` 檔案 (可參考 `.env.example`)：
+
+```properties
+# Resend API 設定 (Email 發送服務)
+RESEND_API_KEY=re_123456...
+RESEND_TO_EMAIL=your_email@example.com
+```
 
 ## 🚀 功能特色 (Features)
 

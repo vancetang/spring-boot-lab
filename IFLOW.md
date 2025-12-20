@@ -8,7 +8,7 @@ Spring Boot Lab 是一個基於 Spring Boot 3.5.8 與 Java 21 建置的後端實
 - **語言**: Java 21
 - **框架**: Spring Boot 3.5.8
 - **建置工具**: Maven
-- **核心庫**: Spring Boot Starter Web, Apache Commons CSV, Lombok
+- **核心庫**: Spring Boot Starter Web, Apache Commons CSV, Lombok, Resend Java, Dotenv Java
 
 ### 核心功能
 1. **自動化資料抓取**: 透過 Task Mode 從臺北市資料大平台下載 CSV，自動解析並依年份產生 JSON 檔案
