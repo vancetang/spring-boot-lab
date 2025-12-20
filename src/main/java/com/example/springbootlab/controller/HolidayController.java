@@ -17,11 +17,15 @@ import com.example.springbootlab.exception.ResourceNotFoundException;
 import com.example.springbootlab.model.Holiday;
 import com.example.springbootlab.model.ncdr.NcdrEntry;
 import com.example.springbootlab.service.RealTimeHolidayService;
+import com.example.springbootlab.service.PdfService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 /**
  * 假日資料 RESTful API 控制器。
@@ -47,6 +51,9 @@ public class HolidayController {
     
     /** 即時假日服務 */
     private final RealTimeHolidayService realTimeHolidayService;
+
+    /** PDF 生成服務 */
+    private final PdfService pdfService;
 
     /** 假日資料快取 (Key: Year, Value: Holiday List) */
     private final Map<String, List<Holiday>> holidayCache = new ConcurrentHashMap<>();
@@ -91,5 +98,23 @@ public class HolidayController {
     @GetMapping("/realtime")
     public List<NcdrEntry> getRealTimeHolidays() {
         return realTimeHolidayService.getRealTimeHolidays();
+    }
+
+    /**
+     * 下載該年份的假日資料 PDF。
+     *
+     * @param year 西元年份
+     * @return PDF 檔案串流
+     * @throws IOException 當 PDF 產生失敗時
+     */
+    @GetMapping("/{year}/pdf")
+    public ResponseEntity<byte[]> downloadPdf(@PathVariable String year) throws IOException {
+        List<Holiday> holidays = getHolidaysByYear(year);
+        byte[] pdfBytes = pdfService.generateHolidayPdf(year, holidays);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=holiday-" + year + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes);
     }
 }

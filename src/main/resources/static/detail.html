@@ -250,6 +250,7 @@
           </select>
           <span id="status" class="status"></span>
           <button id="downloadBtn" class="nav-link" style="cursor:pointer; border:none; font-family: inherit;">📥 下載 CSV</button>
+          <button id="downloadPdfBtn" class="nav-link" style="cursor:pointer; border:none; font-family: inherit;">📄 下載 PDF</button>
           <a href="index.html" class="nav-link">📅 月曆版</a>
           <a href="simple.html" class="nav-link">📋 精簡版</a>
         </div>
@@ -280,6 +281,7 @@
       const tableBody = document.querySelector("#dataTable tbody");
       const statusEl = document.getElementById("status");
       const downloadBtn = document.getElementById("downloadBtn");
+      const downloadPdfBtn = document.getElementById("downloadPdfBtn");
       
       // 常數定義
       const DATA_PATH = "opendata/holiday";
@@ -447,6 +449,14 @@
       // 事件綁定
       yearSelect.addEventListener("change", loadData);
       downloadBtn.addEventListener("click", downloadCSV);
+      downloadPdfBtn.addEventListener("click", () => {
+        const year = yearSelect.value;
+        if (year) {
+            window.open(`api/holidays/${year}/pdf`, '_blank');
+        } else {
+            alert("請先選擇年份");
+        }
+      });
       
       // 啟動程式
       init();
