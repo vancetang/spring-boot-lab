@@ -1,0 +1,273 @@
+/* 大寫中文數字列表樣式 (壹、貳、參...) */
+.chinese-upper {
+    list-style: none;
+    counter-reset: upper-cn-counter;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.chinese-upper > li {
+    counter-increment: upper-cn-counter;
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 8px;
+}
+
+.chinese-upper > li:nth-child(1)::before { content: "壹、"; font-weight: bold; }
+.chinese-upper > li:nth-child(2)::before { content: "貳、"; font-weight: bold; }
+.chinese-upper > li:nth-child(3)::before { content: "參、"; font-weight: bold; }
+.chinese-upper > li:nth-child(4)::before { content: "肆、"; font-weight: bold; }
+.chinese-upper > li:nth-child(5)::before { content: "伍、"; font-weight: bold; }
+.chinese-upper > li:nth-child(6)::before { content: "陸、"; font-weight: bold; }
+.chinese-upper > li:nth-child(7)::before { content: "柒、"; font-weight: bold; }
+.chinese-upper > li:nth-child(8)::before { content: "捌、"; font-weight: bold; }
+.chinese-upper > li:nth-child(9)::before { content: "玖、"; font-weight: bold; }
+.chinese-upper > li:nth-child(10)::before { content: "拾、"; font-weight: bold; }
+.chinese-upper > li:nth-child(11)::before { content: "拾壹、"; font-weight: bold; }
+.chinese-upper > li:nth-child(12)::before { content: "拾貳、"; font-weight: bold; }
+.chinese-upper > li:nth-child(13)::before { content: "拾參、"; font-weight: bold; }
+.chinese-upper > li:nth-child(14)::before { content: "拾肆、"; font-weight: bold; }
+.chinese-upper > li:nth-child(15)::before { content: "拾伍、"; font-weight: bold; }
+.chinese-upper > li:nth-child(16)::before { content: "拾陸、"; font-weight: bold; }
+.chinese-upper > li:nth-child(17)::before { content: "拾柒、"; font-weight: bold; }
+.chinese-upper > li:nth-child(18)::before { content: "拾捌、"; font-weight: bold; }
+.chinese-upper > li:nth-child(19)::before { content: "拾玖、"; font-weight: bold; }
+.chinese-upper > li:nth-child(20)::before { content: "貳拾、"; font-weight: bold; }
+.chinese-upper > li:nth-child(21)::before { content: "貳拾壹、"; font-weight: bold; }
+.chinese-upper > li:nth-child(22)::before { content: "貳拾貳、"; font-weight: bold; }
+.chinese-upper > li:nth-child(23)::before { content: "貳拾參、"; font-weight: bold; }
+.chinese-upper > li:nth-child(24)::before { content: "貳拾肆、"; font-weight: bold; }
+.chinese-upper > li:nth-child(25)::before { content: "貳拾伍、"; font-weight: bold; }
+.chinese-upper > li:nth-child(26)::before { content: "貳拾陸、"; font-weight: bold; }
+.chinese-upper > li:nth-child(27)::before { content: "貳拾柒、"; font-weight: bold; }
+.chinese-upper > li:nth-child(28)::before { content: "貳拾捌、"; font-weight: bold; }
+.chinese-upper > li:nth-child(29)::before { content: "貳拾玖、"; font-weight: bold; }
+.chinese-upper > li:nth-child(30)::before { content: "參拾、"; font-weight: bold; }
+.chinese-upper > li:nth-child(31)::before { content: "參拾壹、"; font-weight: bold; }
+.chinese-upper > li:nth-child(32)::before { content: "參拾貳、"; font-weight: bold; }
+.chinese-upper > li:nth-child(33)::before { content: "參拾參、"; font-weight: bold; }
+.chinese-upper > li:nth-child(34)::before { content: "參拾肆、"; font-weight: bold; }
+.chinese-upper > li:nth-child(35)::before { content: "參拾伍、"; font-weight: bold; }
+.chinese-upper > li:nth-child(36)::before { content: "參拾陸、"; font-weight: bold; }
+.chinese-upper > li:nth-child(37)::before { content: "參拾柒、"; font-weight: bold; }
+.chinese-upper > li:nth-child(38)::before { content: "參拾捌、"; font-weight: bold; }
+.chinese-upper > li:nth-child(39)::before { content: "參拾玖、"; font-weight: bold; }
+.chinese-upper > li:nth-child(40)::before { content: "肆拾、"; font-weight: bold; }
+.chinese-upper > li:nth-child(41)::before { content: "肆拾壹、"; font-weight: bold; }
+.chinese-upper > li:nth-child(42)::before { content: "肆拾貳、"; font-weight: bold; }
+.chinese-upper > li:nth-child(43)::before { content: "肆拾參、"; font-weight: bold; }
+.chinese-upper > li:nth-child(44)::before { content: "肆拾肆、"; font-weight: bold; }
+.chinese-upper > li:nth-child(45)::before { content: "肆拾伍、"; font-weight: bold; }
+.chinese-upper > li:nth-child(46)::before { content: "肆拾陸、"; font-weight: bold; }
+.chinese-upper > li:nth-child(47)::before { content: "肆拾柒、"; font-weight: bold; }
+.chinese-upper > li:nth-child(48)::before { content: "肆拾捌、"; font-weight: bold; }
+.chinese-upper > li:nth-child(49)::before { content: "肆拾玖、"; font-weight: bold; }
+.chinese-upper > li:nth-child(50)::before { content: "伍拾、"; font-weight: bold; }
+
+/* 小寫中文數字列表樣式 (一、二、三...) */
+.chinese-lower {
+    list-style: none;
+    counter-reset: lower-cn-counter;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.chinese-lower > li {
+    counter-increment: lower-cn-counter;
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 8px;
+}
+
+.chinese-lower > li:nth-child(1)::before { content: "一、"; font-weight: bold; }
+.chinese-lower > li:nth-child(2)::before { content: "二、"; font-weight: bold; }
+.chinese-lower > li:nth-child(3)::before { content: "三、"; font-weight: bold; }
+.chinese-lower > li:nth-child(4)::before { content: "四、"; font-weight: bold; }
+.chinese-lower > li:nth-child(5)::before { content: "五、"; font-weight: bold; }
+.chinese-lower > li:nth-child(6)::before { content: "六、"; font-weight: bold; }
+.chinese-lower > li:nth-child(7)::before { content: "七、"; font-weight: bold; }
+.chinese-lower > li:nth-child(8)::before { content: "八、"; font-weight: bold; }
+.chinese-lower > li:nth-child(9)::before { content: "九、"; font-weight: bold; }
+.chinese-lower > li:nth-child(10)::before { content: "十、"; font-weight: bold; }
+.chinese-lower > li:nth-child(11)::before { content: "十一、"; font-weight: bold; }
+.chinese-lower > li:nth-child(12)::before { content: "十二、"; font-weight: bold; }
+.chinese-lower > li:nth-child(13)::before { content: "十三、"; font-weight: bold; }
+.chinese-lower > li:nth-child(14)::before { content: "十四、"; font-weight: bold; }
+.chinese-lower > li:nth-child(15)::before { content: "十五、"; font-weight: bold; }
+.chinese-lower > li:nth-child(16)::before { content: "十六、"; font-weight: bold; }
+.chinese-lower > li:nth-child(17)::before { content: "十七、"; font-weight: bold; }
+.chinese-lower > li:nth-child(18)::before { content: "十八、"; font-weight: bold; }
+.chinese-lower > li:nth-child(19)::before { content: "十九、"; font-weight: bold; }
+.chinese-lower > li:nth-child(20)::before { content: "二十、"; font-weight: bold; }
+.chinese-lower > li:nth-child(21)::before { content: "二十一、"; font-weight: bold; }
+.chinese-lower > li:nth-child(22)::before { content: "二十二、"; font-weight: bold; }
+.chinese-lower > li:nth-child(23)::before { content: "二十三、"; font-weight: bold; }
+.chinese-lower > li:nth-child(24)::before { content: "二十四、"; font-weight: bold; }
+.chinese-lower > li:nth-child(25)::before { content: "二十五、"; font-weight: bold; }
+.chinese-lower > li:nth-child(26)::before { content: "二十六、"; font-weight: bold; }
+.chinese-lower > li:nth-child(27)::before { content: "二十七、"; font-weight: bold; }
+.chinese-lower > li:nth-child(28)::before { content: "二十八、"; font-weight: bold; }
+.chinese-lower > li:nth-child(29)::before { content: "二十九、"; font-weight: bold; }
+.chinese-lower > li:nth-child(30)::before { content: "三十、"; font-weight: bold; }
+.chinese-lower > li:nth-child(31)::before { content: "三十一、"; font-weight: bold; }
+.chinese-lower > li:nth-child(32)::before { content: "三十二、"; font-weight: bold; }
+.chinese-lower > li:nth-child(33)::before { content: "三十三、"; font-weight: bold; }
+.chinese-lower > li:nth-child(34)::before { content: "三十四、"; font-weight: bold; }
+.chinese-lower > li:nth-child(35)::before { content: "三十五、"; font-weight: bold; }
+.chinese-lower > li:nth-child(36)::before { content: "三十六、"; font-weight: bold; }
+.chinese-lower > li:nth-child(37)::before { content: "三十七、"; font-weight: bold; }
+.chinese-lower > li:nth-child(38)::before { content: "三十八、"; font-weight: bold; }
+.chinese-lower > li:nth-child(39)::before { content: "三十九、"; font-weight: bold; }
+.chinese-lower > li:nth-child(40)::before { content: "四十、"; font-weight: bold; }
+.chinese-lower > li:nth-child(41)::before { content: "四十一、"; font-weight: bold; }
+.chinese-lower > li:nth-child(42)::before { content: "四十二、"; font-weight: bold; }
+.chinese-lower > li:nth-child(43)::before { content: "四十三、"; font-weight: bold; }
+.chinese-lower > li:nth-child(44)::before { content: "四十四、"; font-weight: bold; }
+.chinese-lower > li:nth-child(45)::before { content: "四十五、"; font-weight: bold; }
+.chinese-lower > li:nth-child(46)::before { content: "四十六、"; font-weight: bold; }
+.chinese-lower > li:nth-child(47)::before { content: "四十七、"; font-weight: bold; }
+.chinese-lower > li:nth-child(48)::before { content: "四十八、"; font-weight: bold; }
+.chinese-lower > li:nth-child(49)::before { content: "四十九、"; font-weight: bold; }
+.chinese-lower > li:nth-child(50)::before { content: "五十、"; font-weight: bold; }
+
+                /* 阿拉伯數字列表樣式 (1. 2. 3....) */
+                .arabic-number {
+                    list-style: none;
+                    padding-left: 0;
+                    margin-left: 0;
+                }
+                
+                .arabic-number > li {
+                    position: relative;
+                    padding-left: 30px;
+                    margin-bottom: 8px;
+                }
+                
+                .arabic-number > li:nth-child(1)::before { content: "1. "; font-weight: bold; }
+                .arabic-number > li:nth-child(2)::before { content: "2. "; font-weight: bold; }
+                .arabic-number > li:nth-child(3)::before { content: "3. "; font-weight: bold; }
+                .arabic-number > li:nth-child(4)::before { content: "4. "; font-weight: bold; }
+                .arabic-number > li:nth-child(5)::before { content: "5. "; font-weight: bold; }
+                .arabic-number > li:nth-child(6)::before { content: "6. "; font-weight: bold; }
+                .arabic-number > li:nth-child(7)::before { content: "7. "; font-weight: bold; }
+                .arabic-number > li:nth-child(8)::before { content: "8. "; font-weight: bold; }
+                .arabic-number > li:nth-child(9)::before { content: "9. "; font-weight: bold; }
+                .arabic-number > li:nth-child(10)::before { content: "10. "; font-weight: bold; }
+/* 多層級列表樣式 */
+.multi-level-list {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+/* 第一層 - 大寫中文 */
+.multi-level-list > li {
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 8px;
+}
+
+.multi-level-list > li:nth-child(1)::before { content: "壹、"; font-weight: bold; }
+.multi-level-list > li:nth-child(2)::before { content: "貳、"; font-weight: bold; }
+.multi-level-list > li:nth-child(3)::before { content: "參、"; font-weight: bold; }
+.multi-level-list > li:nth-child(4)::before { content: "肆、"; font-weight: bold; }
+.multi-level-list > li:nth-child(5)::before { content: "伍、"; font-weight: bold; }
+.multi-level-list > li:nth-child(6)::before { content: "陸、"; font-weight: bold; }
+.multi-level-list > li:nth-child(7)::before { content: "柒、"; font-weight: bold; }
+.multi-level-list > li:nth-child(8)::before { content: "捌、"; font-weight: bold; }
+.multi-level-list > li:nth-child(9)::before { content: "玖、"; font-weight: bold; }
+.multi-level-list > li:nth-child(10)::before { content: "拾、"; font-weight: bold; }
+.multi-level-list > li:nth-child(11)::before { content: "拾壹、"; font-weight: bold; }
+.multi-level-list > li:nth-child(12)::before { content: "拾貳、"; font-weight: bold; }
+.multi-level-list > li:nth-child(13)::before { content: "拾參、"; font-weight: bold; }
+.multi-level-list > li:nth-child(14)::before { content: "拾肆、"; font-weight: bold; }
+.multi-level-list > li:nth-child(15)::before { content: "拾伍、"; font-weight: bold; }
+.multi-level-list > li:nth-child(16)::before { content: "拾陸、"; font-weight: bold; }
+.multi-level-list > li:nth-child(17)::before { content: "拾柒、"; font-weight: bold; }
+.multi-level-list > li:nth-child(18)::before { content: "拾捌、"; font-weight: bold; }
+.multi-level-list > li:nth-child(19)::before { content: "拾玖、"; font-weight: bold; }
+.multi-level-list > li:nth-child(20)::before { content: "貳拾、"; font-weight: bold; }
+
+/* 第二層 - 小寫中文 */
+.multi-level-list > li > ul {
+    list-style: none;
+    padding-left: 6px; /* 減少縮排距離，再往前一個中文字 */
+    margin: 5px 0;
+}
+
+.multi-level-list > li > ul > li {
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 5px;
+}
+
+.multi-level-list > li > ul > li:nth-child(1)::before { content: "一、"; font-weight: bold; }
+.multi-level-list > li > ul > li:nth-child(2)::before { content: "二、"; font-weight: bold; }
+.multi-level-list > li > ul > li:nth-child(3)::before { content: "三、"; font-weight: bold; }
+.multi-level-list > li > ul > li:nth-child(4)::before { content: "四、"; font-weight: bold; }
+.multi-level-list > li > ul > li:nth-child(5)::before { content: "五、"; font-weight: bold; }
+.multi-level-list > li > ul > li:nth-child(6)::before { content: "六、"; font-weight: bold; }
+.multi-level-list > li > ul > li:nth-child(7)::before { content: "七、"; font-weight: bold; }
+.multi-level-list > li > ul > li:nth-child(8)::before { content: "八、"; font-weight: bold; }
+.multi-level-list > li > ul > li:nth-child(9)::before { content: "九、"; font-weight: bold; }
+.multi-level-list > li > ul > li:nth-child(10)::before { content: "十、"; font-weight: bold; }
+
+/* 第三層 - 阿拉伯數字 */
+.multi-level-list > li > ul > li > ul {
+    list-style: none;
+    padding-left: 4px; /* 減少縮排距離，與第二層一致 */
+    margin: 3px 0;
+}
+
+.multi-level-list > li > ul > li > ul > li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 3px;
+}
+
+.multi-level-list > li > ul > li > ul > li:nth-child(1)::before { content: "1. "; font-weight: bold; }
+                .multi-level-list > li > ul > li > ul > li:nth-child(2)::before { content: "2. "; font-weight: bold; }
+                .multi-level-list > li > ul > li > ul > li:nth-child(3)::before { content: "3. "; font-weight: bold; }
+                .multi-level-list > li > ul > li > ul > li:nth-child(4)::before { content: "4. "; font-weight: bold; }
+                .multi-level-list > li > ul > li > ul > li:nth-child(5)::before { content: "5. "; font-weight: bold; }
+                .multi-level-list > li > ul > li > ul > li:nth-child(6)::before { content: "6. "; font-weight: bold; }
+                .multi-level-list > li > ul > li > ul > li:nth-child(7)::before { content: "7. "; font-weight: bold; }
+                .multi-level-list > li > ul > li > ul > li:nth-child(8)::before { content: "8. "; font-weight: bold; }
+                .multi-level-list > li > ul > li > ul > li:nth-child(9)::before { content: "9. "; font-weight: bold; }
+                .multi-level-list > li > ul > li > ul > li:nth-child(10)::before { content: "10. "; font-weight: bold; }
+
+/* 使用 CSS 計數器為第三層（及更多層）自動編號 */
+.multi-level-list {
+    counter-reset: arabic-counter;
+}
+
+.multi-level-list > li > ul > li > ul > li {
+    counter-increment: arabic-counter;
+}
+
+/* 更深層級的樣式 - 使用循環樣式 */
+.multi-level-list > li > ul > li > ul > li > ul {
+    list-style: none;
+    padding-left: 3px;
+    margin: 2px 0;
+}
+
+.multi-level-list > li > ul > li > ul > li > ul > li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 2px;
+}
+
+.multi-level-list > li > ul > li > ul > li > ul > li::before {
+    content: "(" counter(arabic-counter) ") ";
+    font-weight: bold;
+}
+
+/* 設定更深層級的計數器 */
+.multi-level-list > li > ul > li > ul {
+    counter-reset: inner-arabic-counter;
+}
+
+.multi-level-list > li > ul > li > ul > li {
+    counter-increment: inner-arabic-counter;
+}
