@@ -647,52 +647,69 @@ public class PdfService {
 
         sb.append("</tbody></table>");
 
-        // 測試用多種列表方法
-        sb.append("<h2>測試列表功能 (替代方法)</h2>");
+        // --- 測試自定義列表樣式 ---
+        sb.append("<div style='margin-top: 30px; page-break-inside: avoid;'>");
+        sb.append("<h2>附件一：自定義列表樣式測試 (OpenHTMLtoPDF 相容版)</h2>");
 
-        // 大寫中文數字列表 (1-10)
-        sb.append("<h3>大寫中文數字列表 (壹、貳、參...)</h3>");
-        sb.append("<ol class='chinese-upper'>");
-        for (int i = 1; i <= 10; i++) {
-            sb.append("<li>項目 ").append(i).append("</li>");
+        // 1. 標準中文數字 (一、二、三...)
+        sb.append("<h3>1. 標準中文數字列表 (Class: chinese-safe)</h3>");
+        sb.append("<p style='color: #666; font-size: 0.9em; margin-bottom: 10px;'>此樣式使用 CSS 窮舉法定義，確保在任何 PDF 渲染引擎中都能正確顯示中文編號。</p>");
+        sb.append("<ol class='chinese-safe'>");
+        for (int i = 1; i <= 12; i++) {
+            sb.append("<li>這是第 ").append(i).append(" 點說明事項，測試長度與對齊效果。若文字較長會自動折行，第二行應對齊文字起始處，不會跑版到編號下方。</li>");
         }
         sb.append("</ol>");
 
-        // 小寫中文數字列表 (1-10)
-        sb.append("<h3>小寫中文數字列表 (一、二、三...)</h3>");
-        sb.append("<ol class='chinese-lower'>");
-        for (int i = 1; i <= 10; i++) {
-            sb.append("<li>項目 ").append(i).append("</li>");
-        }
-        sb.append("</ol>");
-
-        // 阿拉伯數字列表
-        sb.append("<h3>阿拉伯數字列表 (1. 2. 3...)</h3>");
-        sb.append("<ol class='arabic-number'>");
-        for (int i = 1; i <= 10; i++) {
-            sb.append("<li>項目 ").append(i).append("</li>");
-        }
-        sb.append("</ol>");
-
-        // 多層級列表
-        sb.append("<h3>多層級列表 (第一層: 壹、貳... 第二層: 一、二... 第三層: 1. 2...)</h3>");
-        sb.append("<ul class='multi-level-list'>");
-        for (int i = 1; i <= 5; i++) {
-            sb.append("<li>第一層項目 ").append(i);
-            sb.append("<ul>"); // 第二層
-            for (int j = 1; j <= 3; j++) {
-                sb.append("<li>第二層項目 ").append(j);
-                sb.append("<ul>"); // 第三層
-                for (int k = 1; k <= 3; k++) {
-                    sb.append("<li>第三層項目 ").append(k).append("</li>");
-                }
-                sb.append("</ul>");
+        // 2. 公文式階層
+        sb.append("<h3 style='margin-top: 20px;'>2. 公文式多層級列表 (Class: official-doc-list)</h3>");
+        sb.append("<p style='color: #666; font-size: 0.9em; margin-bottom: 10px;'>此樣式模擬正式公文結構：一、 -> (一) -> 1. -> (1)</p>");
+        
+        sb.append("<ol class='official-doc-list'>");
+        
+        // 第一層 Item 1
+        sb.append("<li><strong>計畫目標與範疇</strong>");
+        sb.append("<ol>"); // 第二層
+            sb.append("<li>短期目標：完成系統基礎建設。");
+            sb.append("<ol>"); // 第三層
+                sb.append("<li>建立開發環境 (Development Environment)。</li>");
+                sb.append("<li>完成資料庫 Schema 設計與正規化。</li>");
+                sb.append("<li>建立 CI/CD 自動化部署流程。");
+                    sb.append("<ol>"); // 第四層
+                        sb.append("<li>設定 GitHub Actions Workflow。</li>");
+                        sb.append("<li>配置 Docker 容器化環境。</li>");
+                    sb.append("</ol>");
                 sb.append("</li>");
-            }
-            sb.append("</ul>");
+            sb.append("</ol>");
             sb.append("</li>");
-        }
-        sb.append("</ul>");
+            
+            sb.append("<li>中期目標：導入自動化測試與監控。");
+            sb.append("<ol>");
+                sb.append("<li>單元測試覆蓋率達 80% 以上。</li>");
+                sb.append("<li>整合 Prometheus 與 Grafana 監控儀表板。</li>");
+            sb.append("</ol>");
+            sb.append("</li>");
+        sb.append("</ol>");
+        sb.append("</li>");
+
+        // 第一層 Item 2
+        sb.append("<li><strong>執行策略與方法</strong>");
+        sb.append("<ol>");
+            sb.append("<li>採用敏捷開發 (Agile) 模式，每兩週進行一次 Sprint。</li>");
+            sb.append("<li>每週召開進度檢核會議，確認開發狀況與風險。</li>");
+            sb.append("<li>定期進行程式碼審查 (Code Review)，確保品質。</li>");
+        sb.append("</ol>");
+        sb.append("</li>");
+        
+        // 第一層 Item 3
+        sb.append("<li><strong>預期效益</strong>");
+        sb.append("<ol>");
+            sb.append("<li>提升開發效率 30%。</li>");
+            sb.append("<li>降低系統錯誤率，提升使用者滿意度。</li>");
+        sb.append("</ol>");
+        sb.append("</li>");
+
+        sb.append("</ol>"); // End official-doc-list
+        sb.append("</div>");
 
         sb.append("</body></html>");
 
