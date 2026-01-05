@@ -19,6 +19,7 @@
         <commons.io.version>2.20.0</commons.io.version>
         <commons.csv.version>1.14.1</commons.csv.version>
         <commons.lang3.version>3.20.0</commons.lang3.version>
+        <commons.codec.version>1.20.0</commons.codec.version>
     </properties>
     <dependencies>
         <!-- ================ Spring Boot 核心依賴 ================ -->
@@ -69,6 +70,11 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons.lang3.version}</version>
         </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons.codec.version}</version>
+        </dependency>
 
         <!-- Resend Email -->
         <dependency>
@@ -77,12 +83,11 @@
             <version>4.11.0</version>
         </dependency>
 
-        <!-- Dotenv -->
+        <!-- Spring Dotenv (將 .env 整合至 Spring Environment) -->
         <dependency>
-            <groupId>io.github.cdimascio</groupId>
-            <artifactId>dotenv-java</artifactId>
-            <version>3.0.0</version>
-            <scope>test</scope>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+            <version>4.0.0</version>
         </dependency>
 
         <!-- PDF Generation -->
