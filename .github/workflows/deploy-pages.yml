@@ -5,11 +5,11 @@ on:
     workflow_dispatch:
 
     # 自動部署 (僅 docs/ 目錄)
-    push:
-        branches:
-            - main
-        paths:
-            - "src/main/resources/static/**"
+    # push:
+    #     branches:
+    #         - main
+    #     paths:
+    #         - "src/main/resources/static/**"
 
 permissions:
     contents: read
